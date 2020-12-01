@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<!-- Growthrate parameters for maize	-->
+<SimulationModelIncludeFile>
+	<SimulaDirective path="shoot">			
+			<SimulaTable name_column1="time" name_column2="leafAreaExpantionRate"  unit_column1="day" unit_column2="cm2/day"> 
+<!-- 
+very rought estimate based on curve fitting on m.ernst data (6 experiments, not using experiment 5 which has much 
+faster growth. Also assuming SLA is 500 and stem fraction of the shoot is 0 0 10 0 20 50 28 50 
+
+wet
+0	0
+1	0.5
+2	3
+3	1
+10	2
+15	3
+20	5.5
+25	12
+28	19
+
+dry (with recovery)
+0	0
+1	0.5
+2	3
+3	1
+10	1
+15	2.2
+20	2.2
+25	12
+28	19
+
+ -->
+<!--
+0	0
+1	0.5
+2	3
+3	1
+10	1
+15	2.2
+20	2.2
+25	12
+28	19
+ -->
+<!--calculation from Tania Gioia (Rhizo experiment 1), until 28 DAG 
+leaf area was calculated as Leaf length × maximum width × k 
+where k is a shape factor with a value of 0.858 for wheat leaves (Kalra and Dhiman, 1977)
+
+Leaf area Durum HN 
+ 
+9	7.65
+13	16.11
+17	25.33
+21	37.90
+24	50.79
+28	72.74
+
+Leaf area Durum LN
+
+9	6.18
+13	10.48
+17	12.73
+21	16.23
+24	19.00
+28	23.01
+
+
+fitting exponential curve into data provides following formula, where y is the leaf area in cm²/day, and x=DAG
+Durum HN  y=3.229754329e^0.114836551x; R²=0.98
+Durum LN  y=3.959695857e^0.065412098x; R²=0.959
+
+
+Now take the first derivative of this function to get the slope (=leaf area expansion rate)
+
+Durum HN 
+y=3.229754329*0.114836551*e^0.114836551x
+x is DAG, and y is the leaf expansion rate for that day
+
+0	0.370893849
+1	0.416027952
+2	0.466654429
+3	0.523441645
+4	0.587139303
+5	0.658588334
+6	0.738732003
+7	0.828628363
+8	0.929464218
+9	1.042570796
+10	1.169441324
+11	1.311750736
+12	1.471377793
+13	1.65042988
+14	1.851270831
+15	2.076552133
+16	2.329247936
+17	2.612694313
+18	2.930633303
+19	3.287262315
+20	3.687289542
+21	4.135996115
+22	4.639305829
+23	5.203863344
+24	5.83712191
+25	6.547441765
+26	7.344200502
+27	8.237916877
+28	9.240389672
+29	10.36485347
+30	11.62615335
+31	13.04094093
+32	14.62789412
+33	16.40796378
+34	18.40465027
+35	20.64431371
+36	23.15652197
+37	25.97444107
+38	29.13527298
+39	32.68074679
+40	36.65766961
+
+Durum LN 
+y=3.959695857*0.065412098*e^0.065412098x
+x is DAG, and y is the leaf expansion rate for that day
+
+0	0.259012011
+1	0.276520936
+2	0.295213443
+3	0.315169544
+4	0.336474655
+5	0.359219968
+6	0.383502838
+7	0.409427204
+8	0.437104028
+9	0.466651774
+10	0.498196916
+11	0.531874473
+12	0.567828597
+13	0.606213179
+14	0.647192516
+15	0.690942011
+16	0.737648923
+17	0.78751317
+18	0.840748185
+19	0.897581828
+20	0.958257362
+21	1.023034495
+22	1.092190489
+23	1.166021353
+24	1.2448431
+25	1.32899311
+26	1.418831567
+27	1.514743004
+28	1.617137948
+29	1.726454676
+30	1.843161093
+31	1.967756734
+32	2.100774903
+33	2.242784951
+34	2.394394721
+35	2.556253143
+36	2.729053015
+37	2.913533965
+38	3.110485623
+39	3.320750994
+40	3.545230071
+
+
+Since the exponential curve is not correct in the beginning, we have to adjust the values, as it's very important for photosynthesis
+that the plants grow in the beginning very quick, then they rest for some time and then they start really growing. 
+So the numbers from 0-9 DAG are manually adjusted numbers to let theme be more realistic.
+
+Durum HN 
+
+-->
+0	0.0
+1	0.29
+5	0.01
+6	0.01
+7	0.29
+8	0.45
+9	1.042570796
+10	1.169441324
+11	1.311750736
+12	1.471377793
+13	1.65042988
+14	1.851270831
+15	2.076552133
+16	2.329247936
+17	2.612694313
+18	2.930633303
+19	3.287262315
+20	3.687289542
+21	4.135996115
+22	4.639305829
+23	5.203863344
+24	5.83712191
+25	6.547441765
+26	7.344200502
+27	8.237916877
+28	9.240389672
+29	10.36485347
+30	11.62615335
+31	13.04094093
+32	14.62789412
+33	16.40796378
+34	18.40465027
+35	20.64431371
+36	23.15652197
+37	25.97444107
+38	29.13527298
+39	32.68074679
+40	36.65766961
+
+
+
+			</SimulaTable>
+		</SimulaDirective>
+		<SimulaDirective path="hypocotyl">
+				<SimulaTable name_column1="time since creation" unit_column1="day" name_column2="growthRate" unit_column2="cm/day"> <!-- same value for Wheat?-->
+					 0 0
+					 2 0
+					 3 1
+					 4 1
+					 5 0
+					 1000 0
+				</SimulaTable>
+				<SimulaConstant name="diameter"  unit="cm">
+					 0.15 
+				</SimulaConstant>
+		</SimulaDirective>
+
+
+		<SimulaDirective path="primaryRoot">
+				<SimulaTable name_column1="time since creation" unit_column1="day" name_column2="growthRate" unit_column2="cm/day">
+					 <!-- does not really grow in barley only gives rise to seminals, according to sigi jahnke -->
+					 0    0.1
+					 3   0.1 
+					 5    0. 
+					 1000  0.
+				</SimulaTable>
+				<SimulaConstant name="diameter"  unit="cm">
+				<!--raul2006: 0.65 mm-->
+					 0.065 
+				</SimulaConstant>
+		</SimulaDirective>
+		<SimulaDirective path="seminal">
+				<SimulaTable name_column1="time since creation" unit_column1="day" name_column2="growthRate" unit_column2="cm/day">
+				<!-- marc2011 pouches: growth rates these roots stop earlier, data still to be taken, now based on estimates
+0		1.4
+10		1.4
+13		0.2
+40      0.2
+-->
+<!--  average growth rate rhizotrons according to michaelas data is 1.46 cm/day (movement towards deep) and stdev of 0.88   or 
+2.4 if we calculate from the rhizotron thick root length which includes the wiggling.-->
+<!--  in the field nodal roots grow at least to a depth of 60 cm (coring data vera hecht) -->
+
+<!--
+0       0
+1		1.34
+4		1.34778125
+5		1.91675
+6		2.7285
+7		2.43525
+10		2.6697083333
+11		1.816875
+12		1.4875
+13		1.2
+28      1.2
+-->
+
+<!-- AGR for root depth for Durum wheat according to Tania's data -->
+
+0	0
+9	4.081808185
+13	4.014067482
+17	3.5098648
+21	2.778183483
+28 1.5
+30 1
+40 0.00001
+
+				</SimulaTable>
+				<SimulaStochastic  name="longitudinalGrowthRateMultiplier" unit="cm" distribution="normal" mean="1" stdev="0.2"  minimum="0.0" maximum="1.5" />
+				<SimulaConstant name="diameter"  unit="cm">
+				<!-- in michaela ernst winrhizo image about 0.05-0.07 -->
+					 0.06  
+				</SimulaConstant>
+		</SimulaDirective>
+		<SimulaDirective path="seminalSteep">
+				<SimulaTable name_column1="time since creation" unit_column1="day" name_column2="growthRate" unit_column2="cm/day">
+				<!-- marc2011 pouches: growth rates 
+0		1.34
+4		1.34778125
+5		1.91675
+6		2.7285
+7		2.43525
+10		2.6697083333
+11		1.816875
+12		1.4875
+13		0.520625
+40      0.520625
+-->
+<!--
+0       0
+1		1.34
+4		1.34778125
+5		1.91675
+6		2.7285
+7		2.43525
+10		2.6697083333
+11		1.816875
+12		1.4875
+13		1.2
+28      1.2
+-->
+
+0	0
+9	4.081808185
+13	4.014067482
+17	3.5098648
+21	2.778183483
+28 1.5
+30 1
+40 0.00001
+
+				</SimulaTable>
+				<!-- SimulaStochastic  name="longitudinalGrowthRateMultiplier" unit="cm" distribution="normal" mean="1" stdev="0.1"  minimum="0.6" maximum="1.4" /-->
+				<SimulaConstant name="diameter"  unit="cm">
+				<!--marc2011 pouches: sem roots 0.6 mm thick-->
+				<!-- michaelis data 0.067 -->
+					 0.067  
+				</SimulaConstant>
+		</SimulaDirective>
+	<SimulaDirective path="nodalroots">
+		<SimulaTable name_column1="time since creation" unit_column1="day" name_column2="growthRate" unit_column2="cm/day">
+		<!--raul2006: mesocotylborn roots appear later - but sometimes overtake seminal roots in growth. However the length of these roots is very variable-->						
+			 0    0.01
+			 1    1
+			 2    2.4
+			 28   2.4
+		</SimulaTable>
+		<SimulaStochastic  name="longitudinalGrowthRateMultiplier" unit="cm" distribution="normal" mean="1" stdev="0.1"  minimum="0.6" maximum="1.2" />
+		<SimulaTable name_column1="time since creation" unit_column1="day" name_column2="diameter"  unit_column2="cm" type="double">
+		<!--greenfingerdata-->
+			 0 0.1
+			 10 0.08
+			 100 0.08   
+		</SimulaTable>
+	</SimulaDirective>
+	<SimulaDirective path="lateral">
+		<SimulaTable name_column1="time since creation" unit_column1="day" name_column2="growthRate" unit_column2="cm/day">
+		<!-- mark faget's pouches do not have lateral roots -->
+		<!-- Michaela ernst scans these are mostly quite short about 1-3 cm in a couple of days, with some long ones 4-8 after 10 days.   
+		
+		
+			 0 0.01
+			 2 0.2
+			 6 0.2 
+			 10 0.0
+			 20 0.
+			 1000 0.0
+			 -->
+			 
+         0 0.01
+			2 0.2
+			6 0.2 
+			10 0.0
+			20 0.
+		   1000 0.0
+
+		</SimulaTable>
+		<SimulaStochastic  name="longitudinalGrowthRateMultiplier" unit="cm" distribution="lognormal"  mean="1.0" stdev="1.0" minimum="0.1" maximum="10."  /> 				
+		<SimulaConstant name="diameter"  unit="cm">
+		<!--michaela: laterals 0.23 mm-->
+			 0.023 
+		</SimulaConstant>
+	</SimulaDirective>
+	<SimulaDirective path="finelateral">
+		<SimulaTable name_column1="time since creation" unit_column1="day" name_column2="growthRate" unit_column2="cm/day">
+				<!--these stay very short, couple of mm-->						
+			 0 0.01
+			 1 0.1
+			 6 0.0 
+			 1000 0.0
+		</SimulaTable>
+		<SimulaStochastic  name="longitudinalGrowthRateMultiplier" unit="cm" distribution="lognormal"  mean="1" stdev="0.3" minimum="0.2" maximum="2.0"  /> 				
+		<SimulaConstant name="diameter"  unit="cm">
+			 <!--michaela data about 0.160 mm -->
+			 0.0160
+		</SimulaConstant>
+	</SimulaDirective>
+</SimulationModelIncludeFile>			
+

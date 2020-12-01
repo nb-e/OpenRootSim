@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SimulationModelIncludeFile>
+	<SimulaDirective path="resources">
+		<SimulaBase name="potassium">
+			<!--this represents the nutrients in the seed -->
+			<SimulaConstant name="initialNutrientUptake" unit="uMol"> 100</SimulaConstant>
+		</SimulaBase>
+	</SimulaDirective>
+	<SimulaDirective path="shoot">
+		<SimulaBase name="potassium">
+			<SimulaConstant name="leafOptimalNutrientConcentration" unit="uMol/g"> 430</SimulaConstant>
+			<SimulaConstant name="leafMinimalNutrientConcentration" unit="uMol/g"> 273</SimulaConstant>
+			<SimulaConstant name="stemOptimalNutrientConcentration" unit="uMol/g"> 430</SimulaConstant>
+			<SimulaConstant name="stemMinimalNutrientConcentration" unit="uMol/g"> 273</SimulaConstant>
+		</SimulaBase>
+	</SimulaDirective>
+	<SimulaDirective path="hypocotyl">
+		<SimulaBase name="potassium">
+			<SimulaConstant name="optimalNutrientConcentration" unit="uMol/g"> 234</SimulaConstant>
+			<SimulaConstant name="minimalNutrientConcentration" unit="uMol/g"> 168</SimulaConstant>
+			<SimulaConstant name="Imax" unit="uMol/cm2/day"> 0.467</SimulaConstant>
+			<SimulaConstant name="Km" unit="uMol/ml"> 3.9e-2</SimulaConstant>
+			<SimulaConstant name="Efflux" unit="uMol/cm/day"> 1e-6</SimulaConstant>
+			<SimulaConstant name="Cmin" unit="uMol/ml"> 2e-3</SimulaConstant>
+		</SimulaBase>
+	</SimulaDirective>
+	<SimulaDirective path="primaryRoot">
+		<SimulaBase name="potassium">
+			<SimulaConstant name="optimalNutrientConcentration" unit="uMol/g"> 234</SimulaConstant>
+			<SimulaConstant name="minimalNutrientConcentration" unit="uMol/g"> 168</SimulaConstant>
+			<SimulaConstant name="Imax" unit="uMol/cm2/day">0.467</SimulaConstant>
+			<SimulaConstant name="Km" unit="uMol/ml"> 3.9e-2</SimulaConstant>
+			<SimulaConstant name="Efflux" unit="uMol/cm/day"> 1e-6</SimulaConstant>
+			<SimulaConstant name="Cmin" unit="uMol/ml"> 2e-3</SimulaConstant>
+		</SimulaBase>
+	</SimulaDirective>
+	<SimulaDirective path="hypocotylBornRoots">
+		<SimulaBase name="potassium">
+			<SimulaConstant name="optimalNutrientConcentration" unit="uMol/g"> 234</SimulaConstant>
+			<SimulaConstant name="minimalNutrientConcentration" unit="uMol/g"> 168</SimulaConstant>
+			<SimulaConstant name="Imax" unit="uMol/cm2/day"> 0.467</SimulaConstant>
+			<SimulaConstant name="Km" unit="uMol/ml"> 3.9e-2</SimulaConstant>
+			<SimulaConstant name="Efflux" unit="uMol/cm/day"> 1e-6</SimulaConstant>
+			<SimulaConstant name="Cmin" unit="uMol/ml"> 2e-3</SimulaConstant>
+		</SimulaBase>
+	</SimulaDirective>
+	<SimulaDirective path="lateralPrimaryRoot">
+		<SimulaBase name="potassium">
+			<SimulaConstant name="optimalNutrientConcentration" unit="uMol/g"> 234</SimulaConstant>
+			<SimulaConstant name="minimalNutrientConcentration" unit="uMol/g"> 168</SimulaConstant>
+			<SimulaConstant name="Imax" unit="uMol/cm2/day"> 0.467</SimulaConstant>
+			<SimulaConstant name="Km" unit="uMol/ml"> 3.9e-2</SimulaConstant>
+			<SimulaConstant name="Efflux" unit="uMol/cm/day"> 1e-6</SimulaConstant>
+			<SimulaConstant name="Cmin" unit="uMol/ml"> 2e-3</SimulaConstant>
+		</SimulaBase>
+	</SimulaDirective>
+	<SimulaDirective path="lateralPrimaryRootFastGrowing">
+		<SimulaBase name="potassium">
+			<SimulaConstant name="optimalNutrientConcentration" unit="uMol/g"> 234</SimulaConstant>
+			<SimulaConstant name="minimalNutrientConcentration" unit="uMol/g"> 168</SimulaConstant>
+			<SimulaConstant name="Imax" unit="uMol/cm2/day"> 0.467</SimulaConstant>
+			<SimulaConstant name="Km" unit="uMol/ml"> 3.9e-2</SimulaConstant>
+			<SimulaConstant name="Efflux" unit="uMol/cm/day"> 1e-6</SimulaConstant>
+			<SimulaConstant name="Cmin" unit="uMol/ml"> 2e-3</SimulaConstant>
+		</SimulaBase>
+	</SimulaDirective>
+	<SimulaDirective path="lateralHypocotylBornRoots">
+		<SimulaBase name="potassium">
+			<SimulaConstant name="optimalNutrientConcentration" unit="uMol/g"> 234</SimulaConstant>
+			<SimulaConstant name="minimalNutrientConcentration" unit="uMol/g"> 168</SimulaConstant>
+			<SimulaConstant name="Imax" unit="uMol/cm2/day"> 0.467</SimulaConstant>
+			<SimulaConstant name="Km" unit="uMol/ml"> 3.9e-2</SimulaConstant>
+			<SimulaConstant name="Efflux" unit="uMol/cm/day"> 1e-6</SimulaConstant>
+			<SimulaConstant name="Cmin" unit="uMol/ml"> 2e-3</SimulaConstant>
+		</SimulaBase>
+	</SimulaDirective>
+	<SimulaDirective path="finelateral">
+		<SimulaBase name="potassium">
+			<SimulaConstant name="optimalNutrientConcentration" unit="uMol/g"> 234</SimulaConstant>
+			<SimulaConstant name="minimalNutrientConcentration" unit="uMol/g"> 168</SimulaConstant>
+			<SimulaConstant name="Imax" unit="uMol/cm2/day"> 0.467</SimulaConstant>
+			<SimulaConstant name="Km" unit="uMol/ml"> 3.9e-2</SimulaConstant>
+			<SimulaConstant name="Efflux" unit="uMol/cm/day"> 1e-6</SimulaConstant>
+			<SimulaConstant name="Cmin" unit="uMol/ml"> 2e-3</SimulaConstant>
+		</SimulaBase>
+	</SimulaDirective>
+	<SimulaDirective path="finelateralFastGrowing">
+		<SimulaBase name="potassium">
+			<SimulaConstant name="optimalNutrientConcentration" unit="uMol/g"> 234</SimulaConstant>
+			<SimulaConstant name="minimalNutrientConcentration" unit="uMol/g"> 168</SimulaConstant>
+			<SimulaConstant name="Imax" unit="uMol/cm2/day"> 0.467</SimulaConstant>
+			<SimulaConstant name="Km" unit="uMol/ml"> 3.9e-2</SimulaConstant>
+			<SimulaConstant name="Efflux" unit="uMol/cm/day"> 1e-6</SimulaConstant>
+			<SimulaConstant name="Cmin" unit="uMol/ml"> 2e-3</SimulaConstant>
+		</SimulaBase>
+	</SimulaDirective>
+</SimulationModelIncludeFile>

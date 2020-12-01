@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--?xml-stylesheet type="text/xsl" href="tree-view2.xsl"? -->
+<!--
+Copyright © 2016, The Pennsylvania State University
+All rights reserved.
+
+Copyright © 2016 Forschungszentrum Jülich GmbH
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, are permitted under the GNU General Public License v3 and provided that the following conditions are met:
+1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+
+Disclaimer
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+You should have received the GNU GENERAL PUBLIC LICENSE v3 with this file in license.txt but can also be found at http://www.gnu.org/licenses/gpl-3.0.en.html
+
+ -->
+
+<!--
+fan et al 2003
+formation of RCA in bean up to 20%
+-->
+<SimulationModelIncludeFile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../scripts/XML/SimulaXMLSchema.xsd">
+	<SimulaDirective path="shoot">
+		<SimulaConstant
+			name="aerenchymaPhotosynthesisMitigation"
+			unit="100%">
+			0.5 <!--0 is no effect, 1 is full effect-->
+		</SimulaConstant>
+	</SimulaDirective>
+	<SimulaDirective path="hypocotyl">
+		<SimulaTable
+			name_column1="time since creation"
+			unit_column1="day"
+			name_column2="aerenchymaFormation"
+			unit_column2="100%"> 0 0.0 100 0.0
+		</SimulaTable>
+		<SimulaTable
+			name_column1="aerenchymaFormation"
+			unit_column1="100%"
+			name_column2="reductionInRespirationDueToAerenchyma"
+			unit_column2="100%"> 0.0 0.0 0.30 0.70 0.60 1.
+		</SimulaTable>
+	</SimulaDirective>
+	<SimulaDirective path="primaryRoot">
+		<SimulaTable
+			name_column1="time since creation"
+			unit_column1="day"
+			name_column2="aerenchymaFormation"
+			unit_column2="100%"> 0 0.0 3 0.0 5 0.05 10 0.10 20 0.268 1000 0.268
+		</SimulaTable>
+		<SimulaTable
+			name_column1="aerenchymaFormation"
+			unit_column1="100%"
+			name_column2="reductionInRespirationDueToAerenchyma"
+			unit_column2="100%"> 0.0 0.0 0.30 0.70 0.60 1.
+		</SimulaTable>
+	</SimulaDirective>
+	<SimulaDirective path="basalWhorl1">
+		<SimulaTable
+			name_column1="time since creation"
+			unit_column1="day"
+			name_column2="aerenchymaFormation"
+			unit_column2="100%"> 0 0.0 3 0.0 5 0.05 10 0.10 20 0.268 1000 0.268
+		</SimulaTable>
+		<SimulaTable
+			name_column1="aerenchymaFormation"
+			unit_column1="100%"
+			name_column2="reductionInRespirationDueToAerenchyma"
+			unit_column2="100%"> 0.0 0.0 0.30 0.70 0.60 1.
+		</SimulaTable>
+	</SimulaDirective>
+	<SimulaDirective path="basalWhorl2">
+		<SimulaTable
+			name_column1="time since creation"
+			unit_column1="day"
+			name_column2="aerenchymaFormation"
+			unit_column2="100%"> 0 0.0 3 0.0 5 0.05 10 0.10 20 0.268 1000 0.268
+		</SimulaTable>
+		<SimulaTable
+			name_column1="aerenchymaFormation"
+			unit_column1="100%"
+			name_column2="reductionInRespirationDueToAerenchyma"
+			unit_column2="100%"> 0.0 0.0 0.30 0.70 0.60 1.
+		</SimulaTable>
+	</SimulaDirective>
+	<SimulaDirective path="basalWhorl3">
+		<SimulaTable
+			name_column1="time since creation"
+			unit_column1="day"
+			name_column2="aerenchymaFormation"
+			unit_column2="100%"> 0 0.0 3 0.0 5 0.05 10 0.10 20 0.268 1000 0.268
+		</SimulaTable>
+		<SimulaTable
+			name_column1="aerenchymaFormation"
+			unit_column1="100%"
+			name_column2="reductionInRespirationDueToAerenchyma"
+			unit_column2="100%"> 0.0 0.0 0.30 0.70 0.60 1.
+		</SimulaTable>
+	</SimulaDirective>
+	<SimulaDirective path="hypocotylBornRoots">
+		<SimulaTable
+			name_column1="time since creation"
+			unit_column1="day"
+			name_column2="aerenchymaFormation"
+			unit_column2="100%"> 0 0.0 3 0.0 5 0.05 10 0.10 20 0.268 1000 0.268
+		</SimulaTable>
+		<SimulaTable
+			name_column1="aerenchymaFormation"
+			unit_column1="100%"
+			name_column2="reductionInRespirationDueToAerenchyma"
+			unit_column2="100%"> 0.0 0.0 0.30 0.70 0.60 1.
+		</SimulaTable>
+	</SimulaDirective>
+	<SimulaDirective path="lateralPrimaryRoot">
+		<SimulaTable
+			name_column1="time since creation"
+			unit_column1="day"
+			name_column2="aerenchymaFormation"
+			unit_column2="100%"> 0 0.0 3 0.0 5 0.05 10 0.10 20 0.268 1000 0.268
+		</SimulaTable>
+		<SimulaTable
+			name_column1="aerenchymaFormation"
+			unit_column1="100%"
+			name_column2="reductionInRespirationDueToAerenchyma"
+			unit_column2="100%"> 0.0 0.0 0.30 0.70 0.60 1.
+		</SimulaTable>
+	</SimulaDirective>
+	<SimulaDirective path="lateralPrimaryRootFastGrowing">
+		<SimulaTable
+			name_column1="time since creation"
+			unit_column1="day"
+			name_column2="aerenchymaFormation"
+			unit_column2="100%"> 0 0.0 3 0.0 5 0.05 10 0.10 20 0.268 1000 0.268
+		</SimulaTable>
+		<SimulaTable
+			name_column1="aerenchymaFormation"
+			unit_column1="100%"
+			name_column2="reductionInRespirationDueToAerenchyma"
+			unit_column2="100%"> 0.0 0.0 0.30 0.70 0.60 1.
+		</SimulaTable>
+	</SimulaDirective>
+	<SimulaDirective path="lateralBasalRoots">
+		<SimulaTable
+			name_column1="time since creation"
+			unit_column1="day"
+			name_column2="aerenchymaFormation"
+			unit_column2="100%"> 0 0.0 3 0.0 5 0.05 10 0.10 20 0.268 1000 0.268
+		</SimulaTable>
+		<SimulaTable
+			name_column1="aerenchymaFormation"
+			unit_column1="100%"
+			name_column2="reductionInRespirationDueToAerenchyma"
+			unit_column2="100%"> 0.0 0.0 0.30 0.70 0.60 1.
+		</SimulaTable>
+	</SimulaDirective>
+	<SimulaDirective path="lateralHypocotylBornRoots">
+		<SimulaTable
+			name_column1="time since creation"
+			unit_column1="day"
+			name_column2="aerenchymaFormation"
+			unit_column2="100%"> 0 0.0 3 0.0 5 0.05 10 0.10 20 0.268 1000 0.268
+		</SimulaTable>
+		<SimulaTable
+			name_column1="aerenchymaFormation"
+			unit_column1="100%"
+			name_column2="reductionInRespirationDueToAerenchyma"
+			unit_column2="100%"> 0.0 0.0 0.30 0.70 0.60 1.
+		</SimulaTable>
+	</SimulaDirective>
+	<SimulaDirective path="finelateral">
+		<SimulaTable
+			name_column1="time since creation"
+			unit_column1="day"
+			name_column2="aerenchymaFormation"
+			unit_column2="100%"> 0 0.0 3 0.0 5 0.05 10 0.10 20 0.268 1000 0.268
+		</SimulaTable>
+		<SimulaTable
+			name_column1="aerenchymaFormation"
+			unit_column1="100%"
+			name_column2="reductionInRespirationDueToAerenchyma"
+			unit_column2="100%"> 0.0 0.0 0.30 0.70 0.60 1.
+		</SimulaTable>
+	</SimulaDirective>
+	<SimulaDirective path="finelateralFastGrowing">
+		<SimulaTable
+			name_column1="time since creation"
+			unit_column1="day"
+			name_column2="aerenchymaFormation"
+			unit_column2="100%"> 0 0.0 3 0.0 5 0.05 10 0.10 20 0.268 1000 0.268
+		</SimulaTable>
+		<SimulaTable
+			name_column1="aerenchymaFormation"
+			unit_column1="100%"
+			name_column2="reductionInRespirationDueToAerenchyma"
+			unit_column2="100%"> 0.0 0.0 0.30 0.70 0.60 1.
+		</SimulaTable>
+	</SimulaDirective>
+</SimulationModelIncludeFile>

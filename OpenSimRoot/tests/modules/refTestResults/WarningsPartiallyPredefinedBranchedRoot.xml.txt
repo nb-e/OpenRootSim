@@ -1,0 +1,3 @@
+THE MODEL PUT OUT WARNINGS:
+At 14 days mem usage was 23 mB.	1x
+OpenSimRoot was build on Mar 22 2019 from git version a87967cb674eb434cb4b5a7b98885a91217db3f9	1x

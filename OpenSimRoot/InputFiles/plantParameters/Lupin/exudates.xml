@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SimulationModelIncludeFile>
+	<SimulaDirective path="hypocotyl">
+		<SimulaTable name_column1="time since creation" unit_column1="day" name_column2="relativeCarbonCostOfExudation"
+			unit_column2="g/cm/day"
+		> 0 0.00001915 1.8 0.00001511 3.1 0.00001699 4.4 0.00001362 100 0.00001362 </SimulaTable>
+	</SimulaDirective>
+	<SimulaDirective path="primaryRoot">
+		<SimulaTable name_column1="time since creation" unit_column1="day" name_column2="relativeCarbonCostOfExudation"
+			unit_column2="g/cm/day"
+		> 0 0.00001915 1.8 0.00001511 3.1 0.00001699 4.4 0.00001362 100 0.00001362</SimulaTable>
+	</SimulaDirective>
+	<SimulaDirective path="lateralPrimaryRoot">
+		<SimulaTable name_column1="time since creation" unit_column1="day" name_column2="relativeCarbonCostOfExudation"
+			unit_column2="g/cm/day"
+		> 0 0.00001915 1.8 0.00001511 3.1 0.00001699 4.4 0.00001362 100 0.00001362</SimulaTable>
+	</SimulaDirective>
+	<SimulaDirective path="finelateral">
+		<SimulaTable name_column1="time since creation" unit_column1="day" name_column2="relativeCarbonCostOfExudation"
+			unit_column2="g/cm/day"
+		> 0 0.00001915 1.8 0.00001511 3.1 0.00001699 4.4 0.00001362 100 0.00001362</SimulaTable>
+	</SimulaDirective>
+</SimulationModelIncludeFile>

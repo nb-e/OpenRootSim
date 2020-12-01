@@ -1,0 +1,49 @@
+<!--SimRoot parameter file-->
+<SimulationModelIncludeFile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../scripts/XML/SimulaXMLSchema.xsd">
+<!--environmental parameters start here. -->
+	<SimulaDirective path="environment/soil">
+
+		<SimulaBase name="organic">
+			<!--mineralisation using simple empirical model from yang 1994 (wageningen, phd)
+			  Yang HS, Janssen BH. 2000. A mono-component model of carbon mineralization with a dynamic rate constant. European Journal of Soil Science 51: 517-529.
+			  see also yang's phd thesis
+			-->
+	   <SimulaTable name_column1="depth" name_column2="carbonContent" unit_column1="cm" unit_column2="g/g">
+	   <!--note that this is a mineralizable pool-->
+	   <!--this is in 100% base on weight --> 
+	     0 0.0
+	     -200 0.00
+	   </SimulaTable>
+	   <SimulaTable name_column1="depth" name_column2="CNratio" unit_column1="cm" unit_column2="g/g">
+	   <!-- this is the N content (g) of a gram of organic matter --> 
+	     0 13
+	     -10000 13
+	   </SimulaTable>
+	   <SimulaConstant name="speedOfAging"> 
+	   <!--Speed of aging in yangs model, see publication for more examples, Green manure=0.64,Straw=0.66,Roots=0.67,FYM=0.49,SOM=0.46-->
+	   <!-- this is a unit less exponent in yangs model where K, the relative mineralisation rate is: K = r * t^(-s)-->
+	   <!-- 0 for no ageing effects (linear), than the initial relative mineralization rate becomes a constant relative mineralisation rate -->
+	      0.46
+	   </SimulaConstant>
+	   <SimulaTable name_column1="depth" unit_column1="cm" name_column2="initialRelativeMineralisationRate" unit_column2="g/g/year">
+	   <!--The initial relative mineralisation rate in (YEAR**(SOA-1)). Green manure=1.39,Straw=1.11,Roots=0.80,FYM=0.82,SOM=0.057 (0.037 estimate for experimental farm 'vredepeel' based on potential mineralisation measurements)-->
+	     0 0.0
+	     -100  0 
+	   </SimulaTable>
+	   <SimulaConstant name="assimilationEfficiencyMicrobes">
+	   <!--ratio between respiration and assimilation by microbes eff.=assimilation/respiration --> 
+	     1.0
+	   </SimulaConstant>
+	   <SimulaConstant name="CNRatioMicrobes" unit="g/g">
+	   <!-- C / N ratio of the living microbial biomass, 10 for fungi, 5 for bacteria --> 
+	       10 
+	   </SimulaConstant>
+	   <SimulaConstant name="timeOffset" unit="day">
+	       30 
+	   </SimulaConstant>
+		</SimulaBase>
+
+
+	</SimulaDirective>
+</SimulationModelIncludeFile>
+	

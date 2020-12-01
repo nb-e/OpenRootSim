@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Shoot P concentrations for lupin (Dunbabin, e-mail 14 jul 2010):
+
+P(%) deficient <0.15, marginal 0.2, critical 0.22-0.33
+P (g/kg), deficient <1.5, marginal 2.0, critical 2.2-3.3
+P (umol/g), deficient <48, marginal 65, critical 71-107
+
+Dunbabin is working with the values of 3.3 g P/kg =  107
+
+Dunbabin:
+ImaxP = 7.1e-8 umol/cm.s, Km = 0.005 umol/cm3 = 0.05 umol/ml
+
+length/surf.area = 3.43 (3.8 voor dar 85)
+
+Imax P = 7.1e-8 umol/cm/s = 0.000613 umol/cm/d = 0.0210 uMol/cm2/day
+
+
+-->
+<SimulationModelIncludeFile>
+	<SimulaDirective path="resources">
+		<SimulaBase name="phosphorus">
+			<!--this represents the nutrients in the seed , should be enough for the first 10 days ~ 100-200 uMol/g -->
+			<SimulaConstant name="initialNutrientUptake" unit="uMol"> 14 </SimulaConstant>
+		</SimulaBase>
+	</SimulaDirective>
+	<SimulaDirective path="shoot">
+		<SimulaBase name="phosphorus">
+			<SimulaConstant name="leafOptimalNutrientConcentration" unit="uMol/g"> 80</SimulaConstant>
+			<SimulaConstant name="leafMinimalNutrientConcentration" unit="uMol/g"> 48</SimulaConstant>
+			<SimulaConstant name="stemOptimalNutrientConcentration" unit="uMol/g"> 80</SimulaConstant>
+			<SimulaConstant name="stemMinimalNutrientConcentration" unit="uMol/g"> 48</SimulaConstant>
+		</SimulaBase>
+	</SimulaDirective>
+	<SimulaDirective path="hypocotyl">
+		<SimulaBase name="phosphorus">
+			<SimulaConstant name="optimalNutrientConcentration" unit="uMol/g"> 60</SimulaConstant>
+			<SimulaConstant name="minimalNutrientConcentration" unit="uMol/g"> 30</SimulaConstant>
+			<SimulaConstant name="Imax" unit="uMol/cm2/day"> 0.0508</SimulaConstant>
+			<SimulaConstant name="Km" unit="uMol/ml"> 0.005</SimulaConstant>
+			
+			<SimulaConstant name="Cmin" unit="uMol/ml"> 0.2e-3</SimulaConstant>
+		</SimulaBase>
+	</SimulaDirective>
+	<SimulaDirective path="primaryRoot">
+		<SimulaBase name="phosphorus">
+			<SimulaConstant name="optimalNutrientConcentration" unit="uMol/g"> 60</SimulaConstant>
+			<SimulaConstant name="minimalNutrientConcentration" unit="uMol/g"> 30</SimulaConstant>
+			<SimulaConstant name="Imax" unit="uMol/cm2/day">0.0508</SimulaConstant>
+			<SimulaConstant name="Km" unit="uMol/ml"> 0.005</SimulaConstant>
+			
+			<SimulaConstant name="Cmin" unit="uMol/ml"> 0.2e-3</SimulaConstant>
+		</SimulaBase>
+	</SimulaDirective>
+	<SimulaDirective path="lateralPrimaryRoot">
+		<SimulaBase name="phosphorus">
+			<SimulaConstant name="optimalNutrientConcentration" unit="uMol/g"> 60</SimulaConstant>
+			<SimulaConstant name="minimalNutrientConcentration" unit="uMol/g"> 30</SimulaConstant>
+			<SimulaConstant name="Imax" unit="uMol/cm2/day"> 0.0508</SimulaConstant>
+			<SimulaConstant name="Km" unit="uMol/ml"> 0.005</SimulaConstant>
+			
+			<SimulaConstant name="Cmin" unit="uMol/ml"> 0.2e-3</SimulaConstant>
+		</SimulaBase>
+	</SimulaDirective>
+	<SimulaDirective path="finelateral">
+		<SimulaBase name="phosphorus">
+			<SimulaConstant name="optimalNutrientConcentration" unit="uMol/g"> 60</SimulaConstant>
+			<SimulaConstant name="minimalNutrientConcentration" unit="uMol/g"> 30</SimulaConstant>
+			<SimulaConstant name="Imax" unit="uMol/cm2/day"> 0.0508</SimulaConstant>
+			<SimulaConstant name="Km" unit="uMol/ml"> 0.005</SimulaConstant>
+			
+			<SimulaConstant name="Cmin" unit="uMol/ml"> 0.2e-3</SimulaConstant>
+		</SimulaBase>
+	</SimulaDirective>
+	</SimulationModelIncludeFile>

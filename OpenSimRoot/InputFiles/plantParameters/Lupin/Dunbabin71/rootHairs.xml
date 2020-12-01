@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright © 2016 Forschungszentrum Jülich GmbH
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, are permitted under the GNU General Public License v3 and provided that the following conditions are met:
+1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+
+Disclaimer
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+You should have received the GNU GENERAL PUBLIC LICENSE v3 with this file in license.txt but can also be found at http://www.gnu.org/licenses/gpl-3.0.en.html
+
+ -->
+<?xml-stylesheet type="text/xsl" href="XML/treeview.xsl"?>
+<SimulationModelIncludeFile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../scripts/XML/SimulaXMLSchema.xsd">
+<!--
+data from dunbabin on root hairs:
+Below is the root hair info that Yinglong measured.  I don’t think we have an idea of hairiness of different root classes by age.  The measurements below were taken on 6-day old seedlings.  We saw a big variation in hairiness in the genotypes grown in nutrient solution, but this didn’t seem to be dominated by genotype or root classes, but more by local growth conditions.  Maybe you could check the root images Yinglong and see if you can pick out any patterns in where and when the root hairs grew?
+ 
+gt=Genotype
+rhd=Root hair density (per cm root length)
+rhdst=Root hair density (per cm) Std. Error
+rhda=Root hair density (per cm2 root area)
+rhl=Root hair length (mm)
+rhlst=Root hair length Std. Error
+
+gt		rhd		rhdst	rhda		rhl		rhlst
+#004	37.6	5.96	1413.3	0.349	0.045
+#044	67.9	10.56	4606.8	0.222	0.010
+#071	62.3	14.49	3886.8	0.168	0.017
+#085	54.3	11.84	2953.7	0.159	0.010
+ 
+
+-->
+		<SimulaDirective path="hypocotyl">
+				<SimulaTable name_column1="time since creation" unit_column1="day" name_column2="rootHairLength" unit_column2="cm">
+					 0 0
+					 100 0
+				</SimulaTable>
+				<SimulaConstant  name="rootHairDiameter" unit="cm">5e-4</SimulaConstant>
+				<SimulaTable name_column1="time since creation" unit_column1="day" name_column2="rootHairDensity" unit_column2="#/cm2">
+					 0 0
+					 100 0
+				</SimulaTable>
+		</SimulaDirective>
+		<SimulaDirective path="primaryRoot">
+				<SimulaTable name_column1="time since creation" unit_column1="day" name_column2="rootHairLength" unit_column2="cm">
+					 0 0
+					 1 0
+					 2 0.0168
+					 100 0.0168
+				</SimulaTable>
+				<SimulaConstant  name="rootHairDiameter" unit="cm">5e-4</SimulaConstant>
+				<SimulaTable name_column1="time since creation" unit_column1="day" name_column2="rootHairDensity" unit_column2="#/cm2">
+					 0 3886
+					 10 3886
+					 30 3886
+					 100 3886
+				</SimulaTable>
+	</SimulaDirective>
+	<SimulaDirective path="lateralPrimaryRoot">
+				<SimulaTable name_column1="time since creation" unit_column1="day" name_column2="rootHairLength" unit_column2="cm">
+					 0 0
+					 1 0
+					 2 0.0168
+					 100 0.0168
+				</SimulaTable>
+				<SimulaConstant  name="rootHairDiameter" unit="cm">5e-4</SimulaConstant>
+				<SimulaTable name_column1="time since creation" unit_column1="day" name_column2="rootHairDensity" unit_column2="#/cm2">
+					 0 3886
+					 10 3886
+					 30 3886
+					 100 3886
+				</SimulaTable>
+	</SimulaDirective>
+	<SimulaDirective path="finelateral">
+				<SimulaTable name_column1="time since creation" unit_column1="day" name_column2="rootHairLength" unit_column2="cm">
+					 0 0
+					 1 0
+					 2 0.0168
+					 100 0.0168
+				</SimulaTable>
+				<SimulaConstant  name="rootHairDiameter" unit="cm">5e-4</SimulaConstant>
+				<SimulaTable name_column1="time since creation" unit_column1="day" name_column2="rootHairDensity" unit_column2="#/cm2">
+					 0 3886
+					 100 3886
+				</SimulaTable>
+	</SimulaDirective>
+</SimulationModelIncludeFile>			
+

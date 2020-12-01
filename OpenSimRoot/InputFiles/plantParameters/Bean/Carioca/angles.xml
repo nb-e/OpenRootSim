@@ -1,0 +1,579 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--?xml-stylesheet type="text/xsl" href="tree-view2.xsl"? -->
+<!--
+Copyright © 2016, The Pennsylvania State University
+All rights reserved.
+
+Copyright © 2016 Forschungszentrum Jülich GmbH
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, are permitted under the GNU General Public License v3 and provided that the following conditions are met:
+1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+
+Disclaimer
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+You should have received the GNU GENERAL PUBLIC LICENSE v3 with this file in license.txt but can also be found at http://www.gnu.org/licenses/gpl-3.0.en.html
+
+ -->
+
+<SimulationModelIncludeFile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../scripts/XML/SimulaXMLSchema.xsd">
+	<SimulaDirective path="hypocotyl">
+		<SimulaConstant
+			name="numberOfXylemPoles"
+			type="integer">
+			4 
+			 <!--4-->
+		</SimulaConstant>
+		<SimulaStochastic
+			name="soilImpedence.v2"
+			unit="cm"
+			type="coordinate"
+			distribution="uniform"
+			minimum="-0.01"
+			maximum="0.01" />
+		<SimulaStochastic
+			name="gravitropism.v2"
+			unit="cm"
+			type="coordinate"
+			distribution="uniform"
+			minimum="0.5"
+			maximum="0.6" />
+	</SimulaDirective>
+	<SimulaDirective path="primaryRoot">
+		<SimulaConstant
+			name="branchingAngle"
+			unit="degrees">
+			<!--this is the lateral branching angle, may also be given in radians-->
+			<!--primary roots grow down. original file reads on line 79: 0-->
+			0
+		</SimulaConstant>
+		<SimulaConstant
+			name="numberOfXylemPoles"
+			type="integer">
+		<!-- this not well defined in the original model. It seems that model allowed to specify the number of xylem poles of the parent for each root type. That would result in a parent root that has different number of xylem poles speficied for different branches. That is not possible.-->
+		<!-- original file line 92 and 106: 8 and 6.  for 2 whorls of basal roots -->
+		<!-- original file line 24: 4.  for lateral roots -->
+			16
+		</SimulaConstant>
+		<!--SimulaConstant name="regularTopology" type="integer">
+		this has no meaning since this root does not branch of any other root
+			 0 
+		</SimulaConstant-->
+		<SimulaConstant name="soilImpedence">
+			<!--this is a weight for the random direction vector which represents soil impedence.--> 
+			 <!-- original file line 32: reads 0.3. Note that the effect of this factor is timestep dependent in the old and current version of the model. This has to be fixed. The listed value is probably based on hourly data!!!-->
+			0.01
+		</SimulaConstant>
+		<SimulaConstant name="gravitropism">
+			<!--this is a weight for the gravitropism vector.--> 
+			<!-- note: this is timestep dependent currently. listed value should be for an hourly timestep-->
+			<!-- original file line 31: 0.1 -->
+			0.011
+		</SimulaConstant>
+		<SimulaStochastic
+			name="soilImpedence.v2"
+			unit="cm"
+			type="coordinate"
+			distribution="uniform"
+			minimum="-0.05"
+			maximum="0.05" />
+		<SimulaStochastic
+			name="gravitropism.v2"
+			unit="cm"
+			type="coordinate"
+			distribution="uniform"
+			minimum="-0.015"
+			maximum="-0.005" />
+	</SimulaDirective>
+	<!--PARAMETERS FOR BASAL ROOTS OF WHORL 1-->
+	<SimulaDirective path="basalWhorl1">
+		<SimulaConstant
+			name="branchingAngle"
+			unit="degrees">
+		<!--orignal file line 91 and 105 : 90-->
+			90
+		</SimulaConstant>
+		<SimulaConstant
+			name="numberOfXylemPoles"
+			type="integer">
+		<!-- original file line 48: 4.-->
+			4
+		</SimulaConstant>
+		<SimulaConstant
+			name="regularTopology"
+			type="integer">
+		<!--this 0 for random topology or >0 for regular topology
+			if >0 then the value indicates the shift from the previous branching position
+			i.e. if previous branch is at position 1 then next branch is at position 1+this constant. 
+			the numberOfXylemPoles indicates the number of positions-->
+		<!-- original file line 86 and 100: 1 -->
+			0
+		</SimulaConstant>
+		<SimulaConstant name="soilImpedence">
+			<!--this is a weight for the random direction vector which represents soil impedence.--> 
+			<!-- original file line 55: 0.1 note: based on hourly timestep -->
+			0.008
+		</SimulaConstant>
+		<SimulaConstant name="gravitropism">
+			<!--this is a weight for the gravitropism vector.--> 
+			<!-- original file line 54: 0.08 . based on hourly timestep-->
+			0.002
+		</SimulaConstant>
+		<SimulaStochastic
+			name="soilImpedence.v2"
+			unit="cm"
+			type="coordinate"
+			distribution="uniform"
+			minimum="-0.04"
+			maximum="0.04" />
+		<SimulaStochastic
+			name="gravitropism.v2"
+			unit="cm"
+			type="coordinate"
+			distribution="uniform"
+			minimum="-0.08"
+			maximum="-0.04" />
+	</SimulaDirective>
+	<!--PARAMETERS FOR BASAL ROOTS WHORL2-->
+	<SimulaDirective path="basalWhorl2">
+		<SimulaConstant
+			name="branchingAngle"
+			unit="degrees">
+		<!--orignal file line 91 and 105 : 90-->
+			90
+		</SimulaConstant>
+		<SimulaConstant
+			name="numberOfXylemPoles"
+			type="integer">
+		<!-- original file line 48: 4.-->
+			4
+		</SimulaConstant>
+		<SimulaConstant
+			name="regularTopology"
+			type="integer">
+		<!--this 0 for random topology or >0 for regular topology
+			if >0 then the value indicates the shift from the previous branching position
+			i.e. if previous branch is at position 1 then next branch is at position 1+this constant. 
+			the numberOfXylemPoles indicates the number of positions-->
+		<!-- original file line 86 and 100: 1 -->
+			0
+		</SimulaConstant>
+		<SimulaConstant name="soilImpedence">
+			<!--this is a weight for the random direction vector which represents soil impedence.--> 
+			<!-- original file line 55: 0.1 note: based on hourly timestep -->
+			0.008
+		</SimulaConstant>
+		<SimulaConstant name="gravitropism">
+			<!--this is a weight for the gravitropism vector.--> 
+			<!-- original file line 54: 0.08 . based on hourly timestep-->
+			0.001
+		</SimulaConstant>
+		<SimulaStochastic
+			name="soilImpedence.v2"
+			unit="cm"
+			type="coordinate"
+			distribution="uniform"
+			minimum="-0.04"
+			maximum="0.04" />
+		<SimulaStochastic
+			name="gravitropism.v2"
+			unit="cm"
+			type="coordinate"
+			distribution="uniform"
+			minimum="-0.04"
+			maximum="-0.02" />
+	</SimulaDirective>
+	<SimulaDirective path="basalWhorl3">
+		<SimulaConstant
+			name="branchingAngle"
+			unit="degrees">
+		<!--orignal file line 91 and 105 : 90-->
+			90
+		</SimulaConstant>
+		<SimulaConstant
+			name="numberOfXylemPoles"
+			type="integer">
+		<!-- original file line 48: 4.-->
+			4
+		</SimulaConstant>
+		<SimulaConstant
+			name="regularTopology"
+			type="integer">
+		<!--this 0 for random topology or >0 for regular topology
+			if >0 then the value indicates the shift from the previous branching position
+			i.e. if previous branch is at position 1 then next branch is at position 1+this constant. 
+			the numberOfXylemPoles indicates the number of positions-->
+		<!-- original file line 86 and 100: 1 -->
+			0
+		</SimulaConstant>
+		<SimulaConstant name="soilImpedence">
+			<!--this is a weight for the random direction vector which represents soil impedence.--> 
+			<!-- original file line 55: 0.1 note: based on hourly timestep -->
+			0.008
+		</SimulaConstant>
+		<SimulaConstant name="gravitropism">
+			<!--this is a weight for the gravitropism vector.--> 
+			<!-- original file line 54: 0.08 . based on hourly timestep-->
+			0.0005
+		</SimulaConstant>
+		<SimulaStochastic
+			name="soilImpedence.v2"
+			unit="cm"
+			type="coordinate"
+			distribution="uniform"
+			minimum="-0.04"
+			maximum="0.04" />
+		<SimulaStochastic
+			name="gravitropism.v2"
+			unit="cm"
+			type="coordinate"
+			distribution="uniform"
+			minimum="-0.02"
+			maximum="-0.01" />
+	</SimulaDirective>
+	<SimulaDirective path="hypocotylBornRoots">
+		<SimulaConstant
+			name="branchingAngle"
+			unit="degrees">
+		<!--orignal file line 91 and 105 : 90-->
+			85
+		</SimulaConstant>
+		<SimulaConstant
+			name="numberOfXylemPoles"
+			type="integer">
+		<!-- original file line 48: 4.-->
+			4
+		</SimulaConstant>
+		<SimulaConstant
+			name="regularTopology"
+			type="integer">
+		<!--this 0 for random topology or >0 for regular topology
+			if >0 then the value indicates the shift from the previous branching position
+			i.e. if previous branch is at position 1 then next branch is at position 1+this constant. 
+			the numberOfXylemPoles indicates the number of positions-->
+		<!-- original file line 86 and 100: 1 -->
+			0
+		</SimulaConstant>
+		<SimulaConstant name="soilImpedence">
+			<!--this is a weight for the random direction vector which represents soil impedence.--> 
+			<!-- original file line 55: 0.1 note: based on hourly timestep -->
+			0.003
+		</SimulaConstant>
+		<SimulaConstant name="gravitropism">
+			<!--this is a weight for the gravitropism vector.--> 
+			<!-- original file line 54: 0.08 . based on hourly timestep-->
+			0.00
+		</SimulaConstant>
+		<SimulaStochastic
+			name="soilImpedence.v2"
+			unit="cm"
+			type="coordinate"
+			distribution="uniform"
+			minimum="-0.04"
+			maximum="0.04" />
+		<SimulaStochastic
+			name="gravitropism.v2"
+			unit="cm"
+			type="coordinate"
+			distribution="uniform"
+			minimum="-0.002"
+			maximum="0.00" />
+	</SimulaDirective>
+	<SimulaDirective path="lateralPrimaryRoot">
+		<SimulaConstant
+			name="branchingAngle"
+			unit="degrees">
+		<!-- original file line 23 and 47: 75 -->
+			75
+		</SimulaConstant>
+		<SimulaConstant
+			name="numberOfXylemPoles"
+			type="integer">
+		<!-- undefined in original file since there are no branches going off lateral roots -->
+			4
+		</SimulaConstant>
+		<SimulaConstant
+			name="regularTopology"
+			type="integer">
+		<!-- original file line 18 and 42: 0 -->
+			0
+		</SimulaConstant>
+		<SimulaConstant
+			name="topologyOffset"
+			type="integer">
+		<!--///@todo this is really just a bool-->
+		<!--optional if true and regularTopology>0 then regular topology is a positional offset since last branch (causes roots to swirl around the parent)-->
+		<!--default false-->
+		<!-- original file line 18 and 42: 0 -->
+			0
+		</SimulaConstant>
+		<SimulaConstant name="soilImpedence">
+			<!--this is a weight for the random direction vector which represents soil impedence.--> 
+			<!-- original file line 65: 0.1 based on hourly timestep-->
+			0.02
+		</SimulaConstant>
+		<SimulaConstant name="gravitropism">
+			<!--this is a weight for the gravitropism vector.--> 
+			<!-- original file line 64: 0.025 based on hourly timestep-->
+			0.0
+		</SimulaConstant>
+		<SimulaStochastic
+			name="soilImpedence.v2"
+			unit="cm"
+			type="coordinate"
+			distribution="uniform"
+			minimum="-0.2"
+			maximum="0.2" />
+		<SimulaConstant
+			name="gravitropism.v2"
+			type="coordinate"> 0 0 0</SimulaConstant>
+	</SimulaDirective>
+	<SimulaDirective path="lateralPrimaryRootFastGrowing">
+		<SimulaConstant
+			name="branchingAngle"
+			unit="degrees">
+		<!-- original file line 23 and 47: 75 -->
+			75
+		</SimulaConstant>
+		<SimulaConstant
+			name="numberOfXylemPoles"
+			type="integer">
+		<!-- undefined in original file since there are no branches going off lateral roots -->
+			4
+		</SimulaConstant>
+		<SimulaConstant
+			name="regularTopology"
+			type="integer">
+		<!-- original file line 18 and 42: 0 -->
+			0
+		</SimulaConstant>
+		<SimulaConstant
+			name="topologyOffset"
+			type="integer">
+		<!--///@todo this is really just a bool-->
+		<!--optional if true and regularTopology>0 then regular topology is a positional offset since last branch (causes roots to swirl around the parent)-->
+		<!--default false-->
+		<!-- original file line 18 and 42: 0 -->
+			0
+		</SimulaConstant>
+		<SimulaConstant name="soilImpedence">
+			<!--this is a weight for the random direction vector which represents soil impedence.--> 
+			<!-- original file line 65: 0.1 based on hourly timestep-->
+			0.02
+		</SimulaConstant>
+		<SimulaConstant name="gravitropism">
+			<!--this is a weight for the gravitropism vector.--> 
+			<!-- original file line 64: 0.025 based on hourly timestep-->
+			0.0
+		</SimulaConstant>
+		<SimulaStochastic
+			name="soilImpedence.v2"
+			unit="cm"
+			type="coordinate"
+			distribution="uniform"
+			minimum="-0.1"
+			maximum="0.1" />
+		<SimulaConstant
+			name="gravitropism.v2"
+			type="coordinate"> 0 0 0</SimulaConstant>
+	</SimulaDirective>
+	<SimulaDirective path="lateralBasalRoots">
+		<SimulaConstant
+			name="branchingAngle"
+			unit="degrees">
+		<!-- original file line 23 and 47: 75 -->
+			75
+		</SimulaConstant>
+		<SimulaConstant
+			name="numberOfXylemPoles"
+			type="integer">
+		<!-- undefined in original file since there are no branches going off lateral roots -->
+			4
+		</SimulaConstant>
+		<SimulaConstant
+			name="regularTopology"
+			type="integer">
+		<!-- original file line 18 and 42: 0 -->
+			0
+		</SimulaConstant>
+		<SimulaConstant
+			name="topologyOffset"
+			type="integer">
+		<!--///@todo this is really just a bool-->
+		<!--optional if true and regularTopology>0 then regular topology is a positional offset since last branch (causes roots to swirl around the parent)-->
+		<!--default false-->
+		<!-- original file line 18 and 42: 0 -->
+			0
+		</SimulaConstant>
+		<SimulaConstant name="soilImpedence">
+			<!--this is a weight for the random direction vector which represents soil impedence.--> 
+			<!-- original file line 65: 0.1 based on hourly timestep-->
+			0.02
+		</SimulaConstant>
+		<SimulaConstant name="gravitropism">
+			<!--this is a weight for the gravitropism vector.--> 
+			<!-- original file line 64: 0.025 based on hourly timestep-->
+			0.0
+		</SimulaConstant>
+		<SimulaStochastic
+			name="soilImpedence.v2"
+			unit="cm"
+			type="coordinate"
+			distribution="uniform"
+			minimum="-0.1"
+			maximum="0.1" />
+		<SimulaConstant
+			name="gravitropism.v2"
+			type="coordinate"> 0 0 0</SimulaConstant>
+	</SimulaDirective>
+	<SimulaDirective path="lateralHypocotylBornRoots">
+		<SimulaConstant
+			name="branchingAngle"
+			unit="degrees">
+		<!-- original file line 23 and 47: 75 -->
+			75
+		</SimulaConstant>
+		<SimulaConstant
+			name="numberOfXylemPoles"
+			type="integer">
+		<!-- undefined in original file since there are no branches going off lateral roots -->
+			4
+		</SimulaConstant>
+		<SimulaConstant
+			name="regularTopology"
+			type="integer">
+		<!-- original file line 18 and 42: 0 -->
+			0
+		</SimulaConstant>
+		<SimulaConstant
+			name="topologyOffset"
+			type="integer">
+		<!--///@todo this is really just a bool-->
+		<!--optional if true and regularTopology>0 then regular topology is a positional offset since last branch (causes roots to swirl around the parent)-->
+		<!--default false-->
+		<!-- original file line 18 and 42: 0 -->
+			0
+		</SimulaConstant>
+		<SimulaConstant name="soilImpedence">
+			<!--this is a weight for the random direction vector which represents soil impedence.--> 
+			<!-- original file line 65: 0.1 based on hourly timestep-->
+			0.015
+		</SimulaConstant>
+		<SimulaConstant name="gravitropism">
+			<!--this is a weight for the gravitropism vector.--> 
+			<!-- original file line 64: 0.025 based on hourly timestep-->
+			0.0
+		</SimulaConstant>
+		<SimulaStochastic
+			name="soilImpedence.v2"
+			unit="cm"
+			type="coordinate"
+			distribution="uniform"
+			minimum="-0.1"
+			maximum="0.1" />
+		<SimulaConstant
+			name="gravitropism.v2"
+			type="coordinate"> 0 0 0</SimulaConstant>
+	</SimulaDirective>
+	<SimulaDirective path="finelateral">
+		<SimulaConstant
+			name="branchingAngle"
+			unit="degrees">
+		<!-- original file line 23 and 47: 75 -->
+			75
+		</SimulaConstant>
+		<SimulaConstant
+			name="numberOfXylemPoles"
+			type="integer">
+		<!-- undefined in original file since there are no branches going off lateral roots -->
+			4
+		</SimulaConstant>
+		<SimulaConstant
+			name="regularTopology"
+			type="integer">
+		<!-- original file line 18 and 42: 0 -->
+			0
+		</SimulaConstant>
+		<SimulaConstant
+			name="topologyOffset"
+			type="integer">
+		<!--///@todo this is really just a bool-->
+		<!--optional if true and regularTopology>0 then regular topology is a positional offset since last branch (causes roots to swirl around the parent)-->
+		<!--default false-->
+		<!-- original file line 18 and 42: 0 -->
+			0
+		</SimulaConstant>
+		<SimulaConstant name="soilImpedence">
+			<!--this is a weight for the random direction vector which represents soil impedence.--> 
+			<!-- original file line 65: 0.1 based on hourly timestep-->
+			0.5
+		</SimulaConstant>
+		<SimulaConstant name="gravitropism">
+			<!--this is a weight for the gravitropism vector.--> 
+			<!-- original file line 64: 0.025 based on hourly timestep-->
+			0.000
+		</SimulaConstant>
+		<SimulaStochastic
+			name="soilImpedence.v2"
+			unit="cm"
+			type="coordinate"
+			distribution="uniform"
+			minimum="-0.1"
+			maximum="0.1" />
+		<SimulaConstant
+			name="gravitropism.v2"
+			type="coordinate"> 0 0 0</SimulaConstant>
+	</SimulaDirective>
+	<SimulaDirective path="finelateralFastGrowing">
+		<SimulaConstant
+			name="branchingAngle"
+			unit="degrees">
+		<!-- original file line 23 and 47: 75 -->
+			75
+		</SimulaConstant>
+		<SimulaConstant
+			name="numberOfXylemPoles"
+			type="integer">
+		<!-- undefined in original file since there are no branches going off lateral roots -->
+			4
+		</SimulaConstant>
+		<SimulaConstant
+			name="regularTopology"
+			type="integer">
+		<!-- original file line 18 and 42: 0 -->
+			0
+		</SimulaConstant>
+		<SimulaConstant
+			name="topologyOffset"
+			type="integer">
+		<!--///@todo this is really just a bool-->
+		<!--optional if true and regularTopology>0 then regular topology is a positional offset since last branch (causes roots to swirl around the parent)-->
+		<!--default false-->
+		<!-- original file line 18 and 42: 0 -->
+			0
+		</SimulaConstant>
+		<SimulaConstant name="soilImpedence">
+			<!--this is a weight for the random direction vector which represents soil impedence.--> 
+			<!-- original file line 65: 0.1 based on hourly timestep-->
+			0.5
+		</SimulaConstant>
+		<SimulaConstant name="gravitropism">
+			<!--this is a weight for the gravitropism vector.--> 
+			<!-- original file line 64: 0.025 based on hourly timestep-->
+			0.000
+		</SimulaConstant>
+		<SimulaStochastic
+			name="soilImpedence.v2"
+			unit="cm"
+			type="coordinate"
+			distribution="uniform"
+			minimum="-0.1"
+			maximum="0.1" />
+		<SimulaConstant
+			name="gravitropism.v2"
+			type="coordinate"> 0 0 0</SimulaConstant>
+	</SimulaDirective>
+</SimulationModelIncludeFile>

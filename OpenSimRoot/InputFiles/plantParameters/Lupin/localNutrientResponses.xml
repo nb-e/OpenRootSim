@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- contains parameters for how the root growth should respond to local nutrient concentrations -->
+<SimulationModelIncludeFile>
+	
+	<SimulaDirective path="defaults">
+	<SimulaBase name="localResourceResponses">
+		<SimulaBase name="impactOn:rootPotentialLongitudinalGrowth">
+			<SimulaConstant name="aggregationFunction" type="string">maxRelativeDeviationFromOne
+			</SimulaConstant>
+			<SimulaTable name_column2="impactBy:phosphorus" name_column1="localConcentration">-1 0.2 0 0.2 15e-3 1.0 1000 1</SimulaTable>
+			<SimulaTable name_column2="impactBy:potassium" name_column1="localConcentration">-1 1 0 1 1000 1</SimulaTable>
+			<SimulaTable name_column2="impactBy:nitrate" name_column1="localConcentration">
+			<!-- according to zhang et al  1999 (PNAS) 50 uM increases lateral root growth arabidopsis 1.5x, 100 uM by 2x and 1000uM 2.5 x 10000um 3x 
+			rest of root system had 10 uM but zhang claims there is onlz inhibition if the shoot has high N-->
+				-1 1.5 0 1.5 50 1.5 100 1 2000 1
+			</SimulaTable>
+		</SimulaBase>
+		<SimulaBase name="impactOn:gravitropism">
+			<SimulaConstant name="aggregationFunction" type="string">maxRelativeDeviationFromOne
+			</SimulaConstant>
+			<SimulaTable name_column2="impactBy:phosphorus" name_column1="localConcentration">-1 1 1000 1</SimulaTable>
+			<SimulaTable name_column2="impactBy:potassium" name_column1="localConcentration"> -1 1 1000 1</SimulaTable>
+			<SimulaTable name_column2="impactBy:nitrate" name_column1="localConcentration">	-10 1 0 1 2000 1</SimulaTable>
+		</SimulaBase>
+		<SimulaBase name="impactOn:branchingFrequency">
+		<!-- fine laterals -->
+			<SimulaConstant name="aggregationFunction" type="string">maxRelativeDeviationFromOne
+			</SimulaConstant>
+			<SimulaTable name_column2="impactBy:phosphorus" name_column1="localConcentration">-1 0.5 0 0.5 15e-3 1 1000 1</SimulaTable>
+			<SimulaTable name_column2="impactBy:potassium" name_column1="localConcentration"> -1 1 1000 1  </SimulaTable>
+			<SimulaTable name_column2="impactBy:nitrate" name_column1="localConcentration">   -10 1 0 1 2000 1	</SimulaTable>
+		</SimulaBase>
+		<!-- SimulaBase name="impactOn:soilImpedence">
+			<SimulaConstant name="aggregationFunction" type="string">maxRelativeDeviationFromOne
+			</SimulaConstant>
+			<SimulaTable name_column2="impactBy:bulkDensity" name_column1="bulkDensity" unit_column1="g/cm3" unit_column2="100%">
+				0 0 1 0 3 200
+			</SimulaTable>
+			<SimulaTable name_column2="impactBy:phosphorus" name_column1="localConcentration">0 10 14e-3 10 15e-3 0.5 1000 0.5</SimulaTable>
+			<SimulaTable name_column2="impactBy:potassium" name_column1="localConcentration">0 1 1000 1</SimulaTable>
+			<SimulaTable name_column2="impactBy:nitrate" name_column1="localConcentration">
+				0 1 100 1 2000 1
+			</SimulaTable>
+		</SimulaBase-->
+	</SimulaBase>
+	</SimulaDirective>
+
+	<!-- SimulaDirective path="defaultsMajorAxis">
+	<SimulaBase name="localResourceResponses">
+		<SimulaBase name="impactOn:rootPotentialLongitudinalGrowth">
+			<SimulaConstant name="aggregationFunction" type="string">maxRelativeDeviationFromOne
+			</SimulaConstant>
+			<SimulaTable name_column2="impactBy:phosphorus" name_column1="localConcentration">0 0.2 15e-3 1 1000 1</SimulaTable>
+			<SimulaTable name_column2="impactBy:potassium" name_column1="localConcentration"> 0 1 1000 1</SimulaTable>
+			<SimulaTable name_column2="impactBy:nitrate" name_column1="localConcentration">
+				0 1 2000 1
+			</SimulaTable>
+		</SimulaBase>
+		<SimulaBase name="impactOn:gravitropism">
+			<SimulaConstant name="aggregationFunction" type="string">maxRelativeDeviationFromOne
+			</SimulaConstant>
+			<SimulaTable name_column2="impactBy:phosphorus" name_column1="localConcentration">0 0.5 15e-3 2. 1000 0.5</SimulaTable>
+			<SimulaTable name_column2="impactBy:potassium" name_column1="localConcentration"> 0 1 1000 1</SimulaTable>
+			<SimulaTable name_column2="impactBy:nitrate" name_column1="localConcentration">
+				0 1.5 100 1 2000 1
+			</SimulaTable>
+		</SimulaBase>
+		<SimulaBase name="impactOn:branchingFrequency">
+			<SimulaConstant name="aggregationFunction" type="string">maxRelativeDeviationFromOne
+			</SimulaConstant>
+			<SimulaTable name_column2="impactBy:phosphorus" name_column1="localConcentration">0 0.2 15e-3 1. 1000 1.</SimulaTable>
+			<SimulaTable name_column2="impactBy:potassium" name_column1="localConcentration"> 0 1 1000 1</SimulaTable>
+			<SimulaTable name_column2="impactBy:nitrate" name_column1="localConcentration">	0 1 2000 1
+			</SimulaTable>
+		</SimulaBase>
+	</SimulaBase>
+	
+	</SimulaDirective-->
+	
+	<SimulaDirective path="hypocotyl">
+	<SimulaBase name="localResourceResponses">
+		<SimulaBase name="impactOn:rootPotentialLongitudinalGrowth">
+			<SimulaConstant name="aggregationFunction" type="string">maxRelativeDeviationFromOne
+			</SimulaConstant>
+			<SimulaTable name_column2="impactBy:phosphorus" name_column1="localConcentration">-1 1 1000 1</SimulaTable>
+			<SimulaTable name_column2="impactBy:potassium" name_column1="localConcentration"> -1 1 1000 1</SimulaTable>
+			<SimulaTable name_column2="impactBy:nitrate" name_column1="localConcentration">   -10 1 0 1 10000 1</SimulaTable>
+		</SimulaBase>
+		<SimulaBase name="impactOn:gravitropism">
+			<SimulaConstant name="aggregationFunction" type="string">maxRelativeDeviationFromOne
+			</SimulaConstant>
+			<SimulaTable name_column2="impactBy:phosphorus" name_column1="localConcentration">-1 1 1000 1</SimulaTable>
+			<SimulaTable name_column2="impactBy:potassium" name_column1="localConcentration"> -1 1 1000 1</SimulaTable>
+			<SimulaTable name_column2="impactBy:nitrate" name_column1="localConcentration">	-10 1 0 1 10000 1</SimulaTable>
+		</SimulaBase>
+		<SimulaBase name="impactOn:branchingFrequency">
+		<!-- fine laterals -->
+			<SimulaConstant name="aggregationFunction" type="string">maxRelativeDeviationFromOne
+			</SimulaConstant>
+			<SimulaTable name_column2="impactBy:phosphorus" name_column1="localConcentration">-1 1 1000 1</SimulaTable>
+			<SimulaTable name_column2="impactBy:potassium" name_column1="localConcentration"> -1 1 1000 1  </SimulaTable>
+			<SimulaTable name_column2="impactBy:nitrate" name_column1="localConcentration">   -10 1 0 1 10000 1	</SimulaTable>
+		</SimulaBase>
+		<!-- SimulaBase name="impactOn:soilImpedence">
+			<SimulaConstant name="aggregationFunction" type="string">maxRelativeDeviationFromOne
+			</SimulaConstant>
+			<SimulaTable name_column2="impactBy:bulkDensity" name_column1="bulkDensity" unit_column1="g/cm3" unit_column2="100%">
+				0 0 1 0 3 200
+			</SimulaTable>
+			<SimulaTable name_column2="impactBy:phosphorus" name_column1="localConcentration">0 10 14e-3 10 15e-3 0.5 1000 0.5</SimulaTable>
+			<SimulaTable name_column2="impactBy:potassium" name_column1="localConcentration">0 1 1000 1</SimulaTable>
+			<SimulaTable name_column2="impactBy:nitrate" name_column1="localConcentration">
+				0 1 100 1 2000 1
+			</SimulaTable>
+		</SimulaBase-->
+	</SimulaBase>
+	</SimulaDirective>
+
+
+</SimulationModelIncludeFile>

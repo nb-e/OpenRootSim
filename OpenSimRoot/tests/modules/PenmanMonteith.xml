@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--?xml-stylesheet type="text/xsl" href="tree-view2.xsl"? -->
+<!-- Copyright © 2016 Forschungszentrum Jülich GmbH All rights reserved. 
+	Redistribution and use in source and binary forms, with or without modification, 
+	are permitted under the GNU General Public License v3 and provided that the 
+	following conditions are met: 1. Redistributions of source code must retain 
+	the above copyright notice, this list of conditions and the following disclaimer. 
+	2. Redistributions in binary form must reproduce the above copyright notice, 
+	this list of conditions and the following disclaimer in the documentation 
+	and/or other materials provided with the distribution. 3. Neither the name 
+	of the copyright holder nor the names of its contributors may be used to 
+	endorse or promote products derived from this software without specific prior 
+	written permission. Disclaimer THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT 
+	HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, 
+	BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS 
+	FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT 
+	HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, 
+	EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT 
+	OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
+	INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, 
+	STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN 
+	ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY 
+	OF SUCH DAMAGE. You should have received the GNU GENERAL PUBLIC LICENSE v3 
+	with this file in license.txt but can also be found at http://www.gnu.org/licenses/gpl-3.0.en.html -->
+
+<!--This XML runs the pennman monteith model -->
+
+<SimulationModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../scripts/XML/SimulaXMLSchema.xsd">
+
+	<SimulaBase name="plants">
+		<SimulaTable name_column1="time" unit_column1="day"
+			name="meanLeafAreaIndex" unit="cm2/cm2">
+			0 0.
+			10 5.
+			20 5.
+			30 0.
+		</SimulaTable>
+		<SimulaConstant name="meanExtinctionCoefficient" unit="noUnit">
+			0.6
+		</SimulaConstant>
+		<SimulaDerivative name="stomatalResistance" unit="s/m"
+			function="stomatalResistance" />
+	</SimulaBase>
+
+	<SimulaBase name="atmosphere">
+		<SimulaDerivative name="airPressure" unit="Pa"
+			function="airPressure" />
+		<SimulaDerivative name="airDensity" unit="kg/m3"
+			function="airDensity" />
+		<SimulaDerivative name="specificHeatCapacityOfAir"
+			unit="J/kg/degreesC" function="specificHeatCapacityOfAir" />
+		<SimulaDerivative name="aerodynamicResistance" unit="s/m"
+			function="aerodynamicResistance" />
+		<SimulaDerivative name="actualVaporPressure" unit="hPa"
+			function="e_a" />
+		<SimulaDerivative name="saturatedVaporPressure" unit="hPa"
+			function="e_s" />
+		<SimulaDerivative name="slopeVaporPressure" unit="hPa/degreesC"
+			function="delta_e_s" />
+		<!-- if net radiation computed from latitude etc, otherwise use parameter 
+			section -->
+		<SimulaDerivative name="netRadiation" unit="MJ/m2/day" function="Radiation"	/> 
+		<SimulaDerivative name="netRadiationSoil" unit="MJ/m2/day" function="Radiation"	/>
+
+		<!-- the evapo transpiration split up -->
+		<SimulaDerivative name="potentialTranspiration" unit="cm/day"
+			function="monteithEQ">
+			<SimulaConstant name="mode" type="string"> <!-- evaporation, transpiration or evapotranspiration -->
+				transpiration
+			</SimulaConstant>
+		</SimulaDerivative>
+		<!-- todo evaporation and transpiration are in different units -->
+		<SimulaDerivative name="potentialEvaporation" unit="cm/day"
+			function="monteithEQ">
+			<SimulaConstant name="mode" type="string"> <!-- evaporation, transpiration or evapotranspiration -->
+				evaporation
+			</SimulaConstant>
+		</SimulaDerivative>
+
+		<SimulaDerivative name="interception" unit="cm/day"
+			function="Interception" />
+
+		<SimulaDerivative name="priestleyTaylor" unit="cm/day" function="PriestleyTaylor" 
+			/>
+		<SimulaDerivative name="stanghellini" unit="cm/day" function="Stanghellini" 
+			/>
+		<SimulaDerivative name="grassStandardReference" unit="cm/day" function="Grass_reference_evapotranspiration" 
+			/>
+		<SimulaDerivative name="tallStandardReference" unit="cm/day" function="Tall_reference_Crop" 
+			/>
+		<SimulaDerivative name="penmanEQ" unit="cm/day" function="penmanEQ" 
+			/>
+		<SimulaDerivative name="monteithEQ" unit="cm/day" function="monteithEQ" 
+			/>
+
+	</SimulaBase>
+
+
+	<SimulaBase name="environment">
+		<SimulaConstant name="startDay" unit="noUnit" type="integer"> 1
+		</SimulaConstant>
+		<SimulaConstant name="startMonth" unit="noUnit" type="integer"> 1
+		</SimulaConstant>
+		<SimulaBase name="atmosphere">
+			<SimulaTable name_column1="time" name_column2="irradiation"
+				unit_column1="day" unit_column2="umol/cm2/day">
+				0 3000
+				100 3000
+			</SimulaTable>
+			<SimulaTable name_column2="precipitation" name_column1="time"
+				unit_column1="day" unit_column2="cm/day" interpolationMethod="step">
+				0 0
+				1 0
+				2 0
+				3 0.056666667
+				4 0.26
+				5 0.053333333
+				6 0.203333333
+				7 0.046666667
+				8 0.19
+				9 0
+				10 0.19
+				11 0 
+				30 0
+			</SimulaTable>
+			<!-- for pennman monteith -->
+			<SimulaConstant name="netRadiationSoil" unit="W/m2">
+				150
+			</SimulaConstant>
+			<SimulaConstant name="netRadiation" unit="W/m2">
+				300
+			</SimulaConstant>
+			<SimulaConstant name="windSpeed" unit="m/s">
+				1.2
+			</SimulaConstant>
+			<SimulaConstant name="relativeHumidity" unit="m/s"> 65
+			</SimulaConstant>
+			<SimulaTable name_column2="averageDailyTemperature"
+				name_column1="time" unit_column1="day" unit_column2="degreesC"
+				interpolationMethod="linear">
+				0 5.4
+				1 5.8
+				2 6.5
+				3 7.3
+				4 8.4
+				5 10.9
+				6 7.4
+				7 9
+				8 5.8
+				9
+				5.4
+				10 5.9
+				30 30
+
+			</SimulaTable>
+
+			<!-- these are necessary to compute incoming radiation by the radiation 
+				module -->
+			<SimulaConstant name="albedoSoil" unit="noUnit">
+			 0.17
+			</SimulaConstant>
+			<SimulaConstant name="albedoCrop" unit="noUnit">
+			 0.23
+			</SimulaConstant>
+			<SimulaConstant name="altitude" unit="m">
+			 64
+			</SimulaConstant>
+			<SimulaConstant name="startDay" unit="noUnit" type="integer">
+			 25
+			</SimulaConstant>
+			<SimulaConstant name="startMonth" unit="noUnit" type="integer">
+				3
+			</SimulaConstant>
+			<SimulaConstant name="latitude" unit="noUnit">
+			 50.8
+			</SimulaConstant>
+			<SimulaTable name_column2="actualDurationofSunshine"
+				name_column1="time" unit_column1="day" unit_column2="hour"
+				interpolationMethod="step">
+				0 7.66
+				129 7.89
+			</SimulaTable>
+		</SimulaBase>
+	</SimulaBase>
+
+	<SimulaBase name="rootTypeParameters">
+	</SimulaBase>
+
+	<SimulaBase name="simulationControls">
+		<SimulaBase name="outputParameters">
+			<SimulaBase name="table">
+				<SimulaConstant name="run" type="bool"> 1 </SimulaConstant>
+				<SimulaConstant name="searchingDepth" type="integer">
+				 10
+				</SimulaConstant>
+				<SimulaConstant name="startTime" type="time">
+				 0.
+				</SimulaConstant>
+				<SimulaConstant name="endTime" type="time">
+				 30.
+				</SimulaConstant>
+				<SimulaConstant name="timeInterval" type="time">
+				 1.
+				</SimulaConstant>
+			</SimulaBase>
+		</SimulaBase>
+	</SimulaBase>
+
+
+
+
+</SimulationModel>
+
+
+
+

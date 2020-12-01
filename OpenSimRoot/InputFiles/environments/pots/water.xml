@@ -1,0 +1,54 @@
+<!--SimRoot parameter file-->
+<SimulationModelIncludeFile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../scripts/XML/SimulaXMLSchema.xsd">
+	<SimulaDirective path="environment/soil">
+		<SimulaBase name="water">
+			<SimulaTable
+				name_column2="initialHydraulicHead"
+				name_column1="depth"
+				unit_column1="cm"
+				unit_column2="cm"> 0 -30 -30 0
+			</SimulaTable>
+			<SimulaTable
+				name_column2="depthOfWaterTable"
+				name_column1="time"
+				unit_column1="day"
+				unit_column2="cm"> 0 -30 30 -30
+			</SimulaTable>
+			<SimulaTable
+				name_column2="residualWaterContent"
+				name_column1="depth"
+				unit_column1="cm"
+				unit_column2="100%"> 0 0.07 -300 0.07
+			</SimulaTable>
+			<SimulaTable
+				name_column2="saturatedWaterContent"
+				name_column1="depth"
+				unit_column1="cm"
+				unit_column2="100%"
+				interpolationMethod="linear"> 0 0.30 -100 0.30
+			</SimulaTable>
+			<SimulaTable
+				name_column2="vanGenuchten:alpha"
+				name_column1="depth"
+				unit_column1="cm"
+				unit_column2="1/cm"> 0 0.03 -300 0.03
+			</SimulaTable>
+			<SimulaTable
+				name_column2="vanGenuchten:n"
+				name_column1="depth"
+				unit_column1="cm"
+				unit_column2="noUnit"> 0 2. -300 2.
+			</SimulaTable>
+			<SimulaTable
+				name_column2="saturatedConductivity"
+				name_column1="depth"
+				unit_column1="cm"
+				unit_column2="cm/day"
+				interpolationMethod="linear"> 0 40 -300 40
+			</SimulaTable>
+			<SimulaConstant
+				name="volumetricWaterContentInBarberCushman"
+				unit="cm3/cm3">0.102</SimulaConstant>
+		</SimulaBase>
+	</SimulaDirective>
+</SimulationModelIncludeFile>

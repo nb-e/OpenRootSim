@@ -1,0 +1,21 @@
+<!--SimRoot parameter file-->
+<SimulationModelIncludeFile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../scripts/XML/SimulaXMLSchema.xsd">
+	<SimulaDirective path="environment">
+		<SimulaBase name="atmosphere">
+			<SimulaConstant name="irradiation"  unit="uMol/cm2/day"> 
+					2944
+			</SimulaConstant>
+			<SimulaConstant name="PAR/RDD"  unit="100%" >
+					1. 
+			</SimulaConstant>
+			<SimulaTable name_column2="precipitation" name_column1="time" unit_column1="day" unit_column2="cm/day"> 
+				0 0. 80 0.
+			</SimulaTable>
+			<SimulaTable name_column2="evaporation" name_column1="time" unit_column1="day" unit_column2="cm/day" interpolationMethod="step">
+				0 0. 100 0.
+			</SimulaTable>
+		</SimulaBase>
+	</SimulaDirective>
+</SimulationModelIncludeFile>
+
+		

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--?xml-stylesheet type="text/xsl" href="tree-view2.xsl"? -->
+<!--
+Copyright © 2016, The Pennsylvania State University
+All rights reserved.
+
+Copyright © 2016 Forschungszentrum Jülich GmbH
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, are permitted under the GNU General Public License v3 and provided that the following conditions are met:
+1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+
+Disclaimer
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+You should have received the GNU GENERAL PUBLIC LICENSE v3 with this file in license.txt but can also be found at http://www.gnu.org/licenses/gpl-3.0.en.html
+
+ -->
+	<!-- Respiration parameters for maize	-->
+	<!--
+		raul2006: average 0.055 g/g/day. Measured: 0.072 ppm/s/20cm root = 0.0036 ppm/s/cm root * 3600*24 s/day = 311
+		ppm/day/cm root * 1.983 ug/l/ppm * 0.18 l = 55.0 ug/day/cm root / 1100 ug/cm = 0.050 g/g/day Conversion factors: 10e-6
+		for ppm->fraction ( 1.983 ppm -> g CO2 /l 0.180 liter / sample 3600*24 s -> day measure rootdensity 0.0011 g/cm root
+		(This may be wrong - since sample probably included laterals)
+	-->
+	<!--value may also be given in g/cm/day -->
+	<!--
+		RAUL 2005 HP only (low p not much different): nodal (adv) avg 21.97 range 11.16-37.99 seminal Avg 21.66 range
+		13.616-32.47 tap avg 22.35 range 12.86-31.87 nMol CO2 /s/g which converts to g/g/day by 12*24*60*60/1e9 = 0.001037
+	-->
+	<!--
+		total root resp at 28 days (raul2007) 2-5 uMol/s = 2.07 g/day - 5.184 g/day I doubt if the container size if taken
+		into account in these measurements photosynthesis in same measurements is only 0.5 uMol/s
+	-->
+	<!--
+		root respiration 28 day old bean publised nielsen et al 2001 ranges from 3-16 uMol/g/day or 0.000036-0.000192 g/g/day
+	-->
+	<!--
+		put in double the respiration for the first day- so tips have higher respiration and than flattend it out - this is
+		just a preliminary guess - we need some data on this
+	-->
+	<!--
+		Fan 2003 paper: seminal apical sections had 3 times more respiration than middle or basal sections. Sections were 2 cm
+		long respiration varied from 0.2-0.3 uMol O2/cm3/min for middle and basal and 0.6-0.7 for apical(lower resp for older
+		plants) ages and low P treatments. convertion factor= 1 C/02 * 12 C g/mol * 60*24 min/day / 0.11 g/cm3 / 1e6=
+		0.1570909 so fan calculated 0.03-0.045 g/g/day and for apical 0.09 g/g/day
+		
+		not sure if cm3 here really is the root volume, it may just be file volume
+		
+		the whole root  respiration measurements of fan are more like 14.4-28.8 umol/g/day = 0.17-0.32 g/g/day
+	-->
+	<!--
+		whole root respiration maize fan 2003 paper (HP): 13-18 uMol CO2/min/g root = 0.225-0.311 g C/g/day we see in fan -
+		nielsen and raul's data this large difference in resp when calc based on root segment of total root system either root
+		segment does not take uptake and growth respiration into account - or whole root respiration with the open top
+		chambers measures microbial activity?
+	-->
+	<!--
+	Gniazdowska, A., Mikulska, M. & Rychter, A., 1998. Growth, nitrate uptake and respiration rate in bean roots under phosphate deficiency. Biologia Plantarum, 41(2), 217-226.
+	30 nM/g/s = 0.031 g/g/day and higher in younger plants, but lower in P deficient plants
+	-->
+<SimulationModelIncludeFile
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="../../../../scripts/XML/SimulaXMLSchema.xsd">
+	<SimulaDirective path="shoot">
+		<SimulaConstant
+			name="relativeRespirationRateLeafs"
+			unit="g/g/day">
+			<!-- relative respiration may be in g/g/day (based on shoot drymatter) or g/cm2/day (based on leaf area) -->
+			<!--
+			Nogues, S. et al., 2004. Respiratory Carbon Metabolism following Illumination in Intact French Bean Leaves Using 13C/12C Isotope Labeling. Plant Physiol., 136(2), 3245-3254.
+			bean 1 umol/m2/s =  0.0415 g/g/day  
+			-->
+			0.04
+		</SimulaConstant>
+		<SimulaConstant
+			name="relativeRespirationRateStems"
+			unit="g/g/day">
+			<!-- relative respiration may be in g/g/day (based on shoot drymatter) or g/cm2/day (based on leaf area) -->
+			<!-- assumed to be much less than leaf respiration-->
+			0.02
+		</SimulaConstant>
+	</SimulaDirective>
+	<SimulaDirective path="hypocotyl">
+		<SimulaTable
+			name_column1="time since creation"
+			unit_column1="day"
+			name_column2="relativeRespiration"
+			unit_column2="g/g/day"> 0 0.09 2 0.04 6 0.04 1000 0.04</SimulaTable>
+	</SimulaDirective>
+	<SimulaDirective path="primaryRoot">
+		<SimulaTable
+			name_column1="time since creation"
+			unit_column1="day"
+			name_column2="relativeRespiration"
+			unit_column2="g/g/day"> 0 0.09 2 0.04 6 0.04 1000 0.04</SimulaTable>
+	</SimulaDirective>
+	<SimulaDirective path="hypocotylBornRoots">
+		<SimulaTable
+			name_column1="time since creation"
+			unit_column1="day"
+			name_column2="relativeRespiration"
+			unit_column2="g/g/day"> 0 0.09 2 0.04 6 0.04 1000 0.04</SimulaTable>
+	</SimulaDirective>
+	<SimulaDirective path="lateralPrimaryRoot">
+		<SimulaTable
+			name_column1="time since creation"
+			unit_column1="day"
+			name_column2="relativeRespiration"
+			unit_column2="g/g/day"> 0 0.09 2 0.04 6 0.04 1000 0.04</SimulaTable>
+	</SimulaDirective>
+	<SimulaDirective path="lateralPrimaryRootFastGrowing">
+		<SimulaTable
+			name_column1="time since creation"
+			unit_column1="day"
+			name_column2="relativeRespiration"
+			unit_column2="g/g/day"> 0 0.09 2 0.04 6 0.04 1000 0.04</SimulaTable>
+	</SimulaDirective>
+	<SimulaDirective path="lateralHypocotylBornRoots">
+		<SimulaTable
+			name_column1="time since creation"
+			unit_column1="day"
+			name_column2="relativeRespiration"
+			unit_column2="g/g/day"> 0 0.09 2 0.04 6 0.04 1000 0.04</SimulaTable>
+	</SimulaDirective>
+	<SimulaDirective path="finelateral">
+		<SimulaTable
+			name_column1="time since creation"
+			unit_column1="day"
+			name_column2="relativeRespiration"
+			unit_column2="g/g/day"> 0 0.09 2 0.04 6 0.04 1000 0.04</SimulaTable>
+	</SimulaDirective>
+	<SimulaDirective path="finelateralFastGrowing">
+		<SimulaTable
+			name_column1="time since creation"
+			unit_column1="day"
+			name_column2="relativeRespiration"
+			unit_column2="g/g/day"> 0 0.09 2 0.04 6 0.04 1000 0.04</SimulaTable>
+	</SimulaDirective>
+</SimulationModelIncludeFile>

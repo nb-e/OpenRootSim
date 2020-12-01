@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--?xml-stylesheet type="text/xsl" href="tree-view2.xsl"? -->
+<!--
+Copyright © 2016, The Pennsylvania State University
+All rights reserved.
+
+Copyright © 2016 Forschungszentrum Jülich GmbH
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, are permitted under the GNU General Public License v3 and provided that the following conditions are met:
+1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+
+Disclaimer
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+You should have received the GNU GENERAL PUBLIC LICENSE v3 with this file in license.txt but can also be found at http://www.gnu.org/licenses/gpl-3.0.en.html
+
+ -->
+	<!-- Potassium parameters for bean	-->
+	<!--
+	Shea et al 1968 : common bean 
+	table 3: genetic variation (these numbers may be low, since the plant was deficient)
+	shoot: 0.72-1.25 % = 
+	root: 0.43-0.62%
+	Table 1:
+	shoot @ 1ppm K in solution: 0.67-0.97 %
+	shoot @ 10ppm K in solution: 1.08-1.50 % (non deficient)
+	shoot @ 200ppm K in solution: 4.68-5.81 % (extreme high - inducing Mg deficiency)
+	
+	1%= 10 mg/g = 391 umol/g
+	shoot 1.1%= 430 umol/g
+	root 0.6% = 234 umol/g
+	-->
+	<!--
+	Leigh RA, Jones RGW. 1984. A Hypothesis Relating Critical Potassium Concentrations for Growth to the Distribution and Functions of this Ion in the Plant Cell. New Phytologist 97: 1-13.
+	
+	critical concentrations
+	maize 1.3% = 508 umol/g
+	other crops, depending om mg, na nutrition 0.5-2.8
+	
+	-->
+<!--
+Jordan-Meille L, Pellerin S. 2004. Leaf area establishment of a maize (Zea Mays L.) field crop under potassium deficiency. Plant and Soil 265: 75-92.
+field grown maize and potassium:
+
+shoot potassium drops from 100 t0 20 mM which converts more or less to 
+900 umoles/g to 180 umoles/g
+
+-->
+	
+	<!--
+	Silk WK, Hsiao TC, Diedenhofen U, Matson C. 1986. Spatial Distributions of Potassium, Solutes, and Their Deposition Rates in the Growth Zone of the Primary Corn Root. Plant Physiol. 82: 853-858.
+	
+	primary root of maize in 0 K environment: tip 117 uMole/g but after 1.2 cm it's only 48 uMole/g, mostly linear decline during that time 
+	
+	-->
+	<!--
+	Kochian and lucas 1982: Rubidium in maize: 
+	The saturable components yielded Km values of 16 and 86 micromolar for low- and high-salt roots, 
+	respectively, while Vmax values were 5.62 and 1.85 moles per gram fresh weight per hour
+	-->
+	<!-- Vale et al 1988: Maize: table 2: 
+	Imax: 4.2-5.8 umol/g/hour
+	Km: 4.1-39.2 umol (depending on the presence of NH4, in which case Km is higher.
+	-->
+	<!--Claasen et al 1986: maize (table 3, soil 4-9)
+	Imax 10-6 umol/cm2/s 4.8,5.4, 9.8 (depending on soil type) use 5.4e-6 = 0.467 umol/cm2/day
+	Km  umol/cm3: 3.9e-2 
+	cmin umol/cm3 2e-3
+	
+	-->
+	<!-- barber book:
+K applied			0 mg/kg	0 mg/kg	500 mg/kg	500 mg/kg
+temperature		15 C		29 C		15 C		9 C
+=====================================================
+Cli	mmol/l		0.04234	0.0900	6.22340	8.1000
+b							39			23			1.2			1.2
+De 10e7cm2/s	0.15		0.39		5				7.5
+Imax nmol/m/s	56			112			56			112
+Km	uM/l			14			28			14			28
+Cmin	umol/l	1.6			0.89		1.6			0.89
+L0		cm			1684168		1684168		22234		22234
+K		10e6s			1.29		2.38		1.46		2.49
+r0	cm				0.021		0.018		0.026		0.023
+v0 10e6cm3/cm2 0.7		1.2			0.76		1.3
+	-->
+
+<!--THIS NEEDS MORE WORK ON THE KINETIC PARAMETERS-->
+
+	<!--Imax 6.43 nmol/m2/s=55.55 10-3 umol/cm2/day-->
+
+
+	<!--Imax 6.43 nmol/m2/s=55.55 10-3 umol/cm2/day-->
+<SimulationModelIncludeFile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../scripts/XML/SimulaXMLSchema.xsd">
+	<SimulaDirective path="resources">
+		<SimulaBase name="potassium">
+			<SimulaConstant
+				name="initialNutrientUptake"
+				unit="uMol"> 27</SimulaConstant>
+		</SimulaBase>
+	</SimulaDirective>
+	<SimulaDirective path="shoot">
+		<SimulaBase name="potassium">
+			<SimulaConstant
+				name="leafOptimalNutrientConcentration"
+				unit="uMol/g"> 508</SimulaConstant>
+			<SimulaConstant
+				name="leafMinimalNutrientConcentration"
+				unit="uMol/g"> 273</SimulaConstant>
+			<SimulaConstant
+				name="stemOptimalNutrientConcentration"
+				unit="uMol/g"> 250</SimulaConstant>
+			<SimulaConstant
+				name="stemMinimalNutrientConcentration"
+				unit="uMol/g"> 117</SimulaConstant>
+		</SimulaBase>
+	</SimulaDirective>
+	<SimulaDirective path="defaults">
+		<SimulaBase name="potassium">
+			<SimulaConstant
+				name="optimalNutrientConcentration"
+				unit="uMol/g"> 234</SimulaConstant>
+			<SimulaConstant
+				name="minimalNutrientConcentration"
+				unit="uMol/g"> 117</SimulaConstant>
+			<SimulaConstant
+				name="Imax"
+				unit="uMol/cm2/day"> 0.467</SimulaConstant>
+			<SimulaConstant
+				name="Km"
+				unit="uMol/ml"> 1.4e-2</SimulaConstant>
+			<SimulaConstant
+				name="Cmin"
+				unit="uMol/ml"> 2e-3</SimulaConstant>
+			<SimulaConstant
+				name="Efflux"
+				unit="uMol/cm/day"> 1e-6</SimulaConstant>
+		</SimulaBase>
+	</SimulaDirective>
+</SimulationModelIncludeFile>

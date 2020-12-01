@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	Simulation file for SimRoot version 5. This development version, build July 807
+
+	Author: Jouke Postma
+
+	Note: 
+	This file is an include file and contains the controls for the simulation. 
+
+	PLEASE KEEP THIS HEADER UP TO DATE! LIST BELOW WHO YOU ARE, WHEN AND WHAT CHANGES YOU MADE AND WHY. LIST YOUR SOURCE AS MUCH AS POSSIBLE!
+
+	change log:
+
+-->
+<SimulationModelIncludeFile>
+<!--Controls for the simulation-->
+	<SimulaBase name="simulationControls">
+		<SimulaConstant type="integer" name="SimulaStochastic::numberOfSamples">
+		<!--note this should be set to 1 to have normal randomness, but will reduce random effects by repeated sampling the distribution and taking the average. 
+		So you larger number here will reduce the effect of randomness on the output, which in some cases is desirable, especially when comparing treatments.-->
+			1
+		</SimulaConstant>
+		<SimulaBase name="integrationParameters">
+		<!--TODO current timestepping module for simulapoint does not control errors correctly - rootlength is not what is should be-->
+			<SimulaConstant name="defaultSpatialIntegrationLength"  unit="cm">0.</SimulaConstant>
+		</SimulaBase>
+		<SimulaBase name="outputParameters">
+			<SimulaBase name="defaults">
+			<!-- optional section - if an export module section does not list end/start/interval times than you can specify a default here-->
+				<SimulaConstant name="startTime" type="time"> 0.	</SimulaConstant>
+				<SimulaConstant name="endTime" type="time"> 42.	</SimulaConstant>
+			<SimulaConstant name="timeInterval" type="time"> 1.	</SimulaConstant>
+			</SimulaBase>	
+			<!--what output plugins should be loaded and run-->
+			<SimulaBase name="probeAllObjects">
+				<SimulaConstant name="run" type="bool"> 0 <!--this does not result in any output, just tries to run the code for debugging purposes-->	</SimulaConstant>
+				<SimulaConstant name="timeInterval" type="time"> 1	</SimulaConstant>
+			</SimulaBase>	
+			<!-- The garbage collector reduces memory use, don't run to often, or it may slow down the model -->
+			<!-- todo lack time needs to be large when doing vtu's -->
+
+			<SimulaBase name="garbageCollection">
+				<SimulaConstant name="run" type="bool"> 1 	</SimulaConstant>
+				<SimulaConstant name="startTime" type="time"> 0	</SimulaConstant>
+				<SimulaConstant name="lackTime" type="time"> 1.0	</SimulaConstant>
+				<SimulaConstant name="timeInterval" type="time"> 1.0 <!--should be greater than any of the other intervals-->	</SimulaConstant>
+			</SimulaBase>	
+			<SimulaBase name="modelDump">
+				<SimulaConstant name="run" type="bool"> 0 	</SimulaConstant>
+				<SimulaConstant name="startTime" type="time"> 0	</SimulaConstant>
+				<!--becareful not to dump a model that has run for a while, the output may be tenth of gigabytes long-->
+				<SimulaConstant name="endTime" type="time"> 1	</SimulaConstant>
+				<!--not implemented yet SimulaConstant name="copyStyleSheetsToOutputDir"> 1	</SimulaConstant-->
+			</SimulaBase>	
+			<SimulaBase name="rasterImage">
+				<SimulaConstant name="run" type="bool"> 0  </SimulaConstant>
+				<SimulaConstant name="startTime" type="time"> 0.	</SimulaConstant>
+				<SimulaConstant name="timeInterval" type="time"> 5.	</SimulaConstant>
+				<SimulaConstant name="voxelsize" unit="cm" > 0.05	</SimulaConstant>
+				<SimulaConstant name="substeps" unit="#" type="integer" > 5	</SimulaConstant>
+				<SimulaConstant name="edgeSmoothing" unit="cm" > 0.00 	</SimulaConstant>
+				<SimulaConstant name="rootDiameterScalingFactor" unit="100%" > 1.	</SimulaConstant>
+				<SimulaConstant name="includeBinaryRawImage" type="bool" > 0.	</SimulaConstant>
+				<SimulaConstant name="includeVTKImage" type="bool" > 1.	</SimulaConstant>
+				<SimulaConstant name="minCorner" type="coordinate" > -5 -20 -5	</SimulaConstant>
+				<SimulaConstant name="maxCorner" type="coordinate" > 5 0 5	</SimulaConstant>
+			</SimulaBase>
+			<SimulaBase name="wireframe.vtu">
+				<SimulaConstant name="run" type="bool"> 0  </SimulaConstant>
+				<!--note that vtu is incorrect when there are no roots: make startTime later than planting time-->
+				<SimulaConstant name="timeInterval" type="time"> 0.2	</SimulaConstant>
+				<SimulaConstant name="includeShoots" type="bool"> 0 </SimulaConstant>
+				<!--note that currently if you include the shoot the point data will not be shown for the root-->
+				<SimulaConstant name="includeRoots" type="bool"> 1 </SimulaConstant>
+				<SimulaConstant name="includeVTUForDepletionZones" type="bool"> 1 </SimulaConstant>
+				<SimulaConstant name="includePointData" type="bool"> 1 </SimulaConstant>
+			</SimulaBase>				
+			<SimulaBase name="vtp">
+				<SimulaConstant name="run" type="bool"> 0  </SimulaConstant>
+				<!--note that vtu is incorrect when there are no roots: make startTime later than planting time-->
+				<SimulaConstant name="timeInterval" type="time"> 0.2	</SimulaConstant>
+				<SimulaConstant name="includeShoots" type="bool"> 0 </SimulaConstant>
+				<!--note that currently if you include the shoot the point data will not be shown for the root-->
+				<SimulaConstant name="includeRoots" type="bool"> 1 </SimulaConstant>
+				<SimulaConstant name="includeVTUForDepletionZones" type="bool"> 1 </SimulaConstant>
+				<SimulaConstant name="includePointData" type="bool"> 1 </SimulaConstant>
+			</SimulaBase>				
+			<SimulaBase name="VTU">
+				<SimulaConstant name="run" type="bool"> 0  </SimulaConstant>
+				<SimulaConstant name="timeInterval" type="time"> 1.0	</SimulaConstant>
+				<SimulaConstant name="includeShoots" type="bool"> 0 </SimulaConstant>
+				<SimulaConstant name="includeRoots" type="bool"> 1 </SimulaConstant>
+				<SimulaConstant name="includeVTUForDepletionZones" type="bool"> 1 </SimulaConstant>
+				<SimulaConstant name="includePointData" type="bool"> 1 </SimulaConstant>
+			</SimulaBase>	
+			<SimulaBase name="tableOfRootNodes">
+				<SimulaConstant name="run" type="bool"> 0 </SimulaConstant>
+				<SimulaConstant name="timeInterval" type="time"> 8	</SimulaConstant>
+			</SimulaBase>	
+			<SimulaBase name="table">
+				<SimulaConstant name="run" type="bool"> 1 </SimulaConstant>
+				<!--SimulaConstant name="timeInterval" type="time"> 1.0	</SimulaConstant-->
+				<SimulaConstant name="searchingDepth" type="integer">  4 		</SimulaConstant>
+				<SimulaConstant name="skipTheseVariables" type="string">
+					primaryRoot, hypocotyl				
+				</SimulaConstant>
+				<SimulaConstant name="NUrequestedVariables" type="string">
+ NUTRIENT MODEL,
+nutrientFluxDensity,
+nutrientConcentrationAtTheRootSurface,
+nutrientStressFactor,
+nutrientStressFactor2,
+plantNutrientUptake,
+plantNutrientFixation,
+plantMinimalNutrientContent,
+plantOptimalNutrientContent,
+stemOptimalNutrientContent,
+leafOptimalNutrientContent,
+plantNutrientDepletionVolume,
+rootSystemNutrientInFlux,
+rootSystemNutrientDepletionVolume,
+rootNutrientUptake,
+rootSystemNutrientUptake,
+nutrientFlux,
+nutrientFluxDensity,
+stressFactor,
+stressFactor:impactOn:photosynthesis,
+stressFactor:impactOn:rootPotentialLongitudinalGrowth,
+stressAdjustedPotentialLeafArea,
+respirationMultiplicationFactor,
+carbonAllocation2ShootMultiplicationFactor,
+rootSegmentNutrientUptake,
+rootSystemNutrientUptake,
+rootNutrientUptake,
+
+
+CARBON MODEL,
+plantCarbonBalance,
+plantCarbonIncome,
+plantCarbonIncomeRate,
+carbonAvailableForGrowth,
+photosynthesis,
+reserves,
+carbonReserves,
+
+rootCarbonCosts,
+rootCarbonCostOfExudates,
+rootCarbonCostOfNutrientUptake,
+rootCarbonCostOfBiologicalNitrogenFixation,
+
+plantPotentialCarbonSinkForGrowth,
+rootPotentialCarbonSinkForGrowth,
+rootPotentialCarbonSinkForGrowth;majorAxis,
+rootPotentialLongitudinalGrowth,
+rootSecondaryPotentialCarbonSinkForGrowth,
+shootPotentialCarbonSinkForGrowth,
+stemPotentialCarbonSinkForGrowth,
+leafPotentialCarbonSinkForGrowth,
+
+relativeCarbonAllocation2Shoot,
+relativeCarbonAllocation2Roots,
+relativeCarbonAllocation2Leafs,
+relativeCarbonAllocation2Stems,
+rootGrowthScalingFactor,
+rootGrowthScalingFactor;majorAxis,
+secondaryRootGrowthScalingFactor,
+leafAreaReductionCoefficient,
+
+carbonAllocation2Shoot,
+carbonAllocation2Roots,
+carbonAllocation2Leafs,
+carbonAllocation2Stems,
+carbonAllocation2ShootRate,
+carbonAllocation2RootsRate,
+carbonAllocation2LeafsRate,
+carbonAllocation2StemsRate,
+
+plantDryWeight,
+shootDryWeight,
+rootDryWeight,
+leafDryWeight,
+stemDryWeight,
+rootSystemDryWeight,
+
+plantRespiration,
+rootRespiration,
+shootRespiration,
+leafRespiration,
+stemRespiration,
+
+
+ROOT GEOMETRY,
+rootDiameter,
+rootLength,
+rootSegmentLength,
+rootVolume,
+rootSurfaceArea,
+rootPotentialLongitudinalGrowth,
+rootLongitudinalGrowth,
+rootLength;lateralsFastGrowing,
+rootLength;majorAxis,
+D90,
+rootsBelowD90ForNutrient,
+numberOfNonRootedFEMNodes,
+soluteInNonRootedFEMNodes,
+leachingRisk,
+
+SHOOT,
+leafArea,
+leafAreaIndex,
+potentialLeafArea,
+potentialLeafAreaHeuns,
+potentialLeafAreaHeunsII,
+lightInterception,
+
+WATER,
+potentialTranspiration,
+actualTranspiration,
+rootPotentialWaterUptake,
+rootWaterUptake,
+innerRootTensionBase,
+
+SOIL,
+RootLengthProfile_00-05,
+RootLengthProfile_05-10,
+RootLengthProfile_10-15,
+RootLengthProfile_15-20,
+RootLengthProfile_20-25,
+RootLengthProfile_25-30,
+RootLengthProfile_30-35,
+RootLengthProfile_35-40,
+RootLengthProfile_40-45,
+RootLengthProfile_45-50,
+RootLengthProfile_50-55,
+RootLengthProfile_55-60
+				</SimulaConstant>	
+			</SimulaBase>	
+<!--///@todo: include time controls so they don't have to be run of the commandline-->
+<!--///@todo: include wrl and mesh controls so we can choose what output we want and control color coding-->
+		</SimulaBase>	
+	</SimulaBase>	
+</SimulationModelIncludeFile>
+
+

@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--?xml-stylesheet type="text/xsl" href="tree-view2.xsl"? -->
+<!--
+Copyright © 2016, The Pennsylvania State University
+All rights reserved.
+
+Copyright © 2016 Forschungszentrum Jülich GmbH
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, are permitted under the GNU General Public License v3 and provided that the following conditions are met:
+1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+
+Disclaimer
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+You should have received the GNU GENERAL PUBLIC LICENSE v3 with this file in license.txt but can also be found at http://www.gnu.org/licenses/gpl-3.0.en.html
+
+ -->
+
+	<!-- Root Exudation parameters for bean	-->
+	
+<!-- Nielsen et al 1994 page 164 text & figure 3: 
+distance 				nmole C/mm/hour		g/cm/day
+from roottip
+tip (mm)				6.65			0.00001915
+13-23 					5.25			0.00001511
+26-36 					5.9				0.00001699
+39-49 					4.73			0.00001362
+
+this results in ~ 0.12 g C/g root/day in the model
+this results in a little less than respiration (2/3),
+very comparable to what the article's budgets
+
+-->
+<!--
+Groleau-Renaud V, Plantureux S, Guckert A. 1998. Influence of plant morphology on root exudation of maize subjected to mechanical impedance in hydroponic conditions. Plant and Soil 201: 231-239.
+Maize:
+regressions with surface area are not better than with dryweight. 
+probably because surface area / dry weigth becomes relative constant
+after a while. 
+~ 0.050 g/g/day which is 1/5-1/3 of beans and compares to Sauer et al 2006 set below
+includes effects of impedence
+-->
+<!--
+Sauer D, Kuzyakov Y, Stahr K. 2006. Spatial distribution of root exudates of five plant species as assessed by 14C labeling. Journal of Plant Nutrition and Soil Science 169: 360-362.
+
+labeled activity of exudates of monocots ~ 1/3 of dicots
+
+-->
+<!--
+walker et al 2003: effect of root architecture on root exudates virtually unexplored
+-->
+<SimulationModelIncludeFile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../scripts/XML/SimulaXMLSchema.xsd">
+	<!-- The exudation parameters for this species lead to a very high fraction of carbon produced being spent on exudation. Because of this, exudation has been disabled by default until new measurements of the parameters are available. Take care when enabling this again. -->
+	<!--SimulaDirective path="hypocotyl">
+		<SimulaTable
+			name_column1="time since creation"
+			unit_column1="day"
+			name_column2="relativeCarbonCostOfExudation"
+			unit_column2="g/cm/day"> 0 0 100 0</SimulaTable>
+	</SimulaDirective>
+	<SimulaDirective path="primaryRoot">
+		<SimulaTable
+			name_column1="time since creation"
+			unit_column1="day"
+			name_column2="relativeCarbonCostOfExudation"
+			unit_column2="g/cm/day"> 0 0.00001915 1.8 0.00001511 3.1 0.00001699
+			4.4 0.00001362 100 0.00001362</SimulaTable>
+	</SimulaDirective>
+	<SimulaDirective path="basalWhorl1">
+		<SimulaTable
+			name_column1="time since creation"
+			unit_column1="day"
+			name_column2="relativeCarbonCostOfExudation"
+			unit_column2="g/cm/day"> 0 0.00001915 1.8 0.00001511 3.1 0.00001699
+			4.4 0.00001362 100 0.00001362</SimulaTable>
+	</SimulaDirective>
+	<SimulaDirective path="basalWhorl2">
+		<SimulaTable
+			name_column1="time since creation"
+			unit_column1="day"
+			name_column2="relativeCarbonCostOfExudation"
+			unit_column2="g/cm/day"> 0 0.00001915 1.8 0.00001511 3.1 0.00001699
+			4.4 0.00001362 100 0.00001362</SimulaTable>
+	</SimulaDirective>
+	<SimulaDirective path="basalWhorl3">
+		<SimulaTable
+			name_column1="time since creation"
+			unit_column1="day"
+			name_column2="relativeCarbonCostOfExudation"
+			unit_column2="g/cm/day"> 0 0.00001915 1.8 0.00001511 3.1 0.00001699
+			4.4 0.00001362 100 0.00001362</SimulaTable>
+	</SimulaDirective>
+	<SimulaDirective path="hypocotylBornRoots">
+		<SimulaTable
+			name_column1="time since creation"
+			unit_column1="day"
+			name_column2="relativeCarbonCostOfExudation"
+			unit_column2="g/cm/day"> 0 0.00001915 1.8 0.00001511 3.1 0.00001699
+			4.4 0.00001362 100 0.00001362</SimulaTable>
+	</SimulaDirective>
+	<SimulaDirective path="lateralPrimaryRoot">
+		<SimulaTable
+			name_column1="time since creation"
+			unit_column1="day"
+			name_column2="relativeCarbonCostOfExudation"
+			unit_column2="g/cm/day"> 0 0.00001915 1.8 0.00001511 3.1 0.00001699
+			4.4 0.00001362 100 0.00001362</SimulaTable>
+	</SimulaDirective>
+	<SimulaDirective path="lateralPrimaryRootFastGrowing">
+		<SimulaTable
+			name_column1="time since creation"
+			unit_column1="day"
+			name_column2="relativeCarbonCostOfExudation"
+			unit_column2="g/cm/day"> 0 0.00001915 1.8 0.00001511 3.1 0.00001699
+			4.4 0.00001362 100 0.00001362</SimulaTable>
+	</SimulaDirective>
+	<SimulaDirective path="lateralBasalRoots">
+		<SimulaTable
+			name_column1="time since creation"
+			unit_column1="day"
+			name_column2="relativeCarbonCostOfExudation"
+			unit_column2="g/cm/day"> 0 0.00001915 1.8 0.00001511 3.1 0.00001699
+			4.4 0.00001362 100 0.00001362</SimulaTable>
+	</SimulaDirective>
+	<SimulaDirective path="lateralHypocotylBornRoots">
+		<SimulaTable
+			name_column1="time since creation"
+			unit_column1="day"
+			name_column2="relativeCarbonCostOfExudation"
+			unit_column2="g/cm/day"> 0 0.00001915 1.8 0.00001511 3.1 0.00001699
+			4.4 0.00001362 100 0.00001362</SimulaTable>
+	</SimulaDirective>
+	<SimulaDirective path="finelateral">
+		<SimulaTable
+			name_column1="time since creation"
+			unit_column1="day"
+			name_column2="relativeCarbonCostOfExudation"
+			unit_column2="g/cm/day"> 0 0.00001915 1.8 0.00001511 3.1 0.00001699
+			4.4 0.00001362 100 0.00001362</SimulaTable>
+	</SimulaDirective>
+	<SimulaDirective path="finelateralFastGrowing">
+		<SimulaTable
+			name_column1="time since creation"
+			unit_column1="day"
+			name_column2="relativeCarbonCostOfExudation"
+			unit_column2="g/cm/day"> 0 0.00001915 1.8 0.00001511 3.1 0.00001699
+			4.4 0.00001362 100 0.00001362</SimulaTable>
+	</SimulaDirective-->
+</SimulationModelIncludeFile>

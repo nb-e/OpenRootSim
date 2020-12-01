@@ -1,0 +1,895 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<?xml-stylesheet type="text/xsl" href="InputFiles/XML/outlineview.xsl" ?>
+<!--Modeldump. note that the dump may not be complete.-->
+<SimulationModel name="notimplemented" data="notimplemented" id="notimplemented">
+
+
+	<SimulaBase name="plants">
+		<SimulaBase name="simpleRoot" objectGenerator="seedling">
+			<SimulaConstant name="plantType" type="string"> straightRoot
+			</SimulaConstant>
+			<SimulaConstant name="plantingTime" unit="day" type="time"> 0
+			</SimulaConstant>
+			<SimulaConstant name="plantPosition" type="coordinate"> 0 0 0
+			</SimulaConstant>
+		</SimulaBase>
+	</SimulaBase>
+
+
+		<SimulaBase name="dataPointTemplate" prettyName="data point template" unit="noUnit">
+
+			<SimulaDerivative function="rootClassID" name="combinedRootClassID" prettyName="combined root class ID" unit="noUnit"/>
+			<SimulaTable garbageCollectionOff="true" interpolationMethod="linear" name_column1="time" name_column2="hydraulicHeadAtRootSurface" prettyName="hydraulic head at root surface" unit_column1="day" unit_column2="cm">
+0	-200
+100	-200
+
+			</SimulaTable>
+			<SimulaLink name="lateralHydraulicConductivity" prettyName="lateral hydraulic conductivity"/>
+			<SimulaDerivative function="rootClassID" name="parentRootClassID" prettyName="parent root class ID" unit="noUnit"/>
+			<SimulaLink name="radialHydraulicConductivity" prettyName="radial hydraulic conductivity"/>
+			<SimulaDerivative function="rootCircumference" name="rootCircumference" prettyName="root circumference" unit="cm"/>
+			<SimulaDerivative function="rootClassID" name="rootClassID" prettyName="root class ID" unit="noUnit"/>
+			<SimulaVariable function="secondaryGrowth" integrationFunction="RungeKutta4" name="rootDiameter" prettyName="root diameter" unit="cm">
+0	0	0
+
+			</SimulaVariable>
+			<SimulaDerivative function="rootLength2Base" name="rootLength2Base" prettyName="root length to  base" unit="cm"/>
+			<SimulaVariable function="potentialSecondaryGrowth" integrationFunction="RungeKutta4" name="rootPotentialSecondaryGrowth" prettyName="root potential secondary growth" unit="cm">
+0	0	0
+
+			</SimulaVariable>
+			<SimulaDerivative function="rootSegmentAge" name="rootSegmentAge" prettyName="root segment age" unit="day"/>
+			<SimulaDerivative function="rootSegmentDryWeight" name="rootSegmentDryWeight" prettyName="root segment dry weight" unit="g"/>
+			<SimulaDerivative function="hydraulicConductivity" name="rootSegmentLateralHydraulicConductivity" prettyName="root segment lateral hydraulic conductivity" unit="cm3/day/hPa"/>
+			<SimulaDerivative function="rootSegmentLength" name="rootSegmentLength" prettyName="root segment length" unit="cm"/>
+			<SimulaVariable function="rootSegmentLength" integrationFunction="RungeKutta4" name="rootSegmentLengthDuration" prettyName="root segment length duration" unit="cm.day">
+0	0	0
+
+			</SimulaVariable>
+			<SimulaDerivative function="hydraulicConductivity" name="rootSegmentRadialHydraulicConductivity" prettyName="root segment radial hydraulic conductivity" unit="cm3/day/hPa"/>
+			<SimulaDerivative function="rootSegmentSurfaceArea" name="rootSegmentSurfaceArea" prettyName="root segment surface area" unit="cm2"/>
+			<SimulaDerivative function="rootSegmentVolume" name="rootSegmentVolume" prettyName="root segment volume" unit="cm3"/>
+			<SimulaVariable function="useDerivative" integrationFunction="RungeKutta4" name="rootSegmentWaterUptake" prettyName="root segment water uptake" unit="cm3">
+0	0	0
+
+			</SimulaVariable>
+			<SimulaTable function="getValuesFromPlantWaterUptake" garbageCollectionOff="true" interpolationMethod="linear" name_column1="time" name_column2="rootSegmentWaterUptakeRate" prettyName="root segment water uptake rate" unit_column1="day" unit_column2="cm3/day">
+-100000	0
+
+			</SimulaTable>
+			<SimulaDerivative function="proximity" name="spatialRootDensity" prettyName="spatial root density" unit="cm/cm3"/>
+			<SimulaTable function="getValuesFromPlantWaterUptake" garbageCollectionOff="true" interpolationMethod="linear" name_column1="time" name_column2="xylemWaterPotential" prettyName="xylem water potential" unit_column1="day" unit_column2="cm">
+-100000	0
+
+			</SimulaTable>
+		</SimulaBase>
+		<SimulaBase name="environment" prettyName="environment" unit="noUnit">
+
+			<SimulaBase name="atmosphere" prettyName="atmosphere" unit="noUnit">
+
+				<SimulaConstant name="PAR/RDD" prettyName="PAR/ RDD" type="double" unit="100%">
+1
+				</SimulaConstant>
+				<SimulaTable garbageCollectionOff="true" interpolationMethod="step" name_column1="time" name_column2="concentrationInPrecipitation" prettyName="concentration in precipitation" unit_column1="day" unit_column2="umol">
+0	5
+100	5
+
+				</SimulaTable>
+				<SimulaTable garbageCollectionOff="true" interpolationMethod="step" name_column1="time" name_column2="evaporation" prettyName="evaporation" unit_column1="day" unit_column2="cm/day">
+0	0
+100	0
+
+				</SimulaTable>
+				<SimulaConstant name="irradiation" prettyName="irradiation" type="double" unit="umol/cm2/day">
+2944
+				</SimulaConstant>
+				<SimulaTable garbageCollectionOff="true" interpolationMethod="linear" name_column1="time" name_column2="precipitation" prettyName="precipitation" unit_column1="day" unit_column2="cm/day">
+0	0
+80	0
+
+				</SimulaTable>
+			</SimulaBase>
+			<SimulaBase name="dimensions" prettyName="dimensions" unit="noUnit">
+
+				<SimulaConstant name="maxCorner" prettyName="max corner" type="Coordinate" unit="cm">
+2	0	2
+				</SimulaConstant>
+				<SimulaConstant name="minCorner" prettyName="min corner" type="Coordinate" unit="cm">
+-2	-60	-2
+				</SimulaConstant>
+				<SimulaConstant name="resolution" prettyName="resolution" type="Coordinate" unit="cm">
+1	1	1
+				</SimulaConstant>
+				<SimulaConstant name="roundPot" prettyName="round pot" type="bool" unit="noUnit">
+1
+				</SimulaConstant>
+			</SimulaBase>
+			<SimulaBase name="soil" prettyName="soil" unit="noUnit">
+
+				<SimulaTable garbageCollectionOff="true" interpolationMethod="linear" name_column1="depth" name_column2="bulkDensity" prettyName="bulk density" unit_column1="cm" unit_column2="g/cm3">
+-100	1.24
+100	1.24
+
+				</SimulaTable>
+				<SimulaBase name="nitrate" prettyName="nitrate" unit="noUnit">
+
+					<SimulaConstant name="adsorptionCoefficient" prettyName="adsorption coefficient" type="double" unit="umol/cm">
+0
+					</SimulaConstant>
+					<SimulaTable garbageCollectionOff="true" interpolationMethod="linear" name_column1="depth" name_column2="bufferPower" prettyName="buffer power" unit_column1="cm" unit_column2="noUnit">
+-1000	0.4
+1000	0.4
+
+					</SimulaTable>
+					<SimulaTable garbageCollectionOff="true" interpolationMethod="linear" name_column1="depth" name_column2="concentration" prettyName="concentration" unit_column1="cm" unit_column2="umol/ml">
+-100	1
+1	1
+
+					</SimulaTable>
+					<SimulaTable garbageCollectionOff="true" interpolationMethod="linear" name_column1="depth" name_column2="diffusionCoefficient" prettyName="diffusion coefficient" unit_column1="cm" unit_column2="cm2/day">
+-1000	0.07
+-0	0.07
+1e-05	1e-08
+1000	1e-08
+
+					</SimulaTable>
+					<SimulaConstant name="increaseTimeStep" prettyName="increase time step" type="double" unit="noUnit">
+1
+					</SimulaConstant>
+					<SimulaConstant name="longitudinalDispersivity" prettyName="longitudinal dispersivity" type="double" unit="cm">
+1
+					</SimulaConstant>
+					<SimulaConstant name="r1-r0" prettyName="r1-r0" type="double" unit="cm">
+4
+					</SimulaConstant>
+					<SimulaConstant name="saturatedDiffusionCoefficient" prettyName="saturated diffusion coefficient" type="double" unit="cm2/day">
+1.6416
+					</SimulaConstant>
+					<SimulaConstant name="transverseDispersivity" prettyName="transverse dispersivity" type="double" unit="cm">
+0.5
+					</SimulaConstant>
+				</SimulaBase>
+				<SimulaBase name="organic" prettyName="organic" unit="noUnit">
+
+					<SimulaConstant name="CNRatioMicrobes" prettyName="CNRatio microbes" type="double" unit="g/g">
+10
+					</SimulaConstant>
+					<SimulaTable garbageCollectionOff="true" interpolationMethod="linear" name_column1="depth" name_column2="CNratio" prettyName="CNratio" unit_column1="cm" unit_column2="g/g">
+-10000	13
+0	13
+
+					</SimulaTable>
+					<SimulaConstant name="assimilationEfficiencyMicrobes" prettyName="assimilation efficiency microbes" type="double" unit="noUnit">
+1
+					</SimulaConstant>
+					<SimulaTable garbageCollectionOff="true" interpolationMethod="linear" name_column1="depth" name_column2="carbonContent" prettyName="carbon content" unit_column1="cm" unit_column2="g/g">
+-200	0
+0	0
+
+					</SimulaTable>
+					<SimulaTable garbageCollectionOff="true" interpolationMethod="linear" name_column1="depth" name_column2="initialRelativeMineralisationRate" prettyName="initial relative mineralisation rate" unit_column1="cm" unit_column2="g/g/year">
+-100	0
+0	0
+
+					</SimulaTable>
+					<SimulaConstant name="speedOfAging" prettyName="speed of aging" type="double" unit="noUnit">
+0.46
+					</SimulaConstant>
+					<SimulaConstant name="timeOffset" prettyName="time offset" type="double" unit="day">
+30
+					</SimulaConstant>
+				</SimulaBase>
+				<SimulaBase name="phosphorus" prettyName="phosphorus" unit="noUnit">
+
+					<SimulaConstant name="adsorptionCoefficient" prettyName="adsorption coefficient" type="double" unit="umol/cm">
+0
+					</SimulaConstant>
+					<SimulaTable garbageCollectionOff="true" interpolationMethod="linear" name_column1="depth" name_column2="bufferPower" prettyName="buffer power" unit_column1="cm" unit_column2="noUnit">
+-1000	223
+1000	223
+
+					</SimulaTable>
+					<SimulaGrid interpolationMethod="nearestNeighbourInterpolation" name="concentration" prettyName="concentration" unit="umol/ml">
+0	-40	0	0.0018
+4	-9	0	0.0018
+4	-8	0	0.0018
+4	-7	0	0.0018
+-4	-6.5	0	0.0018
+0	-6.5	0	0.0018
+-4	-5.5	0	0.0018
+0	-5.5	0	5.2
+-4	-4.5	0	0.0018
+0	-4.5	0	0.0018
+
+					</SimulaGrid>
+					<SimulaTable garbageCollectionOff="true" interpolationMethod="linear" name_column1="depth" name_column2="concentrationNU" prettyName="concentration NU" unit_column1="cm" unit_column2="umol/ml">
+-100	0.0018
+-3.2	0.0018
+-3	0.091
+0	0.091
+0.1	0
+1000	0
+
+					</SimulaTable>
+					<SimulaTable garbageCollectionOff="true" interpolationMethod="linear" name_column1="depth" name_column2="diffusionCoefficient" prettyName="diffusion coefficient" unit_column1="cm" unit_column2="cm2/day">
+-1000	0.00019872
+1000	0.00019872
+
+					</SimulaTable>
+					<SimulaConstant name="increaseTimeStep" prettyName="increase time step" type="double" unit="noUnit">
+1
+					</SimulaConstant>
+					<SimulaConstant name="longitudinalDispersivity" prettyName="longitudinal dispersivity" type="double" unit="cm">
+1
+					</SimulaConstant>
+					<SimulaConstant name="r1-r0" prettyName="r1-r0" type="double" unit="cm">
+0.3
+					</SimulaConstant>
+					<SimulaConstant name="saturatedDiffusionCoefficient" prettyName="saturated diffusion coefficient" type="double" unit="cm2/day">
+0.00495
+					</SimulaConstant>
+					<SimulaConstant name="transverseDispersivity" prettyName="transverse dispersivity" type="double" unit="cm">
+0.5
+					</SimulaConstant>
+				</SimulaBase>
+				<SimulaBase name="potassium" prettyName="potassium" unit="noUnit">
+
+					<SimulaConstant name="adsorptionCoefficient" prettyName="adsorption coefficient" type="double" unit="umol/cm">
+40
+					</SimulaConstant>
+					<SimulaTable garbageCollectionOff="true" interpolationMethod="linear" name_column1="depth" name_column2="bufferPower" prettyName="buffer power" unit_column1="cm" unit_column2="noUnit">
+-1000	10
+1000	10
+
+					</SimulaTable>
+					<SimulaTable garbageCollectionOff="true" interpolationMethod="linear" name_column1="depth" name_column2="concentration" prettyName="concentration" unit_column1="cm" unit_column2="umol/ml">
+-1000	0.1
+1000	0.1
+
+					</SimulaTable>
+					<SimulaTable garbageCollectionOff="true" interpolationMethod="linear" name_column1="depth" name_column2="diffusionCoefficient" prettyName="diffusion coefficient" unit_column1="cm" unit_column2="cm2/day">
+-1000	0.02
+1000	0.02
+
+					</SimulaTable>
+					<SimulaConstant name="dr" prettyName="dr" type="double" unit="cm">
+0.05
+					</SimulaConstant>
+					<SimulaConstant name="increaseTimeStep" prettyName="increase time step" type="double" unit="noUnit">
+1.05
+					</SimulaConstant>
+					<SimulaConstant name="longitudinalDispersivity" prettyName="longitudinal dispersivity" type="double" unit="cm">
+0
+					</SimulaConstant>
+					<SimulaConstant name="r1-r0" prettyName="r1-r0" type="double" unit="cm">
+2
+					</SimulaConstant>
+					<SimulaConstant name="saturatedDiffusionCoefficient" prettyName="saturated diffusion coefficient" type="double" unit="cm2/day">
+10
+					</SimulaConstant>
+					<SimulaConstant name="transverseDispersivity" prettyName="transverse dispersivity" type="double" unit="cm">
+0
+					</SimulaConstant>
+				</SimulaBase>
+				<SimulaBase name="water" prettyName="water" unit="noUnit">
+
+					<SimulaTable garbageCollectionOff="true" interpolationMethod="linear" name_column1="time" name_column2="depthOfWaterTable" prettyName="depth of water table" unit_column1="day" unit_column2="cm">
+0	-200
+30	-200
+
+					</SimulaTable>
+					<SimulaTable garbageCollectionOff="true" interpolationMethod="linear" name_column1="depth" name_column2="initialHydraulicHead" prettyName="initial hydraulic head" unit_column1="cm" unit_column2="cm">
+-200	0
+0	-200
+
+					</SimulaTable>
+					<SimulaTable garbageCollectionOff="true" interpolationMethod="linear" name_column1="depth" name_column2="residualWaterContent" prettyName="residual water content" unit_column1="cm" unit_column2="100%">
+-300	0.07
+0	0.07
+
+					</SimulaTable>
+					<SimulaTable garbageCollectionOff="true" interpolationMethod="linear" name_column1="depth" name_column2="saturatedConductivity" prettyName="saturated conductivity" unit_column1="cm" unit_column2="cm/day">
+-300	40
+0	40
+
+					</SimulaTable>
+					<SimulaTable garbageCollectionOff="true" interpolationMethod="linear" name_column1="depth" name_column2="saturatedWaterContent" prettyName="saturated water content" unit_column1="cm" unit_column2="100%">
+-100	0.3
+0	0.3
+
+					</SimulaTable>
+					<SimulaTable garbageCollectionOff="true" interpolationMethod="linear" name_column1="depth" name_column2="vanGenuchten:alpha" prettyName="van genuchten:alpha" unit_column1="cm" unit_column2="1/cm">
+-300	0.03
+0	0.03
+
+					</SimulaTable>
+					<SimulaTable garbageCollectionOff="true" interpolationMethod="linear" name_column1="depth" name_column2="vanGenuchten:n" prettyName="van genuchten:n" unit_column1="cm" unit_column2="noUnit">
+-300	2
+0	2
+
+					</SimulaTable>
+					<SimulaConstant name="volumetricWaterContentInBarberCushman" prettyName="volumetric water content in barber cushman" type="double" unit="cm3/cm3">
+0.102
+					</SimulaConstant>
+				</SimulaBase>
+			</SimulaBase>
+		</SimulaBase>
+		<SimulaBase name="hypocotylTemplate" prettyName="hypocotyl template" unit="noUnit">
+
+			<SimulaBase name="branches" prettyName="branches" unit="noUnit"/>
+			<SimulaBase name="dataPoints" objectGenerator="rootDataPoints" prettyName="data points" unit="noUnit"/>
+			<SimulaPoint function="rootGrowthDirection" garbageCollectionOff="true" integrationFunction="RungeKutta4" name="growthpoint" prettyName="growthpoint" unit="cm">
+0	0	0	0	0	0	0	
+
+				<SimulaTable garbageCollectionOff="true" interpolationMethod="linear" name_column1="time" name_column2="hydraulicHeadAtRootSurface" prettyName="hydraulic head at root surface" unit_column1="day" unit_column2="cm">
+0	-200
+100	-200
+
+				</SimulaTable>
+				<SimulaDerivative function="rootCircumference" name="rootCircumference" prettyName="root circumference" unit="cm"/>
+				<SimulaDerivative function="rootDiameter" name="rootDiameter" prettyName="root diameter" unit="cm"/>
+				<SimulaVariable function="scaledRootGrowthRate" garbageCollectionOff="true" integrationFunction="RungeKutta4" name="rootLongitudinalGrowth" prettyName="root longitudinal growth" unit="cm">
+0	0	0
+
+				</SimulaVariable>
+				<SimulaVariable function="potentialRootGrowthRate" integrationFunction="RungeKutta4" name="rootPotentialLongitudinalGrowth" prettyName="root potential longitudinal growth" unit="cm">
+0	0	0
+
+				</SimulaVariable>
+				<SimulaDerivative function="rootDiameter" name="rootPotentialSecondaryGrowth" prettyName="root potential secondary growth" unit="cm"/>
+				<SimulaConstant name="rootSegmentAge" prettyName="root segment age" type="double" unit="day">
+0
+				</SimulaConstant>
+				<SimulaConstant name="rootSegmentDryWeight" prettyName="root segment dry weight" type="double" unit="g">
+0
+				</SimulaConstant>
+				<SimulaConstant name="rootSegmentLength" prettyName="root segment length" type="double" unit="cm">
+0
+				</SimulaConstant>
+				<SimulaConstant name="rootSegmentLengthDuration" prettyName="root segment length duration" type="double" unit="cm.day">
+0
+				</SimulaConstant>
+				<SimulaConstant name="rootSegmentSurfaceArea" prettyName="root segment surface area" type="double" unit="cm2">
+0
+				</SimulaConstant>
+				<SimulaConstant name="rootSegmentVolume" prettyName="root segment volume" type="double" unit="cm3">
+0
+				</SimulaConstant>
+				<SimulaConstant name="rootSegmentWaterUptake" prettyName="root segment water uptake" type="double" unit="cm3">
+0
+				</SimulaConstant>
+			</SimulaPoint>
+			<SimulaDerivative function="rootNutrientTotal" name="rootDryWeight" prettyName="root dry weight" unit="g"/>
+			<SimulaDerivative function="rootTotal.v2" name="rootLength" prettyName="root length" unit="cm"/>
+			<SimulaDerivative function="rootTotal.v2" name="rootSurfaceArea" prettyName="root surface area" unit="cm2"/>
+			<SimulaDerivative function="rootSystemNutrientTotal" name="rootSystemDryWeight" prettyName="root system dry weight" unit="g"/>
+			<SimulaDerivative function="rootSystemNutrientTotal" name="rootSystemLength" prettyName="root system length" unit="cm"/>
+			<SimulaVariable function="rootSystemNutrientTotal" integrationFunction="RungeKutta4" name="rootSystemLongitudinalGrowth" prettyName="root system longitudinal growth" unit="cm">
+0	0	0
+
+			</SimulaVariable>
+			<SimulaDerivative function="rootSystemNutrientTotal" name="rootSystemSurfaceArea" prettyName="root system surface area" unit="cm2"/>
+			<SimulaDerivative function="rootSystemNutrientTotal" name="rootSystemVolume" prettyName="root system volume" unit="cm3"/>
+			<SimulaVariable function="rootSystemNutrientTotal" integrationFunction="RungeKutta4" name="rootSystemWaterUptake" prettyName="root system water uptake" unit="cm3">
+0	0	0
+
+			</SimulaVariable>
+			<SimulaDerivative function="rootTotal.v2" name="rootVolume" prettyName="root volume" unit="cm3"/>
+			<SimulaVariable function="rootNutrientTotal" integrationFunction="RungeKutta4" name="rootWaterUptake" prettyName="root water uptake" unit="cm3">
+0	0	0
+
+			</SimulaVariable>
+		</SimulaBase>
+		<SimulaBase name="plantTemplate" prettyName="plant template" unit="noUnit">
+
+			<SimulaDerivative function="carbonToDryWeightRatio" name="carbonToDryWeightRatio" prettyName="carbon to dry weight ratio" unit="100%"/>
+			<SimulaDerivative function="plantTotal" name="plantDryWeight" prettyName="plant dry weight" unit="g"/>
+			<SimulaDerivative function="plantTotal" name="rootDryWeight" prettyName="root dry weight" unit="g"/>
+			<SimulaDerivative function="plantTotal" name="rootLength" prettyName="root length" unit="cm"/>
+			<SimulaVariable function="plantTotal" integrationFunction="RungeKutta4" name="rootLongitudinalGrowth" prettyName="root longitudinal growth" unit="cm">
+0	0	0
+
+			</SimulaVariable>
+			<SimulaDerivative function="plantTotal" name="rootSurfaceArea" prettyName="root surface area" unit="cm2"/>
+			<SimulaDerivative function="hydraulicConductivityRootSystem" name="rootSystemHydraulicConductivity1" prettyName="root system hydraulic conductivity1" unit="cm3/day/g/hPa"/>
+			<SimulaDerivative function="hydraulicConductivityRootSystem" name="rootSystemHydraulicConductivity2" prettyName="root system hydraulic conductivity2" unit="cm3/day/cm2/hPa"/>
+			<SimulaDerivative function="hydraulicConductivityRootSystem" name="rootSystemHydraulicConductivity3" prettyName="root system hydraulic conductivity3" unit="cm3/day/cm3/hPa"/>
+			<SimulaDerivative function="plantTotal" name="rootVolume" prettyName="root volume" unit="cm3"/>
+			<SimulaVariable function="plantTotal" integrationFunction="RungeKutta4" name="rootWaterUptake" prettyName="root water uptake" unit="cm3">
+0	0	0
+
+			</SimulaVariable>
+			<SimulaVariable function="waterUptakeAlmDoussanSchnepfModel" integrationFunction="RungeKutta4" name="rootWaterUptakeCheck" prettyName="root water uptake check" unit="cm3">
+0	0	0
+
+			</SimulaVariable>
+			<SimulaDerivative function="plantTotal" name="shootDryWeight" prettyName="shoot dry weight" unit="g"/>
+			<SimulaTable function="getValuesFromPlantWaterUptake" garbageCollectionOff="true" interpolationMethod="linear" name_column1="time" name_column2="waterPotentialAtTheCollar" prettyName="water potential at the collar" unit_column1="day" unit_column2="hPa">
+0	-220
+20	-1000
+28	-1000
+
+			</SimulaTable>
+		</SimulaBase>
+		<SimulaBase name="rootTypeParameters" prettyName="root type parameters" unit="noUnit">
+
+			<SimulaBase name="straightRoot" prettyName="straight root" unit="noUnit">
+
+				<SimulaBase name="hypocotyl" prettyName="hypocotyl" unit="noUnit">
+
+					<SimulaConstant name="bottomBoundary" prettyName="bottom boundary" type="bool" unit="noUnit">
+1
+					</SimulaConstant>
+					<SimulaConstant name="bounceOfTheSide" prettyName="bounce of the side" type="bool" unit="noUnit">
+1
+					</SimulaConstant>
+					<SimulaBase name="branchList" prettyName="branch list" unit="noUnit"/>
+					<SimulaConstant name="branchingAngle" prettyName="branching angle" type="double" unit="degrees">
+0
+					</SimulaConstant>
+					<SimulaConstant name="density" prettyName="density" type="double" unit="g/cm3">
+0.1
+					</SimulaConstant>
+					<SimulaConstant name="diameter" prettyName="diameter" type="double" unit="cm">
+0.4
+					</SimulaConstant>
+					<SimulaStochastic distribution="uniform" maximum="1.050000" minimum="1.050000" name="gravitropism.v2" prettyName="gravitropism.v2" type="Coordinate" unit="cm"/>
+					<SimulaTable garbageCollectionOff="true" interpolationMethod="linear" name_column1="days after germination" name_column2="growthRate" prettyName="growth rate" unit_column1="day" unit_column2="cm/day">
+0	0
+100	0
+
+					</SimulaTable>
+					<SimulaTable garbageCollectionOff="true" interpolationMethod="linear" name_column1="time since planting" name_column2="lateralHydraulicConductivity" prettyName="lateral hydraulic conductivity" unit_column1="day" unit_column2="cm4/day/hPa">
+0	0.0432
+100	0.0432
+
+					</SimulaTable>
+					<SimulaConstant name="lengthRootTipWithoutXylemVessels" prettyName="length root tip without xylem vessels" type="double" unit="cm">
+2
+					</SimulaConstant>
+					<SimulaConstant name="numberOfXylemPoles" prettyName="number of xylem poles" type="integer" unit="noUnit">
+4
+					</SimulaConstant>
+					<SimulaBase name="potassium" prettyName="potassium" unit="noUnit">
+
+						<SimulaConstant name="Cmin" prettyName="Cmin" type="double" unit="umol/ml">
+0.001
+						</SimulaConstant>
+						<SimulaConstant name="Imax" prettyName="Imax" type="double" unit="umol/cm2/day">
+2.592
+						</SimulaConstant>
+						<SimulaConstant name="Km" prettyName="Km" type="double" unit="umol/ml">
+0.014
+						</SimulaConstant>
+						<SimulaConstant name="minimalNutrientConcentration" prettyName="minimal nutrient concentration" type="double" unit="umol/g">
+168
+						</SimulaConstant>
+						<SimulaConstant name="optimalNutrientConcentration" prettyName="optimal nutrient concentration" type="double" unit="umol/g">
+234
+						</SimulaConstant>
+					</SimulaBase>
+					<SimulaTable garbageCollectionOff="true" interpolationMethod="linear" name_column1="time since planting" name_column2="radialHydraulicConductivity" prettyName="radial hydraulic conductivity" unit_column1="day" unit_column2="cm/day/hPa">
+0	0.0001728
+100	0.0001728
+
+					</SimulaTable>
+					<SimulaStochastic distribution="uniform" maximum="0.000000" minimum="0.000000" name="soilImpedence.v2" prettyName="soil impedence.v2" type="Coordinate" unit="cm"/>
+				</SimulaBase>
+				<SimulaBase name="lateral" prettyName="lateral" unit="noUnit">
+
+					<SimulaConstant name="bottomBoundary" prettyName="bottom boundary" type="bool" unit="noUnit">
+1
+					</SimulaConstant>
+					<SimulaConstant name="bounceOfTheSide" prettyName="bounce of the side" type="bool" unit="noUnit">
+1
+					</SimulaConstant>
+					<SimulaBase name="branchList" prettyName="branch list" unit="noUnit"/>
+					<SimulaConstant name="branchingAngle" prettyName="branching angle" type="double" unit="degrees">
+90
+					</SimulaConstant>
+					<SimulaConstant name="density" prettyName="density" type="double" unit="g/cm3">
+0.1
+					</SimulaConstant>
+					<SimulaConstant name="diameter" prettyName="diameter" type="double" unit="cm">
+0.01
+					</SimulaConstant>
+					<SimulaStochastic distribution="uniform" maximum="-0.005000" minimum="-0.015000" name="gravitropism.v2" prettyName="gravitropism.v2" type="Coordinate" unit="cm"/>
+					<SimulaTable garbageCollectionOff="true" interpolationMethod="linear" name_column1="days after germination" name_column2="growthRate" prettyName="growth rate" unit_column1="day" unit_column2="cm/day">
+0	0.2
+5	0
+28	0
+
+					</SimulaTable>
+					<SimulaTable garbageCollectionOff="true" interpolationMethod="linear" name_column1="time since planting" name_column2="lateralHydraulicConductivity" prettyName="lateral hydraulic conductivity" unit_column1="day" unit_column2="cm4/day/hPa">
+0	0.111
+100	0.111
+
+					</SimulaTable>
+					<SimulaConstant name="lengthRootTipWithoutXylemVessels" prettyName="length root tip without xylem vessels" type="double" unit="cm">
+2
+					</SimulaConstant>
+					<SimulaConstant name="numberOfXylemPoles" prettyName="number of xylem poles" type="integer" unit="noUnit">
+4
+					</SimulaConstant>
+					<SimulaBase name="potassium" prettyName="potassium" unit="noUnit">
+
+						<SimulaConstant name="Cmin" prettyName="Cmin" type="double" unit="umol/ml">
+0.001
+						</SimulaConstant>
+						<SimulaConstant name="Imax" prettyName="Imax" type="double" unit="umol/cm2/day">
+2.592
+						</SimulaConstant>
+						<SimulaConstant name="Km" prettyName="Km" type="double" unit="umol/ml">
+0.014
+						</SimulaConstant>
+						<SimulaConstant name="minimalNutrientConcentration" prettyName="minimal nutrient concentration" type="double" unit="umol/g">
+168
+						</SimulaConstant>
+						<SimulaConstant name="optimalNutrientConcentration" prettyName="optimal nutrient concentration" type="double" unit="umol/g">
+234
+						</SimulaConstant>
+					</SimulaBase>
+					<SimulaTable garbageCollectionOff="true" interpolationMethod="linear" name_column1="time since planting" name_column2="radialHydraulicConductivity" prettyName="radial hydraulic conductivity" unit_column1="day" unit_column2="cm/day/hPa">
+0	0
+1	0.00218
+100	0.00218
+
+					</SimulaTable>
+					<SimulaStochastic distribution="uniform" maximum="0.050000" minimum="-0.050000" name="soilImpedence.v2" prettyName="soil impedence.v2" type="Coordinate" unit="cm"/>
+				</SimulaBase>
+				<SimulaBase name="primaryRoot" prettyName="primary root" unit="noUnit">
+
+					<SimulaConstant name="bottomBoundary" prettyName="bottom boundary" type="bool" unit="noUnit">
+1
+					</SimulaConstant>
+					<SimulaConstant name="bounceOfTheSide" prettyName="bounce of the side" type="bool" unit="noUnit">
+1
+					</SimulaConstant>
+					<SimulaBase name="branchList" prettyName="branch list" unit="noUnit"/>
+					<SimulaConstant name="branchingAngle" prettyName="branching angle" type="double" unit="degrees">
+0
+					</SimulaConstant>
+					<SimulaConstant name="density" prettyName="density" type="double" unit="g/cm3">
+0.1
+					</SimulaConstant>
+					<SimulaConstant name="diameter" prettyName="diameter" type="double" unit="cm">
+0.4
+					</SimulaConstant>
+					<SimulaStochastic distribution="uniform" maximum="-1.050000" minimum="-1.150000" name="gravitropism.v2" prettyName="gravitropism.v2" type="Coordinate" unit="cm"/>
+					<SimulaTable garbageCollectionOff="true" interpolationMethod="linear" name_column1="days after germination" name_column2="growthRate" prettyName="growth rate" unit_column1="day" unit_column2="cm/day">
+0	5
+8	5
+12	0
+13	0
+28	0
+
+					</SimulaTable>
+					<SimulaTable garbageCollectionOff="true" interpolationMethod="linear" name_column1="time since planting" name_column2="lateralHydraulicConductivity" prettyName="lateral hydraulic conductivity" unit_column1="day" unit_column2="cm4/day/hPa">
+0	0.0432
+100	0.0432
+
+					</SimulaTable>
+					<SimulaConstant name="lengthRootTipWithoutXylemVessels" prettyName="length root tip without xylem vessels" type="double" unit="cm">
+0
+					</SimulaConstant>
+					<SimulaConstant name="numberOfXylemPoles" prettyName="number of xylem poles" type="integer" unit="noUnit">
+4
+					</SimulaConstant>
+					<SimulaBase name="potassium" prettyName="potassium" unit="noUnit">
+
+						<SimulaConstant name="Cmin" prettyName="Cmin" type="double" unit="umol/ml">
+0.001
+						</SimulaConstant>
+						<SimulaConstant name="Imax" prettyName="Imax" type="double" unit="umol/cm2/day">
+2.592
+						</SimulaConstant>
+						<SimulaConstant name="Km" prettyName="Km" type="double" unit="umol/ml">
+0.014
+						</SimulaConstant>
+						<SimulaConstant name="minimalNutrientConcentration" prettyName="minimal nutrient concentration" type="double" unit="umol/g">
+168
+						</SimulaConstant>
+						<SimulaConstant name="optimalNutrientConcentration" prettyName="optimal nutrient concentration" type="double" unit="umol/g">
+234
+						</SimulaConstant>
+					</SimulaBase>
+					<SimulaTable garbageCollectionOff="true" interpolationMethod="linear" name_column1="time since planting" name_column2="radialHydraulicConductivity" prettyName="radial hydraulic conductivity" unit_column1="day" unit_column2="cm/day/hPa">
+0	0.0001728
+100	0.0001728
+
+					</SimulaTable>
+					<SimulaStochastic distribution="uniform" maximum="0.000000" minimum="-0.000000" name="soilImpedence.v2" prettyName="soil impedence.v2" type="Coordinate" unit="cm"/>
+				</SimulaBase>
+				<SimulaBase name="resources" prettyName="resources" unit="noUnit"/>
+				<SimulaBase name="shoot" prettyName="shoot" unit="noUnit">
+
+					<SimulaConstant name="areaPerPlant" prettyName="area per plant" type="double" unit="cm2">
+660
+					</SimulaConstant>
+					<SimulaConstant name="extinctionCoefficient" prettyName="extinction coefficient" type="double" unit="noUnit">
+0.9
+					</SimulaConstant>
+					<SimulaTable garbageCollectionOff="true" interpolationMethod="linear" name_column1="time" name_column2="leafAreaExpantionRate" prettyName="leaf area expantion rate" unit_column1="day" unit_column2="cm2/day">
+0	1000
+9	1000
+11	1
+28	1
+
+					</SimulaTable>
+					<SimulaConstant name="lightUseEfficiency" prettyName="light use efficiency" type="double" unit="g/umol">
+4.2e-07
+					</SimulaConstant>
+					<SimulaBase name="potassium" prettyName="potassium" unit="noUnit">
+
+						<SimulaConstant name="leafMinimalNutrientConcentration" prettyName="leaf minimal nutrient concentration" type="double" unit="umol/g">
+273
+						</SimulaConstant>
+						<SimulaConstant name="leafOptimalNutrientConcentration" prettyName="leaf optimal nutrient concentration" type="double" unit="umol/g">
+430
+						</SimulaConstant>
+						<SimulaConstant name="stemMinimalNutrientConcentration" prettyName="stem minimal nutrient concentration" type="double" unit="umol/g">
+100
+						</SimulaConstant>
+						<SimulaConstant name="stemOptimalNutrientConcentration" prettyName="stem optimal nutrient concentration" type="double" unit="umol/g">
+215
+						</SimulaConstant>
+					</SimulaBase>
+					<SimulaConstant name="relativePotentialTranspiration" prettyName="relative potential transpiration" type="double" unit="cm3/cm2/day">
+0.0001
+					</SimulaConstant>
+					<SimulaTable garbageCollectionOff="true" interpolationMethod="linear" name_column1="time" name_column2="specificLeafArea" prettyName="specific leaf area" unit_column1="day" unit_column2="g/cm2">
+0	0.0015
+24	0.0025
+40	0.003
+60	0.003
+
+					</SimulaTable>
+				</SimulaBase>
+			</SimulaBase>
+		</SimulaBase>
+		<SimulaBase name="shootTemplate" prettyName="shoot template" unit="noUnit">
+
+			<SimulaLink name="areaPerPlant" prettyName="area per plant"/>
+			<SimulaLink name="extinctionCoefficient" prettyName="extinction coefficient"/>
+			<SimulaVariable function="constantLeafGrowthRate" integrationFunction="RungeKutta4" name="leafArea" prettyName="leaf area" unit="cm2">
+0	0	0
+
+			</SimulaVariable>
+			<SimulaDerivative function="leafAreaIndex" name="leafAreaIndex" prettyName="leaf area index" unit="cm2/cm2"/>
+			<SimulaVariable function="leafDryWeight.v2" integrationFunction="RungeKutta4" name="leafDryWeight" prettyName="leaf dry weight" unit="g">
+0	0	0
+
+			</SimulaVariable>
+			<SimulaVariable function="stemDryWeight" integrationFunction="RungeKutta4" name="stemDryWeight" prettyName="stem dry weight" unit="g">
+0	0	0
+
+			</SimulaVariable>
+		</SimulaBase>
+		<SimulaBase name="siblingRootTemplate" prettyName="sibling root template" unit="noUnit">
+
+			<SimulaBase name="branches" prettyName="branches" unit="noUnit"/>
+			<SimulaBase name="dataPoints" objectGenerator="rootDataPoints" prettyName="data points" unit="noUnit"/>
+			<SimulaPoint function="rootGrowthDirection" garbageCollectionOff="true" integrationFunction="RungeKutta4" name="growthpoint" prettyName="growthpoint" unit="cm">
+0	0	0	0	0	0	0	
+
+				<SimulaTable garbageCollectionOff="true" interpolationMethod="linear" name_column1="time" name_column2="hydraulicHeadAtRootSurface" prettyName="hydraulic head at root surface" unit_column1="day" unit_column2="cm">
+0	-200
+100	-200
+
+				</SimulaTable>
+				<SimulaDerivative function="rootCircumference" name="rootCircumference" prettyName="root circumference" unit="cm"/>
+				<SimulaDerivative function="rootDiameter" name="rootDiameter" prettyName="root diameter" unit="cm"/>
+				<SimulaVariable function="scaledRootGrowthRate" garbageCollectionOff="true" integrationFunction="RungeKutta4" name="rootLongitudinalGrowth" prettyName="root longitudinal growth" unit="cm">
+0	0	0
+
+				</SimulaVariable>
+				<SimulaVariable function="potentialRootGrowthRate" integrationFunction="RungeKutta4" name="rootPotentialLongitudinalGrowth" prettyName="root potential longitudinal growth" unit="cm">
+0	0	0
+
+				</SimulaVariable>
+				<SimulaDerivative function="rootDiameter" name="rootPotentialSecondaryGrowth" prettyName="root potential secondary growth" unit="cm"/>
+				<SimulaConstant name="rootSegmentAge" prettyName="root segment age" type="double" unit="day">
+0
+				</SimulaConstant>
+				<SimulaConstant name="rootSegmentDryWeight" prettyName="root segment dry weight" type="double" unit="g">
+0
+				</SimulaConstant>
+				<SimulaConstant name="rootSegmentLength" prettyName="root segment length" type="double" unit="cm">
+0
+				</SimulaConstant>
+				<SimulaConstant name="rootSegmentLengthDuration" prettyName="root segment length duration" type="double" unit="cm.day">
+0
+				</SimulaConstant>
+				<SimulaConstant name="rootSegmentPotentialWaterUptake" prettyName="root segment potential water uptake" type="double" unit="cm3">
+0
+				</SimulaConstant>
+				<SimulaConstant name="rootSegmentSpecificWeight" prettyName="root segment specific weight" type="double" unit="g/cm3">
+0
+				</SimulaConstant>
+				<SimulaConstant name="rootSegmentSurfaceArea" prettyName="root segment surface area" type="double" unit="cm2">
+0
+				</SimulaConstant>
+				<SimulaConstant name="rootSegmentVolume" prettyName="root segment volume" type="double" unit="cm3">
+0
+				</SimulaConstant>
+				<SimulaConstant name="rootSegmentWaterUptake" prettyName="root segment water uptake" type="double" unit="cm3">
+0
+				</SimulaConstant>
+			</SimulaPoint>
+			<SimulaDerivative function="rootNutrientTotal" name="rootDryWeight" prettyName="root dry weight" unit="g"/>
+			<SimulaDerivative function="rootTotal.v2" name="rootLength" prettyName="root length" unit="cm"/>
+			<SimulaDerivative function="rootTotal.v2" name="rootSurfaceArea" prettyName="root surface area" unit="cm2"/>
+			<SimulaDerivative function="rootSystemNutrientTotal" name="rootSystemDryWeight" prettyName="root system dry weight" unit="g"/>
+			<SimulaDerivative function="rootSystemNutrientTotal" name="rootSystemLength" prettyName="root system length" unit="cm"/>
+			<SimulaVariable function="rootSystemNutrientTotal" integrationFunction="RungeKutta4" name="rootSystemLongitudinalGrowth" prettyName="root system longitudinal growth" unit="cm">
+0	0	0
+
+			</SimulaVariable>
+			<SimulaDerivative function="rootSystemNutrientTotal" name="rootSystemSurfaceArea" prettyName="root system surface area" unit="cm2"/>
+			<SimulaDerivative function="rootSystemNutrientTotal" name="rootSystemVolume" prettyName="root system volume" unit="cm3"/>
+			<SimulaVariable function="rootSystemNutrientTotal" integrationFunction="RungeKutta4" name="rootSystemWaterUptake" prettyName="root system water uptake" unit="cm3">
+0	0	0
+
+			</SimulaVariable>
+			<SimulaDerivative function="rootTotal.v2" name="rootVolume" prettyName="root volume" unit="cm3"/>
+			<SimulaVariable function="rootNutrientTotal" integrationFunction="RungeKutta4" name="rootWaterUptake" prettyName="root water uptake" unit="cm3">
+0	0	0
+
+			</SimulaVariable>
+		</SimulaBase>
+		<SimulaBase name="simulationControls" prettyName="simulation controls" unit="noUnit">
+
+			<SimulaConstant name="SimulaStochastic::numberOfSamples" prettyName="Simula stochastic::number of samples" type="integer" unit="noUnit">
+1
+			</SimulaConstant>
+			<SimulaBase name="integrationParameters" prettyName="integration parameters" unit="noUnit">
+
+				<SimulaConstant name="defaultSpatialIntegrationLength" prettyName="default spatial integration length" type="double" unit="cm">
+5
+				</SimulaConstant>
+			</SimulaBase>
+			<SimulaBase name="outputParameters" prettyName="output parameters" unit="noUnit">
+
+				<SimulaBase name="VTU" prettyName="VTU" unit="noUnit">
+
+					<SimulaConstant name="includePointData" prettyName="include point data" type="bool" unit="noUnit">
+1
+					</SimulaConstant>
+					<SimulaConstant name="includeRoots" prettyName="include roots" type="bool" unit="noUnit">
+1
+					</SimulaConstant>
+					<SimulaConstant name="includeShoots" prettyName="include shoots" type="bool" unit="noUnit">
+0
+					</SimulaConstant>
+					<SimulaConstant name="includeVTUForDepletionZones" prettyName="include VTUFor depletion zones" type="bool" unit="noUnit">
+1
+					</SimulaConstant>
+					<SimulaConstant name="run" prettyName="run" type="bool" unit="noUnit">
+0
+					</SimulaConstant>
+					<SimulaConstant name="timeInterval" prettyName="time interval" type="double" unit="noUnit">
+1
+					</SimulaConstant>
+				</SimulaBase>
+				<SimulaBase name="defaults" prettyName="defaults" unit="noUnit">
+
+					<SimulaConstant name="endTime" prettyName="end time" type="double" unit="noUnit">
+20.
+					</SimulaConstant>
+					<SimulaConstant name="startTime" prettyName="start time" type="double" unit="noUnit">
+0
+					</SimulaConstant>
+					<SimulaConstant name="timeInterval" prettyName="time interval" type="double" unit="noUnit">
+0.2
+					</SimulaConstant>
+				</SimulaBase>
+				<SimulaBase name="garbageCollection" prettyName="garbage collection" unit="noUnit">
+
+					<SimulaConstant name="lackTime" prettyName="lack time" type="double" unit="noUnit">
+1
+					</SimulaConstant>
+					<SimulaConstant name="run" prettyName="run" type="bool" unit="noUnit">
+1
+					</SimulaConstant>
+					<SimulaConstant name="startTime" prettyName="start time" type="double" unit="noUnit">
+5
+					</SimulaConstant>
+					<SimulaConstant name="timeInterval" prettyName="time interval" type="double" unit="noUnit">
+1
+					</SimulaConstant>
+				</SimulaBase>
+				<SimulaBase name="modelDump" prettyName="model dump" unit="noUnit">
+
+					<SimulaConstant name="endTime" prettyName="end time" type="double" unit="noUnit">
+1
+					</SimulaConstant>
+					<SimulaConstant name="run" prettyName="run" type="bool" unit="noUnit">
+0
+					</SimulaConstant>
+					<SimulaConstant name="startTime" prettyName="start time" type="double" unit="noUnit">
+0
+					</SimulaConstant>
+				</SimulaBase>
+				<SimulaBase name="probeAllObjects" prettyName="probe all objects" unit="noUnit">
+
+					<SimulaConstant name="run" prettyName="run" type="bool" unit="noUnit">
+0
+					</SimulaConstant>
+					<SimulaConstant name="timeInterval" prettyName="time interval" type="double" unit="noUnit">
+1
+					</SimulaConstant>
+				</SimulaBase>
+				<SimulaBase name="rasterImage" prettyName="raster image" unit="noUnit">
+
+					<SimulaConstant name="edgeSmoothing" prettyName="edge smoothing" type="double" unit="cm">
+0
+					</SimulaConstant>
+					<SimulaConstant name="includeBinaryRawImage" prettyName="include binary raw image" type="bool" unit="noUnit">
+0
+					</SimulaConstant>
+					<SimulaConstant name="includeVTKImage" prettyName="include VTKImage" type="bool" unit="noUnit">
+0
+					</SimulaConstant>
+					<SimulaConstant name="overlapFunction" prettyName="overlap function" type="string" unit="noUnit">
+additive
+					</SimulaConstant>
+					<SimulaConstant name="radiusComesFrom" prettyName="radius comes from" type="string" unit="noUnit">
+rootDiameter,phosphorus/radiusDepletionZone
+					</SimulaConstant>
+					<SimulaConstant name="rootDiameterScalingFactor" prettyName="root diameter scaling factor" type="double" unit="100%">
+1
+					</SimulaConstant>
+					<SimulaConstant name="run" prettyName="run" type="bool" unit="noUnit">
+0
+					</SimulaConstant>
+					<SimulaConstant name="startTime" prettyName="start time" type="double" unit="noUnit">
+5
+					</SimulaConstant>
+					<SimulaConstant name="substeps" prettyName="substeps" type="integer" unit="#">
+1
+					</SimulaConstant>
+					<SimulaConstant name="timeInterval" prettyName="time interval" type="double" unit="noUnit">
+5
+					</SimulaConstant>
+					<SimulaConstant name="voxelsize" prettyName="voxelsize" type="double" unit="cm">
+0.1
+					</SimulaConstant>
+				</SimulaBase>
+				<SimulaBase name="table" prettyName="table" unit="noUnit">
+
+					<SimulaConstant name="run" prettyName="run" type="bool" unit="noUnit">
+0
+					</SimulaConstant>
+					<SimulaConstant name="searchingDepth" prettyName="searching depth" type="integer" unit="noUnit">
+5
+					</SimulaConstant>
+					<SimulaConstant name="skipTheseVariables" prettyName="skip these variables" type="string" unit="noUnit">
+primaryRoot, hypocotyl,
+					</SimulaConstant>
+				</SimulaBase>
+				<SimulaBase name="tableOfRootNodes" prettyName="table of root nodes" unit="noUnit">
+
+					<SimulaConstant name="run" prettyName="run" type="bool" unit="noUnit">
+0
+					</SimulaConstant>
+					<SimulaConstant name="timeInterval" prettyName="time interval" type="double" unit="noUnit">
+8
+					</SimulaConstant>
+				</SimulaBase>
+				<SimulaBase name="vtp" prettyName="vtp" unit="noUnit">
+
+					<SimulaConstant name="run" prettyName="run" type="bool" unit="noUnit">
+1
+					</SimulaConstant>
+					<SimulaConstant name="timeInterval" prettyName="time interval" type="double" unit="noUnit">
+1
+					</SimulaConstant>
+				</SimulaBase>
+			</SimulaBase>
+		</SimulaBase>
+		<SimulaBase name="soil" prettyName="soil" unit="noUnit">
+
+			<SimulaBase name="water" prettyName="water" unit="noUnit"/>
+		</SimulaBase>
+</SimulationModel>
+

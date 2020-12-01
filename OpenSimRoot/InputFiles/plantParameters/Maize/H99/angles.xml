@@ -1,0 +1,435 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--?xml-stylesheet type="text/xsl" href="tree-view2.xsl"? -->
+<!--
+Copyright © 2016, The Pennsylvania State University
+All rights reserved.
+
+Copyright © 2016 Forschungszentrum Jülich GmbH
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, are permitted under the GNU General Public License v3 and provided that the following conditions are met:
+1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+
+Disclaimer
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+You should have received the GNU GENERAL PUBLIC LICENSE v3 with this file in license.txt but can also be found at http://www.gnu.org/licenses/gpl-3.0.en.html
+
+ -->
+<!-- data Sam Trachsel (trachsel et al., 201? submitted to plant and soil)
+Genotype	"crown root number"	"crown root angle (degrees from vertical)"	"crown root branching (laterals/cm)"	V
+W64a	15	30	10	1
+H99	15	45	15	2
+-->
+<SimulationModelIncludeFile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../scripts/XML/SimulaXMLSchema.xsd">
+	<SimulaDirective path="hypocotyl">
+		<SimulaConstant
+			name="numberOfXylemPoles"
+			type="integer"> 61
+		</SimulaConstant>
+				<!-- v1 gives a relative maximum lenth of the soil impedence vector
+				     v2 gives a soil impedence vector for which it's length is relative to the growth vector-->
+		<SimulaConstant name="soilImpedence"> 0.3
+		</SimulaConstant>
+		<SimulaConstant name="gravitropism"> -1.
+		</SimulaConstant>
+		<SimulaStochastic
+			name="soilImpedence.v2"
+			unit="cm"
+			type="coordinate"
+			distribution="uniform"
+			minimum="-0.3"
+			maximum="0.3" />
+		<SimulaStochastic
+			name="gravitropism.v2"
+			unit="cm"
+			type="coordinate"
+			distribution="uniform"
+			minimum="0.5"
+			maximum="1" />
+	</SimulaDirective>
+	<SimulaDirective path="primaryRoot">
+		<SimulaConstant
+			name="branchingAngle"
+			unit="degrees">
+			0 <!--value unknown-->
+		</SimulaConstant>
+		<SimulaConstant
+			name="numberOfXylemPoles"
+			type="integer">
+			8 
+					 <!-- 6-10 xylem poles in primary-seminal roots and increasing more in crown & brace roots up to 48 
+					 monocotolydons roots branch from phloem poles, not xylem
+					 Hochholdinger F. 2009. The Maize Root System: Morphology, Anatomy, and Genetics. Handbook of Maize: Its Biology.145-160.
+					 -->
+		</SimulaConstant>
+		<SimulaConstant name="soilImpedence"> 0.05
+		</SimulaConstant>
+		<SimulaConstant name="gravitropism"> 0.01
+		</SimulaConstant>
+		<SimulaStochastic
+			name="soilImpedence.v2"
+			unit="cm"
+			type="coordinate"
+			distribution="uniform"
+			minimum="-0.05"
+			maximum="0.05" />
+		<SimulaStochastic
+			name="gravitropism.v2"
+			unit="cm"
+			type="coordinate"
+			distribution="uniform"
+			minimum="-0.015"
+			maximum="-0.005" />
+	</SimulaDirective>
+<!--PARAMETERS FOR Seminal ROOTS-->
+	<SimulaDirective path="braceroots">
+		<SimulaConstant
+			name="branchingAngle"
+			unit="degrees"> 140
+		</SimulaConstant>
+		<SimulaConstant
+			name="numberOfXylemPoles"
+			type="integer">
+			40 
+					 <!-- 6-10 xylem poles in primary-seminal roots and increasing more in crown & brace roots up to 48 
+					 monocotolydons roots branch from phloem poles, not xylem
+					 Hochholdinger F. 2009. The Maize Root System: Morphology, Anatomy, and Genetics. Handbook of Maize: Its Biology.145-160.
+					 -->
+		</SimulaConstant>
+		<SimulaConstant
+			name="regularTopology"
+			type="integer"> 4
+		</SimulaConstant>
+		<SimulaStochastic
+			name="soilImpedence.v2"
+			unit="cm"
+			type="coordinate"
+			distribution="uniform"
+			minimum="-0.03"
+			maximum="0.03" />
+		<SimulaStochastic
+			name="gravitropism.v2"
+			unit="cm"
+			type="coordinate"
+			distribution="uniform"
+			minimum="-0.01"
+			maximum="-0.005" />
+	</SimulaDirective>
+	<SimulaDirective path="braceroots2">
+		<SimulaConstant
+			name="branchingAngle"
+			unit="degrees"> 130
+		</SimulaConstant>
+		<SimulaConstant
+			name="numberOfXylemPoles"
+			type="integer">
+			48
+					 <!-- 6-10 xylem poles in primary-seminal roots and increasing more in crown & brace roots up to 48 
+					 monocotolydons roots branch from phloem poles, not xylem
+					 Hochholdinger F. 2009. The Maize Root System: Morphology, Anatomy, and Genetics. Handbook of Maize: Its Biology.145-160.
+					 -->
+		</SimulaConstant>
+		<SimulaConstant
+			name="regularTopology"
+			type="integer"> 3
+		</SimulaConstant>
+		<SimulaStochastic
+			name="soilImpedence.v2"
+			unit="cm"
+			type="coordinate"
+			distribution="uniform"
+			minimum="-0.03"
+			maximum="0.03" />
+		<SimulaStochastic
+			name="gravitropism.v2"
+			unit="cm"
+			type="coordinate"
+			distribution="uniform"
+			minimum="-0.01"
+			maximum="-0.005" />
+	</SimulaDirective>
+	<SimulaDirective path="seminal">
+		<SimulaConstant
+			name="branchingAngle"
+			unit="degrees">
+			90 <!--original value: 90 -->
+		</SimulaConstant>
+		<SimulaConstant
+			name="numberOfXylemPoles"
+			type="integer">
+			6
+					 					 <!-- 6-10 xylem poles in primary-seminal roots and increasing more in crown & brace roots up to 48 
+					 monocotolydons roots branch from phloem poles, not xylem
+					 Hochholdinger F. 2009. The Maize Root System: Morphology, Anatomy, and Genetics. Handbook of Maize: Its Biology.145-160.
+					 -->
+		</SimulaConstant>
+		<SimulaConstant
+			name="regularTopology"
+			type="integer">
+			1 <!--value unknown-->
+		</SimulaConstant>
+		<SimulaConstant name="soilImpedence">0.02
+		</SimulaConstant>
+		<SimulaConstant name="gravitropism">0.004
+		</SimulaConstant>
+		<SimulaStochastic
+			name="soilImpedence.v2"
+			unit="cm"
+			type="coordinate"
+			distribution="uniform"
+			minimum="-0.04"
+			maximum="0.04" />
+		<SimulaStochastic
+			name="gravitropism.v2"
+			unit="cm"
+			type="coordinate"
+			distribution="uniform"
+			minimum="-0.035"
+			maximum="-0.025" />
+	</SimulaDirective>
+	<SimulaDirective path="nodalroots">
+		<SimulaConstant
+			name="branchingAngle"
+			unit="degrees">
+			140 <!--stem growth up and these branch from the stem-->
+		</SimulaConstant>
+		<SimulaConstant
+			name="numberOfXylemPoles"
+			type="integer">
+			10
+					 <!-- 6-10 xylem poles in primary-seminal roots and increasing more in crown & brace roots up to 48 
+					 monocotolydons roots branch from phloem poles, not xylem
+					 Hochholdinger F. 2009. The Maize Root System: Morphology, Anatomy, and Genetics. Handbook of Maize: Its Biology.145-160.
+					 -->
+		</SimulaConstant>
+		<SimulaConstant
+			name="regularTopology"
+			type="integer">
+			3 <!--value unknown-->
+		</SimulaConstant>
+		<SimulaConstant
+			name="topologyOffset"
+			type="integer">
+			0 <!--value unknown-->
+		</SimulaConstant>
+		<SimulaStochastic
+			name="soilImpedence.v2"
+			unit="cm"
+			type="coordinate"
+			distribution="uniform"
+			minimum="-0.02"
+			maximum="0.02" />
+		<SimulaStochastic
+			name="gravitropism.v2"
+			unit="cm"
+			type="coordinate"
+			distribution="uniform"
+			minimum="-0.01"
+			maximum="-0.005" />
+	</SimulaDirective>
+	<SimulaDirective path="nodalroots2">
+		<SimulaConstant
+			name="branchingAngle"
+			unit="degrees">
+			135 <!--stem growth up and these branch from the stem-->
+		</SimulaConstant>
+		<SimulaConstant
+			name="numberOfXylemPoles"
+			type="integer">
+			18
+					 <!-- 6-10 xylem poles in primary-seminal roots and increasing more in crown & brace roots up to 48 
+					 monocotolydons roots branch from phloem poles, not xylem
+					 Hochholdinger F. 2009. The Maize Root System: Morphology, Anatomy, and Genetics. Handbook of Maize: Its Biology.145-160.
+					 -->
+		</SimulaConstant>
+		<SimulaConstant
+			name="regularTopology"
+			type="integer">
+			0 <!--value unknown-->
+		</SimulaConstant>
+		<SimulaConstant
+			name="topologyOffset"
+			type="integer">
+			0 <!--value unknown-->
+		</SimulaConstant>
+		<SimulaStochastic
+			name="soilImpedence.v2"
+			unit="cm"
+			type="coordinate"
+			distribution="uniform"
+			minimum="-0.02"
+			maximum="0.02" />
+		<SimulaStochastic
+			name="gravitropism.v2"
+			unit="cm"
+			type="coordinate"
+			distribution="uniform"
+			minimum="-0.01"
+			maximum="-0.005" />
+	</SimulaDirective>
+	<SimulaDirective path="nodalroots3">
+		<SimulaConstant
+			name="branchingAngle"
+			unit="degrees">
+			130 <!--stem growth up and these branch from the stem-->
+		</SimulaConstant>
+		<SimulaConstant
+			name="numberOfXylemPoles"
+			type="integer">
+			24
+					 					 <!-- 6-10 xylem poles in primary-seminal roots and increasing more in crown & brace roots up to 48 
+					 monocotolydons roots branch from phloem poles, not xylem
+					 Hochholdinger F. 2009. The Maize Root System: Morphology, Anatomy, and Genetics. Handbook of Maize: Its Biology.145-160.
+					 -->
+		</SimulaConstant>
+		<SimulaConstant
+			name="regularTopology"
+			type="integer">
+			0 <!--value unknown-->
+		</SimulaConstant>
+		<SimulaConstant
+			name="topologyOffset"
+			type="integer">
+			0 <!--value unknown-->
+		</SimulaConstant>
+		<SimulaStochastic
+			name="soilImpedence.v2"
+			unit="cm"
+			type="coordinate"
+			distribution="uniform"
+			minimum="-0.02"
+			maximum="0.02" />
+		<SimulaStochastic
+			name="gravitropism.v2"
+			unit="cm"
+			type="coordinate"
+			distribution="uniform"
+			minimum="-0.01"
+			maximum="-0.005" />
+	</SimulaDirective>
+	<SimulaDirective path="nodalroots4">
+		<SimulaConstant
+			name="branchingAngle"
+			unit="degrees">
+			130 <!--stem growth up and these branch from the stem-->
+		</SimulaConstant>
+		<SimulaConstant
+			name="numberOfXylemPoles"
+			type="integer">
+			32
+					 <!-- 6-10 xylem poles in primary-seminal roots and increasing more in crown & brace roots up to 48 
+					 monocotolydons roots branch from phloem poles, not xylem
+					 Hochholdinger F. 2009. The Maize Root System: Morphology, Anatomy, and Genetics. Handbook of Maize: Its Biology.145-160.
+					 -->
+		</SimulaConstant>
+		<SimulaStochastic
+			name="soilImpedence.v2"
+			unit="cm"
+			type="coordinate"
+			distribution="uniform"
+			minimum="-0.02"
+			maximum="0.02" />
+		<SimulaStochastic
+			name="gravitropism.v2"
+			unit="cm"
+			type="coordinate"
+			distribution="uniform"
+			minimum="-0.01"
+			maximum="-0.005" />
+	</SimulaDirective>
+	<SimulaDirective path="lateralOfCrownRoots">
+		<SimulaConstant
+			name="branchingAngle"
+			unit="degrees">
+			90 <!--original value: 62.83-->
+		</SimulaConstant>
+		<SimulaConstant
+			name="numberOfXylemPoles"
+			type="integer">
+			4 <!--value unknown-->
+		</SimulaConstant>
+		<SimulaConstant name="soilImpedence"> 0.05
+		</SimulaConstant>
+		<SimulaConstant name="gravitropism"> 0.0
+		</SimulaConstant>
+		<SimulaStochastic
+			name="soilImpedence.v2"
+			unit="cm"
+			type="coordinate"
+			distribution="uniform"
+			minimum="-0.05"
+			maximum="0.05" />
+		<SimulaConstant
+			name="gravitropism.v2"
+			type="coordinate"> 0 0 0</SimulaConstant>
+	</SimulaDirective>
+	<SimulaDirective path="lateral">
+		<SimulaConstant
+			name="branchingAngle"
+			unit="degrees">
+			90 <!--original value: 62.83-->
+		</SimulaConstant>
+		<SimulaConstant
+			name="numberOfXylemPoles"
+			type="integer">
+			4 <!--value unknown-->
+		</SimulaConstant>
+		<SimulaStochastic
+			name="soilImpedence.v2"
+			unit="cm"
+			type="coordinate"
+			distribution="uniform"
+			minimum="-0.1"
+			maximum="0.1" />
+		<SimulaConstant
+			name="gravitropism.v2"
+			type="coordinate"> 0 0 0</SimulaConstant>
+	</SimulaDirective>
+	<SimulaDirective path="finelateral">
+		<SimulaConstant
+			name="branchingAngle"
+			unit="degrees">
+			62.83 <!--original value: 62.83-->
+		</SimulaConstant>
+		<SimulaConstant
+			name="numberOfXylemPoles"
+			type="integer">
+			4 <!--value unknown-->
+		</SimulaConstant>
+		<SimulaStochastic
+			name="soilImpedence.v2"
+			unit="cm"
+			type="coordinate"
+			distribution="uniform"
+			minimum="-0.05"
+			maximum="0.05" />
+		<SimulaConstant
+			name="gravitropism.v2"
+			type="coordinate"> 0 0 0</SimulaConstant>
+	</SimulaDirective>
+	<SimulaDirective path="finelateral2">
+		<SimulaConstant
+			name="branchingAngle"
+			unit="degrees">
+			62.83 <!--original value: 62.83-->
+		</SimulaConstant>
+		<SimulaConstant
+			name="numberOfXylemPoles"
+			type="integer">
+			4 <!--value unknown-->
+		</SimulaConstant>
+		<SimulaStochastic
+			name="soilImpedence.v2"
+			unit="cm"
+			type="coordinate"
+			distribution="uniform"
+			minimum="-0.05"
+			maximum="0.05" />
+		<SimulaConstant
+			name="gravitropism.v2"
+			type="coordinate"> 0 0 0</SimulaConstant>
+	</SimulaDirective>
+</SimulationModelIncludeFile>

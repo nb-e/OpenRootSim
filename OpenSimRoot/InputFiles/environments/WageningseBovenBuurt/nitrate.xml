@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--?xml-stylesheet type="text/xsl" href="tree-view2.xsl"? -->
+<!--
+Copyright © 2016, The Pennsylvania State University
+All rights reserved.
+
+Copyright © 2016 Forschungszentrum Jülich GmbH
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, are permitted under the GNU General Public License v3 and provided that the following conditions are met:
+1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+
+Disclaimer
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+You should have received the GNU GENERAL PUBLIC LICENSE v3 with this file in license.txt but can also be found at http://www.gnu.org/licenses/gpl-3.0.en.html
+
+ -->
+
+<SimulationModelIncludeFile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../scripts/XML/SimulaXMLSchema.xsd">
+	<SimulaDirective path="environment/soil">
+		<SimulaBase name="nitrate">
+				<!--depth: negative is below ground, 0 is soil surface -->
+			<SimulaTable
+				name_column1="depth"
+				unit_column1="cm"
+				name_column2="concentration"
+				unit_column2="uMol/ml">
+					
+					<!--	 1000 0
+						 0.00001    0
+						 0 5.
+						 -2 5.
+						 -10 3.
+						 -50 2.
+
+						 -1000 2.-->
+					<!--
+						rocksprings at beginning of cropping season as measured by maria 
+						HP: 100 0 0.01 0 0 50 -5 43.27 -15 24.35 -25 3.71 -35 2.15 -45 0.45 -55 0.33 -1000 0.33 
+						LP: 100 0 0.01 0 0 2.8  -5 2.36 -15 4.02 -25 3.15 -35 2.17 -45 1.67 -55 1.59 -1000 1.59
+						
+june/4/2009
+Depth	HN-NY	HN-OH	LN-NY	LN-OH
+0 – 10	43.14	119.30	2.82	2.30
+10 – 20	33.16	15.50	2.63	3.86
+20 – 30	5.28	2.02	2.75	3.08
+30 – 40	3.94	0.33	1.88	2.10
+40 – 50	0.51	0.39	1.62	1.61
+50 – 60	0.21	0.46	2.16	1.54
+						
+					-->
+				100 0 0.01 0 0 2.8 -5 2.36 -15 4.02 -25 3.15 -35 2.17 -45 1.67 -55
+				1.59 -1000 1.59
+	         <!--100 20 -1000 20-->
+			</SimulaTable>
+			<SimulaTable
+				name_column1="depth"
+				unit_column1="cm"
+				name_column2="diffusionCoefficient"
+				unit_column2="cm2/day">
+					<!--Note, this is effective diffusion coefficient-->
+					<!--Source: barber 1995, page 223 De=2.5E-6 cm2/s = 0.216 cm2/day -->
+				1000 1e-8 0.00001 1e-8 -0 0.216 -1000 0.216
+			</SimulaTable>
+			<SimulaTable
+				name_column1="depth"
+				unit_column1="cm"
+				name_column2="bufferPower"
+				unit_column2="noUnit"> 1000 0.4 -1000 0.4
+			</SimulaTable>	
+					<!-- 2cm, will mean about no competition, anything smaller will probably introduce competition-->
+			<SimulaConstant
+				name="r1-r0"
+				unit="cm"> 4</SimulaConstant>
+
+					<!--following is for swms, note that tables with depth are allowed-->
+			<SimulaConstant
+				name="saturatedDiffusionCoefficient"
+				unit="cm2/day">
+					<!-- original swms code: 1.6416 cm2/day--> 
+					<!--Picioreanu C, van Loosdrecht M, Heijnen J. 1997. Modelling the effect of oxygen concentration on nitrite accumulation in a biofilm airlift suspension reactor.
+							nitrate: 1.7 e-9 m2/sec =  1.4688 cm2/day -->
+				1.6416
+			</SimulaConstant>
+			<SimulaConstant
+				name="longitudinalDispersivity"
+				unit="cm"> 1.</SimulaConstant>
+			<SimulaConstant
+				name="transverseDispersivity"
+				unit="cm"> 0.5</SimulaConstant>
+			<SimulaConstant
+				name="adsorptionCoefficient"
+				unit="uMol/cm"> 0.</SimulaConstant>
+		</SimulaBase>
+	</SimulaDirective>
+</SimulationModelIncludeFile>

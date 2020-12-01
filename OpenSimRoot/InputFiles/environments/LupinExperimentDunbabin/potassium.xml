@@ -1,0 +1,88 @@
+<!--SimRoot parameter file-->
+<SimulationModelIncludeFile>
+<!--environmental parameters start here. -->
+	<SimulaDirective path="environment/soil">
+
+			<SimulaBase name="potassium">
+			<!--depth: negative is below ground, 0 is soil surface -->
+				<!--Dunham and Nye, 1976 potassium: De 17.2 10-6 cm2/s-->
+				<!--Claasen et al, 1986 (range varries by soil type)
+				Cli (uMol/cm3) 0.087-5.44 (THese numbers are strange high - 2 times Km maybe a better guess. )
+				De (cm2/s) 0.72-3.910 * 10-7
+				b 2.9-22.8
+				
+				clay: 0.260/1.66/9.9
+				
+				-->
+					<!-- barber book:
+K applied			0 mg/kg	0 mg/kg	500 mg/kg	500 mg/kg
+temperature		15 C		29 C		15 C		9 C
+==========================================================
+Cli	mmol/l		0.0460	0.0900	6.2600	8.1000
+b							39			23			1.2			1.2
+De 10e-7cm2/s	0.15		0.39		5				7.5
+Imax nmol/m/s	56			112			56			112
+Km	uM/l			14			28			14			28
+Cmin	umol/l	1.6			0.89		1.6			0.89
+L0		cm			3070		3070		2260		2260
+K		10e6s			1.29		2.38		1.46		2.49
+r0	cm				0.021		0.018		0.026		0.023
+v0 10e6cm3/cm2 0.7		1.2			0.76		1.3
+	-->
+				<SimulaTable name_column1="depth" unit_column1="cm" name_column2="concentration" unit_column2="uMol/ml">
+					<!-- 1000 0
+					 0.00001    0
+					 0 0.300
+					 -1000 0.300 -->
+					 1000 0
+					 0.00001 0
+					 0 0.150
+					 -29 0.150
+					 -30 0.05
+					 -1000 0.05 
+				</SimulaTable>
+				<SimulaTable name_column1="depth" unit_column1="cm" name_column2="diffusionCoefficient" unit_column2="cm2/day" >
+				<!-- 0.0143 , source barber book?-->
+				<!--based on calculations frp, diffusion in free water at 1.56 cm2/day: 0.067-->
+				<!--Lal R. 2006. Encyclopedia of soil science. CRC Press.
+				Effective diffusion coeeficients at a volumetric water content of 0.4
+				nitrate 1e-6 cm2/s  = 0.8
+				potassium 1e-7 cm2/s  = 0.08
+				phosphorus 1-9 cm2/s  = 0.0008
+				-->
+
+				
+					1000    0.067
+					-1000		0.067
+				</SimulaTable>	
+				<SimulaTable name_column1="depth" unit_column1="cm" name_column2="bufferPower" unit_column2="noUnit" >
+					1000		10
+					-1000		10
+				</SimulaTable>
+				<!--note that these parameters define the spatial configuration of barber-cushman and 
+				thereby can, together with the timestep, significantly effect memory use, performance
+				 and accuracy of the data -->
+				 <!--make sure you take roothair length into account here-->	
+				<SimulaConstant name="r1-r0" unit="cm"> 1.5 </SimulaConstant>
+				<!--SimulaConstant name="dr" unit="cm"> 0.05 </SimulaConstant-->
+			
+			<!--SWMS only-->
+				<SimulaConstant name="saturatedDiffusionCoefficient" unit="cm2/day">
+				<!-- this is not saturated but difussion in free water -->
+				<!-- Fell and Hutchinson 1971: diffusion in water: 22e-5 cm2/sec = 19 cm2/day -->
+				<!-- Lobo VMM, Ribeiro ACF, Verissimo LMP. 1998. Diffusion coefficients in aqueous solutions of potassium chloride at high and low concentrations. Journal of Molecular Liquids 78: 139-149.
+				1.8e-9 m2/sec = 1.56 cm2/day -->
+				1.56
+				</SimulaConstant>
+				<SimulaConstant name="increaseTimeStep" >1.01</SimulaConstant>
+			<SimulaConstant name="longitudinalDispersivity" unit="cm"> 1. </SimulaConstant>
+			<SimulaConstant name="transverseDispersivity" unit="cm"> 0.5 </SimulaConstant>
+			<SimulaConstant name="adsorptionCoefficient" unit="uMol/cm">
+			<!-- note to make this equal to the barber-cushman module, you need to divide the buffer for the barber-cushman model by the water content given by the barber cushman model --> 
+			33.3 
+			</SimulaConstant>
+		</SimulaBase>
+
+	</SimulaDirective>
+</SimulationModelIncludeFile>
+	

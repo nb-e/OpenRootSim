@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright © 2016 Forschungszentrum Jülich GmbH
+All rights reserved.
+	
+Redistribution and use in source and binary forms, with or without modification, are permitted under the GNU General Public License v3 and provided that the following conditions are met:
+1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+
+Disclaimer
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+You should have received the GNU GENERAL PUBLIC LICENSE v3 with this file in license.txt but can also be found at http://www.gnu.org/licenses/gpl-3.0.en.html
+	
+-->
+<?xml-stylesheet type="text/xsl" href="XML/treeview.xsl"?>
+<SimulationModelIncludeFile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../scripts/XML/SimulaXMLSchema.xsd">
+	<SimulaDirective path="hypocotyl">
+		<SimulaConstant
+			name="numberOfXylemPoles"
+			type="integer">
+			7
+					 <!-- 6-8 xylem poles (xylem groups) in primary-seminal roots 
+					 Jackson V. 1922. Anatomical structure of the roots of barley. 
+					 -->
+		</SimulaConstant>
+				<!-- v1 gives a relative maximum lenth of the soil impedence vector
+				     v2 gives a soil impedence vector for which it's length is relative to the growth vector-->
+		<SimulaConstant name="soilImpedence"> 0.3</SimulaConstant>
+		<SimulaConstant name="gravitropism"> -1.</SimulaConstant>
+		<SimulaStochastic
+			name="soilImpedence.v2"
+			unit="cm"
+			type="coordinate"
+			distribution="uniform"
+			minimum="-0.3"
+			maximum="0.3" /> <!--this value is still from the old maize file-->
+		<SimulaStochastic
+			name="gravitropism.v2"
+			unit="cm"
+			type="coordinate"
+			distribution="uniform"
+			minimum="0.5"
+			maximum="1" /> <!--this value is still from the old maize file-->
+	</SimulaDirective>
+	<SimulaDirective path="primaryRoot">
+		<SimulaConstant
+			name="branchingAngle"
+			unit="degrees">
+			0 <!--value unknown--> <!--this value is still from the old maize file-->
+		</SimulaConstant>
+		<SimulaConstant
+			name="numberOfXylemPoles"
+			type="integer">
+			7 
+					 <!-- 6-8 xylem poles (xylem groups) in primary-seminal roots 
+					 Jackson V. 1922. Anatomical structure of the roots of barley. 
+					 -->
+		</SimulaConstant>
+		<SimulaConstant name="soilImpedence"> 0.05 </SimulaConstant> <!--this value is still from the old maize file-->
+		<SimulaConstant name="gravitropism"> 0.01 </SimulaConstant> <!--this value is still from the old maize file-->
+		<SimulaStochastic
+			name="soilImpedence.v2"
+			unit="cm"
+			type="coordinate"
+			distribution="uniform"
+			minimum="-0.05"
+			maximum="0.05" /> <!--this value is still from the old maize file-->
+		<SimulaStochastic
+			name="gravitropism.v2"
+			unit="cm"
+			type="coordinate"
+			distribution="uniform"
+			minimum="-0.015"
+			maximum="-0.005" /> <!--this value is still from the old maize file--><!--this value is still from the old maize file-->
+	</SimulaDirective>
+	<SimulaDirective path="seminal">
+		<SimulaConstant
+			name="branchingAngle"
+			unit="degrees">
+			50 <!-- Vera Hecht: PT1: y=180-(a+b), so BA=90-(y/2) Sca High Rhizo y=80° SD=14.577° n=5; Sca Low Rhizo y=68° SD=32.326° n=5 -->
+		</SimulaConstant>
+		<SimulaConstant
+			name="numberOfXylemPoles"
+			type="integer">
+			7 
+					 <!-- 6-8 xylem poles (xylem groups) in primary-seminal roots 
+					 Jackson V. 1922. Anatomical structure of the roots of barley. 
+					 -->
+		</SimulaConstant>
+		<SimulaConstant
+			name="regularTopology"
+			type="integer"> 1
+		</SimulaConstant>
+		<SimulaStochastic
+			name="soilImpedence.v2"
+			unit="cm"
+			type="coordinate"
+			distribution="normal"
+			mean="0"
+			stdev="0.1" /> <!--this value is still from the old maize file-->
+		<SimulaStochastic
+			name="gravitropism.v2"
+			unit="cm"
+			type="coordinate"
+			distribution="uniform"
+			minimum="-0.1"
+			maximum="-0.05" /> <!--this value is still from the old maize file-->
+		<SimulaConstant
+			name="cannotgrowup"
+			type="bool">1</SimulaConstant> <!--this value is still from the old maize file-->
+	</SimulaDirective>
+	<SimulaDirective path="seminalSteep">
+		<SimulaConstant
+			name="branchingAngle"
+			unit="degrees">
+			10 <!--original value: 90 --> <!--this value is still from the old maize file-->
+		</SimulaConstant>
+		<SimulaConstant
+			name="numberOfXylemPoles"
+			type="integer">
+			7 
+					 <!-- 6-8 xylem poles (xylem groups) in primary-seminal roots ("branched roots") 
+					 Jackson V. 1922. Anatomical structure of the roots of barley. From these poles, other roots (laterals) can emerge.
+					 -->
+		</SimulaConstant>
+		<SimulaConstant
+			name="regularTopology"
+			type="integer">
+			1 <!--value unknown-->
+		</SimulaConstant>
+		<SimulaStochastic
+			name="soilImpedence.v2"
+			unit="cm"
+			type="coordinate"
+			distribution="normal"
+			mean="0"
+			stdev="0.1" /> <!--this value is still from the old maize file-->
+		<SimulaStochastic
+			name="gravitropism.v2"
+			unit="cm"
+			type="coordinate"
+			distribution="uniform"
+			minimum="-0.1"
+			maximum="-0.05" /> <!--this value is still from the old maize file-->
+		<SimulaConstant
+			name="cannotgrowup"
+			type="bool">1</SimulaConstant> <!--this value is still from the old maize file-->
+	</SimulaDirective>
+	<SimulaDirective path="nodalroots">
+		<SimulaConstant
+			name="branchingAngle"
+			unit="degrees">
+			145 
+<!--stem growth up and the nodal roots branch from the nodes of the stem down, so it is 180-BA
+					 Vera Hecht: PT1: Sca High Rhizotron y=95° SD=18.028° n=3, Sca Low Rhizotron y=70° SD=31.885° n=4, with y=180-(a+b), so BA=y/2
+					 PT2: with y=180-(a+b), so BA=90-(y/2)
+					 at base Sca High y=85.6, Sca Low 5xFert. y=87 , Sca low 1xFert. y=117 (error bars all overlap)
+					 => average at base y=96.53, so BA in SimRoot: 131.735
+					 at 5cm depth Sca High y=46, Sca low 5xFert y=50.2, Sca Low 1xFert y=52.75 (error bars all overlap)
+					 => average at 5cm depth y=49.65, so BA in SimRoot: 155.175-->
+		</SimulaConstant>
+		<SimulaConstant
+			name="numberOfXylemPoles"
+			type="integer">
+			14 
+					 <!-- 12-16 xylem poles (xylem groups) in primary-nodal roots ("unbranched" roots")
+					 Jackson V. 1922. Anatomical structure of the roots of barley. From these poles, lateral roots can emerge.
+					 -->
+		</SimulaConstant>
+		<SimulaStochastic
+			name="soilImpedence.v2"
+			unit="cm"
+			type="coordinate"
+			distribution="normal"
+			mean="0"
+			stdev="0.1" /> <!--this value is still from the old maize file-->
+		<SimulaStochastic
+			name="gravitropism.v2"
+			unit="cm"
+			type="coordinate"
+			distribution="uniform"
+			minimum="-0.1"
+			maximum="-0.05" /> <!--values from the old maize file: min=-0.01, max=-0.005-->
+		<SimulaConstant
+			name="cannotgrowup"
+			type="bool">1</SimulaConstant> <!--this value is still from the old maize file-->
+	</SimulaDirective>
+	<SimulaDirective path="nodalRootsOfTillers">
+		<SimulaConstant
+			name="branchingAngle"
+			unit="degrees">
+			125 
+<!--stem growth up and the nodal roots branch from the nodes of the stem down, so it is 180-BA
+					 Vera Hecht: PT1: Sca High Rhizotron y=95° SD=18.028° n=3, Sca Low Rhizotron y=70° SD=31.885° n=4, with y=180-(a+b), so BA=y/2
+					 PT2: with y=180-(a+b), so BA=90-(y/2)
+					 at base Sca High y=85.6, Sca Low 5xFert. y=87 , Sca low 1xFert. y=117 (error bars all overlap)
+					 => average at base y=96.53, so BA in SimRoot: 131.735
+					 at 5cm depth Sca High y=46, Sca low 5xFert y=50.2, Sca Low 1xFert y=52.75 (error bars all overlap)
+					 => average at 5cm depth y=49.65, so BA in SimRoot: 155.175-->
+		</SimulaConstant>
+		<SimulaConstant
+			name="numberOfXylemPoles"
+			type="integer">
+			14 
+					 <!-- 12-16 xylem poles (xylem groups) in primary-nodal roots ("unbranched" roots")
+					 Jackson V. 1922. Anatomical structure of the roots of barley. From these poles, lateral roots can emerge.
+					 -->
+		</SimulaConstant>
+		<SimulaStochastic
+			name="soilImpedence.v2"
+			unit="cm"
+			type="coordinate"
+			distribution="normal"
+			mean="0"
+			stdev="0.1" /> <!--this value is still from the old maize file-->
+		<SimulaStochastic
+			name="gravitropism.v2"
+			unit="cm"
+			type="coordinate"
+			distribution="uniform"
+			minimum="-0.1"
+			maximum="-0.05" /> <!--values from the old maize file: min=-0.01, max=-0.005-->
+		<SimulaConstant
+			name="cannotgrowup"
+			type="bool">1</SimulaConstant> <!--this value is still from the old maize file-->
+	</SimulaDirective>
+	<SimulaDirective path="lateral">
+		<SimulaConstant
+			name="branchingAngle"
+			unit="degrees">
+			90 <!--original value: 62.83--> <!-- according to wikipedia, laterals first grow perpendicular (senkrecht) to the main root before they show gravitropism lateron. -->
+		</SimulaConstant>
+		<SimulaConstant
+			name="numberOfXylemPoles"
+			type="integer">
+			4 <!--value unknown--> <!--this value is still from the old maize file-->
+		</SimulaConstant>
+		<SimulaStochastic
+			name="soilImpedence.v2"
+			unit="cm"
+			type="coordinate"
+			distribution="normal"
+			mean="0"
+			stdev="0.1" /> <!--this value is still from the old maize file-->
+		<SimulaConstant
+			name="gravitropism.v2"
+			type="coordinate"> 0 0 0</SimulaConstant> <!--this value is still from the old maize file-->
+		<SimulaConstant
+			name="cannotgrowup"
+			type="bool">1</SimulaConstant> <!--this value is still from the old maize file-->
+	</SimulaDirective>
+	<SimulaDirective path="finelateral">
+		<SimulaConstant
+			name="branchingAngle"
+			unit="degrees">
+			62.83 <!--original value: 62.83--> <!--this value is still from the old maize file-->
+		</SimulaConstant>
+		<SimulaConstant
+			name="numberOfXylemPoles"
+			type="integer">
+			4 <!--value unknown--> <!--this value is still from the old maize file-->
+		</SimulaConstant>
+		<SimulaStochastic
+			name="soilImpedence.v2"
+			unit="cm"
+			type="coordinate"
+			distribution="normal"
+			mean="0"
+			stdev="0.01" /> <!--this value is still from the old maize file-->
+		<SimulaConstant
+			name="gravitropism.v2"
+			type="coordinate"> 0 0 0</SimulaConstant> <!--this value is still from the old maize file-->
+	</SimulaDirective>
+</SimulationModelIncludeFile>			
+

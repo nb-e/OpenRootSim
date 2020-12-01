@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright © 2016 Forschungszentrum Jülich GmbH All rights reserved. 
+	Redistribution and use in source and binary forms, with or without modification, 
+	are permitted under the GNU General Public License v3 and provided that the 
+	following conditions are met: 1. Redistributions of source code must retain 
+	the above copyright notice, this list of conditions and the following disclaimer. 
+	2. Redistributions in binary form must reproduce the above copyright notice, 
+	this list of conditions and the following disclaimer in the documentation 
+	and/or other materials provided with the distribution. 3. Neither the name 
+	of the copyright holder nor the names of its contributors may be used to 
+	endorse or promote products derived from this software without specific prior 
+	written permission. Disclaimer THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT 
+	HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, 
+	BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS 
+	FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT 
+	HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, 
+	EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT 
+	OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
+	INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, 
+	STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN 
+	ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY 
+	OF SUCH DAMAGE. You should have received the GNU GENERAL PUBLIC LICENSE v3 
+	with this file in license.txt but can also be found at http://www.gnu.org/licenses/gpl-3.0.en.html -->
+<!-- Tests formula interpreter using non-linear ODE X1’=0.3*X2*(2-X1) X2’=0.1*X1*(2-X2) -->
+<SimulationModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="../../scripts/XML/SimulaXMLSchema.xsd">
+
+	<!-- variable -->
+	<SimulaBase name="RK4">
+		<SimulaVariable name="X1" unit="cm/day" function="useFormula">
+			3.
+			<SimulaConstant name="formula" type="string"> 0.3*X2*(2-X1)
+			</SimulaConstant>
+			<SimulaBase name="variablePaths">
+				<SimulaConstant name="X1" type="string"> X1 </SimulaConstant>
+				<SimulaConstant name="X2" type="string"> X2 </SimulaConstant>
+			</SimulaBase>
+		</SimulaVariable>
+		<SimulaVariable name="X2" unit="cm/day" function="useFormula">
+			3.
+			<SimulaConstant name="formula" type="string"> 0.1*X1*(2-X2)
+			</SimulaConstant>
+			<SimulaBase name="variablePaths">
+				<SimulaConstant name="X1" type="string"> X1 </SimulaConstant>
+				<SimulaConstant name="X2" type="string"> X2 </SimulaConstant>
+			</SimulaBase>
+		</SimulaVariable>
+	</SimulaBase>
+	<SimulaBase name="RK4_largeDT">
+		<SimulaVariable name="X1" unit="cm/day" function="useFormula" maxTimeStep="2." minTimeStep="2." >
+			3.
+			<SimulaConstant name="formula" type="string"> 0.3*X2*(2-X1)
+			</SimulaConstant>
+			<SimulaBase name="variablePaths">
+				<SimulaConstant name="X1" type="string"> X1 </SimulaConstant>
+				<SimulaConstant name="X2" type="string"> X2 </SimulaConstant>
+			</SimulaBase>
+		</SimulaVariable>
+		<SimulaVariable name="X2" unit="cm/day" function="useFormula"  maxTimeStep="2." minTimeStep="2.">
+			3.
+			<SimulaConstant name="formula" type="string"> 0.1*X1*(2-X2)
+			</SimulaConstant>
+			<SimulaBase name="variablePaths">
+				<SimulaConstant name="X1" type="string"> X1 </SimulaConstant>
+				<SimulaConstant name="X2" type="string"> X2 </SimulaConstant>
+			</SimulaBase>
+		</SimulaVariable>
+	</SimulaBase>
+	<SimulaBase name="RK4_smallDT">
+		<SimulaVariable name="X1" unit="cm/day" function="useFormula" maxTimeStep="0.01" minTimeStep="0.01" >
+			3.
+			<SimulaConstant name="formula" type="string"> 0.3*X2*(2-X1)
+			</SimulaConstant>
+			<SimulaBase name="variablePaths">
+				<SimulaConstant name="X1" type="string"> X1 </SimulaConstant>
+				<SimulaConstant name="X2" type="string"> X2 </SimulaConstant>
+			</SimulaBase>
+		</SimulaVariable>
+		<SimulaVariable name="X2" unit="cm/day" function="useFormula"  maxTimeStep="0.01" minTimeStep="0.01">
+			3.
+			<SimulaConstant name="formula" type="string"> 0.1*X1*(2-X2)
+			</SimulaConstant>
+			<SimulaBase name="variablePaths">
+				<SimulaConstant name="X1" type="string"> X1 </SimulaConstant>
+				<SimulaConstant name="X2" type="string"> X2 </SimulaConstant>
+			</SimulaBase>
+		</SimulaVariable>
+	</SimulaBase>
+	<SimulaBase name="ForwardEuler">
+		<SimulaVariable name="X1" unit="cm/day"
+			integrationFunction="ForwardEuler" function="useFormula">
+			3.
+			<SimulaConstant name="formula" type="string"> 0.3*X2*(2-X1)
+			</SimulaConstant>
+			<SimulaBase name="variablePaths">
+				<SimulaConstant name="X1" type="string"> X1 </SimulaConstant>
+				<SimulaConstant name="X2" type="string"> X2 </SimulaConstant>
+			</SimulaBase>
+		</SimulaVariable>
+		<SimulaVariable name="X2" unit="cm/day"
+			integrationFunction="ForwardEuler" function="useFormula">
+			3.
+			<SimulaConstant name="formula" type="string"> 0.1*X1*(2-X2)
+			</SimulaConstant>
+			<SimulaBase name="variablePaths">
+				<SimulaConstant name="X1" type="string"> X1 </SimulaConstant>
+				<SimulaConstant name="X2" type="string"> X2 </SimulaConstant>
+			</SimulaBase>
+		</SimulaVariable>
+	</SimulaBase>
+	<SimulaBase name="ForwardEuler_largeDT">
+		<SimulaVariable name="X1" unit="cm/day"
+			integrationFunction="ForwardEuler" function="useFormula" maxTimeStep="2." minTimeStep="2.">
+			3.
+			<SimulaConstant name="formula" type="string"> 0.3*X2*(2-X1)
+			</SimulaConstant>
+			<SimulaBase name="variablePaths">
+				<SimulaConstant name="X1" type="string"> X1 </SimulaConstant>
+				<SimulaConstant name="X2" type="string"> X2 </SimulaConstant>
+			</SimulaBase>
+		</SimulaVariable>
+		<SimulaVariable name="X2" unit="cm/day"
+			integrationFunction="ForwardEuler" function="useFormula"  maxTimeStep="2." minTimeStep="2.">
+			3.
+			<SimulaConstant name="formula" type="string"> 0.1*X1*(2-X2)
+			</SimulaConstant>
+			<SimulaBase name="variablePaths">
+				<SimulaConstant name="X1" type="string"> X1 </SimulaConstant>
+				<SimulaConstant name="X2" type="string"> X2 </SimulaConstant>
+			</SimulaBase>
+		</SimulaVariable>
+	</SimulaBase>
+
+
+	<SimulaBase name="simulationControls">
+		<SimulaBase name="outputParameters">
+			<SimulaBase name="table">
+				<SimulaConstant name="run" type="bool"> 1 </SimulaConstant>
+				<SimulaConstant name="searchingDepth" type="integer"> 3
+				</SimulaConstant>
+				<SimulaConstant name="startTime" type="time"> 0.
+				</SimulaConstant>
+				<SimulaConstant name="endTime" type="time"> 100
+				</SimulaConstant>
+				<SimulaConstant name="timeInterval" type="time"> 0.1
+				</SimulaConstant>
+			</SimulaBase>
+		</SimulaBase>
+	</SimulaBase>
+
+
+</SimulationModel>
+

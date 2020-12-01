@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Simulation file for SimRoot version 5. This development version, build 
+	July 2007 Author: Jouke Postma Note: PLEASE KEEP THIS HEADER UP TO DATE! 
+	LIST BELOW WHO YOU ARE, WHEN AND WHAT CHANGES YOU MADE AND WHY. LIST YOUR 
+	SOURCE AS MUCH AS POSSIBLE! change log: 11-july-07 added support for include 
+	files. -->
+<!--STYLE SHEET SECTION: feel free to attach any stylesheet of your choosing -->
+<!--?xml-stylesheet type="text/xsl" href="tree-view2.xsl"? -->
+
+
+<!--SIMULATION MODEL -->
+<SimulationModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../scripts/XML/SimulaXMLSchema.xsd">
+
+	<SimulaBase name="soil">
+	</SimulaBase>
+
+	<SimulaBase name="plants">
+		<SimulaBase name="simpleRoot" objectGenerator="seedling">
+			<SimulaConstant name="plantType" type="string"> straightRoot
+			</SimulaConstant>
+			<SimulaConstant name="plantingTime" unit="day" type="time"> 0
+			</SimulaConstant>
+			<SimulaConstant name="plantPosition" type="coordinate"> 0 0 0
+			</SimulaConstant>
+		</SimulaBase>
+	</SimulaBase>
+
+	<SimulaIncludeFile
+		fileName="plantParameters/straightRoot/simulationControlParameters.xml" />
+
+	<SimulaIncludeFile fileName="templates/plantTemplateFullModel.xml" />
+	<SimulaIncludeFile fileName="templates/plantTemplate.IncludeGeometry.xml" />
+	<SimulaIncludeFile fileName="templates/plantTemplate.IncludeDryweight.xml" />
+	<!--SimulaIncludeFile fileName="templates/plantTemplate.IncludePhosphorusBC.xml" 
+		/ -->
+	<!-- If leaving out water and nitrate, enable this to have a rough estimate 
+		of carbon cost of nitrate fixation and uptake -->
+	<!-- SimulaIncludeFile fileName="templates/plantTemplate.IncludeNitrateBasic.xml" 
+		/ -->
+	<SimulaIncludeFile fileName="templates/plantTemplate.IncludeWaterModule.xml" />
+	<!--SimulaIncludeFile fileName="templates/plantTemplate.IncludeNitrate3D.xml"/ -->
+	<SimulaIncludeFile fileName="templates/plantTemplate.IncludePotassium3D.xml" />
+	<!-- adjusted template to compare potassium uptake between 3d and BC -->
+	<SimulaIncludeFile fileName="plantParameters/straightRoot/plantTemplate.IncludePotassiumBC.xml" />
+
+	<!--SimulaIncludeFile fileName="templates/configurationCarbon.xml" / -->
+	<!--SimulaIncludeFile fileName="templates/plantTemplate.IncludeRootHairs.xml" 
+		/> <SimulaIncludeFile fileName="templates/plantTemplate.IncludeRootLengthProfile.xml" 
+		/> <SimulaIncludeFile fileName="templates/plantTemplate.IncludeAerenchyma.xml" 
+		/> <SimulaIncludeFile fileName="templates/plantTemplate.IncludeStress.xml" 
+		/ -->
+
+	<!--SimulaIncludeFile fileName="environments/Rocksprings/Rocksprings-bean.xml" 
+		/ -->
+	<SimulaIncludeFile fileName="environments/pots/pot.xml" />
+
+	<SimulaBase name="rootTypeParameters">
+		<SimulaIncludeFile fileName="plantParameters/straightRoot/straightRoot.xml" />
+	</SimulaBase>
+
+</SimulationModel>

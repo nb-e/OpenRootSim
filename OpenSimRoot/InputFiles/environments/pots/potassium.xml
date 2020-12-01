@@ -1,0 +1,53 @@
+<!--SimRoot parameter file-->
+<SimulationModelIncludeFile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../scripts/XML/SimulaXMLSchema.xsd">
+<!--environmental parameters start here. -->
+	<SimulaDirective path="environment/soil">
+
+			<SimulaBase name="potassium">
+					<SimulaTable name_column1="depth" unit_column1="cm" name_column2="concentration" unit_column2="uMol/ml">
+					 1000 0.1
+					 -1000 0.1 
+				</SimulaTable>
+				<SimulaTable name_column1="depth" unit_column1="cm" name_column2="diffusionCoefficient" unit_column2="cm2/day" >
+				<!-- 0.0143 , source barber book?-->
+				<!--based on calculations frp, diffusion in free water at 1.56 cm2/day: 0.067-->
+				<!--Lal R. 2006. Encyclopedia of soil science. CRC Press.
+				Effective diffusion coeeficients at a volumetric water content of 0.4
+				nitrate 1e-6 cm2/s  = 0.8
+				potassium 1e-7 cm2/s  = 0.08
+				phosphorus 1-9 cm2/s  = 0.0008
+				-->
+					1000    0.02
+					-1000		0.02
+				</SimulaTable>	
+				<SimulaTable name_column1="depth" unit_column1="cm" name_column2="bufferPower" unit_column2="noUnit" >
+					1000		10
+					-1000		10
+				</SimulaTable>
+				<!--note that these parameters define the spatial configuration of barber-cushman and 
+				thereby can, together with the timestep, significantly effect memory use, performance
+				 and accuracy of the data -->
+				 <!--make sure you take roothair length into account here-->	
+				<SimulaConstant name="r1-r0" unit="cm"> 2. </SimulaConstant>
+				<SimulaConstant name="dr" unit="cm"> 0.05 </SimulaConstant>
+			
+			<!--SWMS only-->
+				<SimulaConstant name="saturatedDiffusionCoefficient" unit="cm2/day">
+				<!-- this is not saturated but difussion in free water -->
+				<!-- Fell and Hutchinson 1971: diffusion in water: 22e-5 cm2/sec = 19 cm2/day -->
+				<!-- Lobo VMM, Ribeiro ACF, Verissimo LMP. 1998. Diffusion coefficients in aqueous solutions of potassium chloride at high and low concentrations. Journal of Molecular Liquids 78: 139-149.
+				1.8e-9 m2/sec = 1.56 cm2/day -->
+				10
+				</SimulaConstant>
+				<SimulaConstant name="increaseTimeStep" >1.05</SimulaConstant>
+			<SimulaConstant name="longitudinalDispersivity" unit="cm"> 0. </SimulaConstant>
+			<SimulaConstant name="transverseDispersivity" unit="cm"> 0. </SimulaConstant>
+			<SimulaConstant name="adsorptionCoefficient" unit="uMol/cm">
+			<!-- note to make this equal to the barber-cushman module, you need to divide the buffer for the barber-cushman model by the water content given by the barber cushman model --> 
+			40
+			</SimulaConstant>
+		</SimulaBase>
+
+	</SimulaDirective>
+</SimulationModelIncludeFile>
+	

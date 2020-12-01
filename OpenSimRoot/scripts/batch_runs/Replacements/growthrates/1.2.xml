@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--?xml-stylesheet type="text/xsl" href="tree-view2.xsl"? -->
+<!--
+Copyright © 2016, The Pennsylvania State University
+All rights reserved.
+
+Copyright © 2016 Forschungszentrum Jülich GmbH
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, are permitted under the GNU General Public License v3 and provided that the following conditions are met:
+1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+
+Disclaimer
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+You should have received the GNU GENERAL PUBLIC LICENSE v3 with this file in license.txt but can also be found at http://www.gnu.org/licenses/gpl-3.0.en.html
+
+ -->
+	<!-- Growthrate parameters for maize	-->
+<SimulationModelIncludeFile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../scripts/XML/SimulaXMLSchema.xsd">
+	<SimulaDirective path="shoot">
+		<SimulaTable
+			name_column1="time"
+			name_column2="leafAreaExpantionRate"
+			unit_column1="day"
+			unit_column2="cm2/day"> 
+			  <!-- Raul 2007 data non-drougth after 28? days: avg 1842 range 905-3074 -->
+			  <!-- Raul 2005 data non-drougth after 28? days: avg 800 range 625-900 -->
+			  <!-- Raul 2006 based on dryweights leaf area was probably more like 1485 -->
+			<!-- chaochun 2007 bean: ave leaf area 800 cm2 after 4 weeks-->
+			<!-- three sister experiment 2008 leaf area estimates fit nicely exponential curve with formula
+			leaf area = 2.5 x 1.3^days which (with an offset of 3 days for emergence converst to
+   0 0 1 0 2 2.5 3 0.75 4 0.98 5 1.27 6 1.65 7 2.14 8 2.78 9 3.62 10 4.71 11 6.12 12 7.95 13 10.34 
+   14 13.44 15 17.47 16 22.72 17 29.53 18 38.39 19 49.91 20 64.88 21 84.34 22 109.64 23 142.54 24 185.3 
+   25 240.89 26 313.15 27 407.1 100	407.1	-->
+   <!--fitting polynomial through threesister dataset and taking the derivative of that -->
+   <!--dwyer and steward: after about 30 days this should be constant roughly somewhere around 200-->
+			0 0 2 0 2.38 2.32 2.77 3.24 3.15 3.93 3.54 4.41 3.92 4.72 4.3 4.87
+			4.69 4.89 5.07 4.81 5.45 4.64 5.84 4.41 6.22 4.14 6.61 3.84 6.99 3.55
+			7.37 3.27 7.76 3.02 8.14 2.83 8.53 2.71 8.91 2.66 9.29 2.71 9.68 2.88
+			10.06 3.16 10.44 3.58 10.83 4.15 11.21 4.87 11.6 5.76 11.98 6.82
+			12.36 8.07 12.75 9.5 13.13 11.13 13.52 12.96 13.9 14.99 14.28 17.23
+			14.67 19.68 15.05 22.35 15.43 25.22 15.82 28.32 16.2 31.62 16.59
+			35.14 16.97 38.87 17.35 42.81 17.74 46.95 18.12 51.29 18.51 55.83
+			18.89 60.55 19.27 65.45 19.66 70.53 20.04 75.76 20.42 81.16 20.81
+			86.69 21.19 92.36 21.58 98.15 21.96 104.05 22.34 110.04 22.73 116.11
+			23.11 122.24 23.49 128.42 23.88 134.63 24.26 140.86 24.65 147.08
+			25.03 153.28 25.41 159.42 25.8 165.51 26.18 171.5 26.57 177.39 26.95
+			183.14 27.33 188.73 27.72 194.13 28.1 199.33 28.48 204.29 28.87
+			208.98 29.25 213.38 29.64 217.45 30.02 221.18 30.4 224.52 30.79
+			227.44 31.17 229.92 31.56 231.91 31.94 233.39 33.09 234.36 50 234.36
+			80 0
+		  <SimulaConstant
+			  name="multiplier"> 1.2
+		  </SimulaConstant>
+		</SimulaTable>
+	</SimulaDirective>
+	<SimulaDirective path="hypocotyl">
+		<SimulaTable
+			name_column1="time since creation"
+			unit_column1="day"
+			name_column2="growthRate"
+			unit_column2="cm/day"> 0 1 1 2 2 2 3 2 5 0 1000 0
+		</SimulaTable>
+		<SimulaConstant
+			name="diameter"
+			unit="cm"> 0.15
+		</SimulaConstant>
+	</SimulaDirective>
+
+
+<!--
+Moshe's data on root diameter:
+Seminal Roots, apical section (0-4 cm): Diam: 0.793 mm; SD: 0.137; n: 23.
+Seminal Roots, maturation section (4-8 cm): Diam: 0.844 mm; SD: 0.117; n: 24.
+Crown Nodal Roots, apical section (0-4 cm): Diam: 1.207 mm; SD: 0.122; n: 25.
+Crown Nodal Roots, maturation section (4-8 cm): Diam: 1.137 mm; SD: 0.177; n: 30.
+Lateral of the Seminal Roots (apical 0-4 cm): Diam: 0.371 mm; SD: 0.082; n: 27.
+-->
+	<SimulaDirective path="primaryRoot">
+		<SimulaTable
+			name_column1="time since creation"
+			unit_column1="day"
+			name_column2="growthRate"
+			unit_column2="cm/day">
+					 <!--raul2006: 189 cm / 28 days = 6.75 cm/day-->
+					 <!--raul-verbal: 2006 data is over estimation - primary root length should be more in range of 140cm--> 
+					 <!--assuming max depth is about 2 meters & growth slows down once the crown roots start to grow-->
+			0 4.5 28 4.5 38 0. 1000 0.
+		</SimulaTable>
+		<SimulaConstant
+			name="diameter"
+			unit="cm">
+				<!--raul2006: 0.65 mm-->
+			0.065
+		</SimulaConstant>
+	</SimulaDirective>
+	<SimulaDirective path="braceroots">
+		<SimulaTable
+			name_column1="time since creation"
+			unit_column1="day"
+			name_column2="growthRate"
+			unit_column2="cm/day">
+				<!--raul2006: nodalroots appear later - but sometimes overtake seminal roots in growth. However the length of these roots is very variable-->
+			0 0.01 5 1 10 4.5 17 4.5 22 0 1000 0.
+		</SimulaTable>
+		<SimulaStochastic
+			name="longitudinalGrowthRateMultiplier"
+			unit="cm"
+			distribution="uniform"
+			minimum="0.7"
+			maximum="1.0" />
+		<SimulaTable
+			name_column1="time since creation"
+			unit_column1="day"
+			name_column2="diameter"
+			unit_column2="cm"
+			type="double"> 0 0.4 8 0.4 15 0.15 24 0.1 100 0.1
+		</SimulaTable>
+	</SimulaDirective>
+	<SimulaDirective path="braceroots2">
+		<SimulaTable
+			name_column1="time since creation"
+			unit_column1="day"
+			name_column2="growthRate"
+			unit_column2="cm/day">
+				<!--raul2006: nodalroots appear later - but sometimes overtake seminal roots in growth. However the length of these roots is very variable-->
+			0 0.01 5 1 10 4.5 17 4.5 22 0 1000 0.
+		</SimulaTable>
+		<SimulaStochastic
+			name="longitudinalGrowthRateMultiplier"
+			unit="cm"
+			distribution="uniform"
+			minimum="0.7"
+			maximum="1." />
+		<SimulaTable
+			name_column1="time since creation"
+			unit_column1="day"
+			name_column2="diameter"
+			unit_column2="cm"
+			type="double"> 0 0.5 9 0.5 16 0.2 24 0.1 100 0.1
+		</SimulaTable>
+	</SimulaDirective>
+	<SimulaDirective path="seminal">
+		<SimulaTable
+			name_column1="time since creation"
+			unit_column1="day"
+			name_column2="growthRate"
+			unit_column2="cm/day"> 0 0.01 1 0.5 2 4.5 28 4.5 38 0.0 100 0
+		</SimulaTable>
+		<SimulaStochastic
+			name="longitudinalGrowthRateMultiplier"
+			unit="cm"
+			distribution="normal"
+			mean="1"
+			stdev="0.1"
+			minimum="0.6"
+			maximum="1.2" />
+		<SimulaConstant
+			name="diameter"
+			unit="cm">
+				<!--raul2006: sem roots 0.85 mm and larger-->
+			0.085
+		</SimulaConstant>
+	</SimulaDirective>
+	<SimulaDirective path="nodalroots">
+		<SimulaTable
+			name_column1="time since creation"
+			unit_column1="day"
+			name_column2="growthRate"
+			unit_column2="cm/day">
+		<!--raul2006: mesocotylborn roots appear later - but sometimes overtake seminal roots in growth. However the length of these roots is very variable-->
+			0 0.01 1 1 3 4.5 28 4.5 38 0 1000 0.
+		</SimulaTable>
+		<SimulaStochastic
+			name="longitudinalGrowthRateMultiplier"
+			unit="cm"
+			distribution="normal"
+			mean="1"
+			stdev="0.1"
+			minimum="0.6"
+			maximum="1.2" />
+		<SimulaTable
+			name_column1="time since creation"
+			unit_column1="day"
+			name_column2="diameter"
+			unit_column2="cm"
+			type="double">
+		<!--raul2006: nodal roots 1.2 mm and larger-->
+			0 0.12 10 0.09 100 0.09
+		</SimulaTable>
+	</SimulaDirective>
+	<SimulaDirective path="nodalroots2">
+		<SimulaTable
+			name_column1="time since creation"
+			unit_column1="day"
+			name_column2="growthRate"
+			unit_column2="cm/day">
+		<!--raul2006: mesocotylborn roots appear later - but sometimes overtake seminal roots in growth. However the length of these roots is very variable-->
+			0 0.01 1 1 3 4.5 28 4.5 38 0 1000 0.
+		</SimulaTable>
+		<SimulaStochastic
+			name="longitudinalGrowthRateMultiplier"
+			unit="cm"
+			distribution="normal"
+			mean="1"
+			stdev="0.1"
+			minimum="0.6"
+			maximum="1.2" />
+		<SimulaTable
+			name_column1="time since creation"
+			unit_column1="day"
+			name_column2="diameter"
+			unit_column2="cm"
+			type="double">
+		<!--raul2006: nodal roots 1.2 mm and larger-->
+			0 0.14 10 0.09 100 0.09
+		</SimulaTable>
+	</SimulaDirective>
+	<SimulaDirective path="nodalroots3">
+		<SimulaTable
+			name_column1="time since creation"
+			unit_column1="day"
+			name_column2="growthRate"
+			unit_column2="cm/day">
+		<!--raul2006: mesocotylborn roots appear later - but sometimes overtake seminal roots in growth. However the length of these roots is very variable-->
+			0 0.01 1 1 3 4.5 28 4.5 38 0 1000 0.
+		</SimulaTable>
+		<SimulaStochastic
+			name="longitudinalGrowthRateMultiplier"
+			unit="cm"
+			distribution="normal"
+			mean="1"
+			stdev="0.1"
+			minimum="0.6"
+			maximum="1.2" />
+		<SimulaTable
+			name_column1="time since creation"
+			unit_column1="day"
+			name_column2="diameter"
+			unit_column2="cm"
+			type="double">
+		<!--raul2006: nodal roots 1.2 mm and larger-->
+			0 0.16 10 0.10 100 0.10
+		</SimulaTable>
+	</SimulaDirective>
+	<SimulaDirective path="nodalroots4">
+		<SimulaTable
+			name_column1="time since creation"
+			unit_column1="day"
+			name_column2="growthRate"
+			unit_column2="cm/day">
+		<!--raul2006: mesocotylborn roots appear later - but sometimes overtake seminal roots in growth. However the length of these roots is very variable-->
+			0 0.01 1 1 3 4.5 28 4.5 38 0 1000 0.
+		</SimulaTable>
+		<SimulaStochastic
+			name="longitudinalGrowthRateMultiplier"
+			unit="cm"
+			distribution="normal"
+			mean="1"
+			stdev="0.1"
+			minimum="0.6"
+			maximum="1.2" />
+		<SimulaTable
+			name_column1="time since creation"
+			unit_column1="day"
+			name_column2="diameter"
+			unit_column2="cm"
+			type="double">
+		<!--raul2006: nodal roots 1.2 mm and larger-->
+			0 0.20 10 0.11 100 0.11
+		</SimulaTable>
+	</SimulaDirective>
+	<SimulaDirective path="lateralOfCrownRoots">
+	<!--from the field data the crown root laterals nearly look like seminal roots, just not as thick. They have dense tertiary lateral roots that are as thick as the laterals of the seminals, but do not have the fine lateral roots that we saw else where-->
+		<SimulaTable
+			name_column1="time since creation"
+			unit_column1="day"
+			name_column2="growthRate"
+			unit_column2="cm/day">
+		<!--based on moshes hydroponics stuff - lateral grow about a cm the first 3 days and about 4 cm in the following 8 days - with quite some variation in the later part - rauls laterals at 28 do not look longer than moshes at 14 days-->
+		<!--based on total root length I have to assume these are upper limits-->
+			0 0.1 1 0.5 3 1.2 12 1.2 18 0.0 1000 0.0
+		</SimulaTable>
+		<SimulaStochastic
+			name="longitudinalGrowthRateMultiplier"
+			unit="cm"
+			distribution="normal"
+			mean="0.4"
+			stdev="0.3"
+			minimum="0.1"
+			maximum="1" />
+		<SimulaConstant
+			name="diameter"
+			unit="cm">
+	
+		<!--jouke 2008 field observations: these are about the same thickness as seminal roots-->
+			0.07
+		</SimulaConstant>
+	</SimulaDirective>
+	<SimulaDirective path="lateral">
+		<SimulaTable
+			name_column1="time since creation"
+			unit_column1="day"
+			name_column2="growthRate"
+			unit_column2="cm/day">
+		<!--based on moshes hydroponics stuff - lateral grow about a cm the first 3 days and about 4 cm in the following 8 days - with quite some variation in the later part - rauls laterals at 28 do not look longer than moshes at 14 days-->
+		<!--based on total root length I have to assume these are upper limits-->
+		<!--Maize” cahn et al: elongation of lateral roots : ~1cm/day and only a few days-->
+		<!-- Mollier A, Pellerin S. 1999. Maize root system growth and development as influenced by phosphorus deficiency. J. Exp. Bot. 50: 487-497.
+			2-20 cm in 8 days , average 8 cm in 8 days 
+		-->
+			0 0.01 1 0.2 3 0.4 7 1.0 11 0.0 1000 0.0
+		</SimulaTable>
+		<SimulaStochastic
+			name="longitudinalGrowthRateMultiplier"
+			unit="cm"
+			distribution="lognormal"
+			mean="0.7"
+			stdev="0.3"
+			minimum="0.1"
+			maximum="2." />
+		<SimulaConstant
+			name="diameter"
+			unit="cm">
+		<!--moshe 2008 personal: lateral roots 0.3-0.4 mm (commercial variety, hydroponics)-->
+		<!--raul2006: laterals 0.4-0.5 mm-->
+			0.04
+		</SimulaConstant>
+	</SimulaDirective>
+	<SimulaDirective path="finelateral">
+		<SimulaTable
+			name_column1="time since creation"
+			unit_column1="day"
+			name_column2="growthRate"
+			unit_column2="cm/day">
+				<!--Raul2006: these stay very short-->
+			0 0.01 1 0.35 6 0.0 1000 0.0
+		</SimulaTable>
+		<SimulaStochastic
+			name="longitudinalGrowthRateMultiplier"
+			unit="cm"
+			distribution="normal"
+			mean="1"
+			stdev="0.1"
+			minimum="0.5"
+			maximum="1.5" />
+		<SimulaConstant
+			name="diameter"
+			unit="cm">
+			 <!--Raul2006: fine laterals (tertiary) roots 0.25-0.4 mm -->
+			0.025
+		</SimulaConstant>
+	</SimulaDirective>
+	<SimulaDirective path="finelateral2">
+		<SimulaTable
+			name_column1="time since creation"
+			unit_column1="day"
+			name_column2="growthRate"
+			unit_column2="cm/day">
+				<!--Raul2006: these stay very short, 0.5-2 cm?-->
+			0 0.001 1 0.28 4 0.0 1000 0.0
+		</SimulaTable>
+		<SimulaStochastic
+			name="longitudinalGrowthRateMultiplier"
+			unit="cm"
+			distribution="normal"
+			mean="1"
+			stdev="0.1"
+			minimum="0.5"
+			maximum="1.5" />
+		<SimulaConstant
+			name="diameter"
+			unit="cm">
+			 <!--Raul2006: fine laterals (tertiary) roots 0.25-0.4 mm -->
+			0.015
+		</SimulaConstant>
+	</SimulaDirective>
+</SimulationModelIncludeFile>

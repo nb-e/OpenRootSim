@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--?xml-stylesheet type="text/xsl" href="tree-view2.xsl"? -->
+<!--
+Copyright © 2016, The Pennsylvania State University
+All rights reserved.
+
+Copyright © 2016 Forschungszentrum Jülich GmbH
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, are permitted under the GNU General Public License v3 and provided that the following conditions are met:
+1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+
+Disclaimer
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+You should have received the GNU GENERAL PUBLIC LICENSE v3 with this file in license.txt but can also be found at http://www.gnu.org/licenses/gpl-3.0.en.html
+
+ -->
+
+<SimulationModelIncludeFile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../scripts/XML/SimulaXMLSchema.xsd">
+	<SimulaDirective path="environment">
+		<SimulaBase name="atmosphere">
+			<SimulaConstant
+				name="irradiation"
+				unit="uMol/cm2/day">
+				4000
+			  <!-- average estimate for green houses tyson 800 uMol/m2/s  = 3456.0 uMol/cm2/day (12 hour light)
+			  5184 for 1200uMol/m2/s
+			 average Raul experiment 2006 green houses tyson 590 uMol/m2/s measurements taken from 10am-1pm 
+			    2548.8 uMol/cm2/day (based on 12 hour day)
+			    about 25% less because of mornings and evenings ?
+			    		   
+              2.8330E-3 Mj/cm2/d sunny summers day in the Netherlands: day 190 year 1999 data KNMI ; NOTE: use PAR/RDD ratio of 0.5-->
+			</SimulaConstant>
+			<SimulaConstant
+				name="PAR/RDD"
+				unit="100%">
+			<!--note="optional conversion factor from RDD to PAR - normally 0.5; only used if irradiation isn't converted yet otherwise set to 1"-->
+				1.
+			</SimulaConstant>
+			<SimulaTable
+				name_column2="precipitation"
+				name_column1="time"
+				unit_column1="day"
+				unit_column2="cm/day"
+				interpolationMethod="step"> 
+			  <!--
+			  Rocksprings, PA, maize season 2009
+			  1 0 2 1 3 0.29 4	0 5 0 6 0.61 7 0 8 0 9 0.25 10 0.03 11 0 12 0.64 13 0.33 14 0 15 0 16 0 17 0 18 1.8 19 0.2 20 0 21 2.84 22 0.38 23 0
+				24 0 25 0 26 0 27 0.18 28 0 29 0.46 30 0 31 1.35 32 0.13 33 0.23 34 0.25 35 0 36 0 37 0 38 0 39 0 40 0 41 0 42 1.42 -->
+				0 0 1 0 2 1 3 0.29 4 0 5 0 6 0.61 7 0 8 0 9 0.25 10 0.03 11 0 12
+				0.64 13 0.33 14 0 15 0 16 0 17 0 18 1.8 19 0.2 20 0 21 2.84 22 0.38
+				23 0 24 0 25 0 26 0 27 0.18 28 0 29 0.46 30 0 31 1.35 32 0.13 33
+				0.23 34 0.25 35 0 36 0 37 0 38 0 39 0 40 0 41 0 42 1.42
+			</SimulaTable>
+			<SimulaTable
+				name_column2="evaporation"
+				name_column1="time"
+				unit_column1="day"
+				unit_column2="cm/day"
+				interpolationMethod="step">
+			<!--this is 'estimated' data for rocksprings. Maybe not be so accurate -->
+				0 0 1 0.05 2 0.1 3 0.1 4 0.05 5 0.05 6 0.1 7 0.05 8 0.05 9 0.1 10
+				0.1 11 0.05 12 0.1 13 0.1 14 0.05 15 0.04 16 0.03 17 0.02 18 0.09 19
+				0.09 20 0.04 21 0.09 22 0.09 23 0.04 24 0.03 25 0.02 26 0.02 27 0.08
+				28 0.03 29 0.08 30 0.03 31 0.08 32 0.07 33 0.07 34 0.07 35 0.03 36
+				0.02 37 0.01 38 0 39 0 40 0 41 0 42 0.06
+			</SimulaTable>
+
+		<!-- for pennman monteith -->
+<!-- numbers need to be checked -->
+			<SimulaConstant
+				name="netRadiationSoil"
+				unit="W/m2"> 0</SimulaConstant>
+			<SimulaConstant
+				name="netRadiation"
+				unit="W/m2"> 50</SimulaConstant>
+			<SimulaConstant
+				name="windSpeed"
+				unit="m/s"> 2.</SimulaConstant>
+			<SimulaConstant
+				name="relativeHumidity"
+				unit="m/s"> 60</SimulaConstant>
+			<SimulaTable
+				name_column2="averageDailyTemperature"
+				name_column1="time"
+				unit_column1="day"
+				unit_column2="degreesC"
+				interpolationMethod="linear"> 0 16.9 100 16.9
+			</SimulaTable>
+
+<!-- these are necessary to compute incoming radiation by the radiation module -->
+			<SimulaConstant
+				name="albedoSoil"
+				unit="noUnit"> 0.17</SimulaConstant>
+			<SimulaConstant
+				name="albedoCrop"
+				unit="noUnit"> 0.23</SimulaConstant>
+			<!-- 0.23 grass 0.17 bare soil 0.05 open water 0.4 desert sand -->
+			<SimulaConstant
+				name="altitude"
+				unit="m"> 91</SimulaConstant>
+			<SimulaConstant
+				name="startDay"
+				unit="noUnit"
+				type="integer"> 22</SimulaConstant>
+			<SimulaConstant
+				name="startMonth"
+				unit="noUnit"
+				type="integer"> 6</SimulaConstant>
+			<SimulaConstant
+				name="latitude"
+				unit="noUnit"> 50.8</SimulaConstant>
+			<SimulaTable
+				name_column2="actualDurationofSunshine"
+				name_column1="time"
+				unit_column1="day"
+				unit_column2="hour"
+				interpolationMethod="step">
+				<!-- time of the day that there are no clouds -->
+				0 0 60 0
+			</SimulaTable>
+		</SimulaBase>
+	</SimulaDirective>
+</SimulationModelIncludeFile>

@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright © 2016 Forschungszentrum Jülich GmbH
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, are permitted under the GNU General Public License v3 and provided that the following conditions are met:
+1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+
+Disclaimer
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+You should have received the GNU GENERAL PUBLIC LICENSE v3 with this file in license.txt but can also be found at http://www.gnu.org/licenses/gpl-3.0.en.html
+
+ -->
+<?xml-stylesheet type="text/xsl" href="XML/treeview.xsl"?>
+<SimulationModelIncludeFile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../scripts/XML/SimulaXMLSchema.xsd">
+	<SimulaDirective path="shoot">			
+			<SimulaTable name_column1="time" name_column2="leafAreaExpantionRate"  unit_column1="day" unit_column2="cm2/day"> 
+<!-- 
+very rought estimate based on curve fitting on m.ernst data (6 experiments, not using experiment 5 which has much 
+faster growth. Also assuming SLA is 500 and stem fraction of the shoot is 0 0 10 0 20 50 28 50 
+
+wet
+0	0
+1	0.5
+2	3
+3	1
+10	2
+15	3
+20	5.5
+25	12
+28	19
+
+dry (with recovery)
+0	0
+1	0.5
+2	3
+3	1
+10	1
+15	2.2
+20	2.2
+25	12
+28	19
+
+ -->
+<!--
+0	0
+1	0.5
+2	3
+3	1
+10	1
+15	2.2
+20	2.2
+25	12
+28	19
+ -->
+<!--Leaf area growth rate Durum HN based on exponential curve fitting with formula leaf area = 4.7 x 1.1^days
+ R^2 0.9923
+ 
+ 0	0
+1	0.52
+2	0.57
+3	0.62
+10	1.22
+15	1.96
+20	3.17
+25	5.1
+28	6.7
+-->
+0	0
+1	0.517
+2	0.5687
+3	0.62557
+4	0.688127
+5	0.7569397
+6	0.83263367
+7	0.915897037
+8	1.007486741
+9	1.108235415
+10	1.219058956
+11	1.340964852
+12	1.475061337
+13	1.622567471
+14	1.784824218
+15	1.96330664
+16	2.159637304
+17	2.375601034
+18	2.613161137
+19	2.874477251
+20	3.161924976
+21	3.478117474
+22	3.825929221
+23	4.208522143
+24	4.629374358
+25	5.092311793
+26	5.601542973
+27	6.16169727
+28	6.777866997
+
+
+			</SimulaTable>
+		</SimulaDirective>
+		<SimulaDirective path="hypocotyl">
+				<SimulaTable name_column1="time since creation" unit_column1="day" name_column2="growthRate" unit_column2="cm/day">
+					 0 0
+					 2 0
+					 3 1
+					 4 1
+					 5 0
+					 1000 0
+				</SimulaTable>
+				<SimulaConstant name="diameter"  unit="cm">
+					 0.15 
+				</SimulaConstant>
+		</SimulaDirective>
+
+
+		<SimulaDirective path="primaryRoot">
+				<SimulaTable name_column1="time since creation" unit_column1="day" name_column2="growthRate" unit_column2="cm/day">
+					 <!-- does not really grow in barley only gives rise to seminals, according to sigi jahnke -->
+					 0    0.1
+					 3   0.1 
+					 5    0. 
+					 1000  0.
+				</SimulaTable>
+				<SimulaConstant name="diameter"  unit="cm">
+				<!--raul2006: 0.65 mm-->
+					 0.065 
+				</SimulaConstant>
+		</SimulaDirective>
+		<SimulaDirective path="seminal">
+				<SimulaTable name_column1="time since creation" unit_column1="day" name_column2="growthRate" unit_column2="cm/day">
+				<!-- marc2011 pouches: growth rates these roots stop earlier, data still to be taken, now based on estimates
+0		1.4
+10		1.4
+13		0.2
+40      0.2
+-->
+<!--  average growth rate rhizotrons according to michaelas data is 1.46 cm/day (movement towards deep) and stdev of 0.88   or 
+2.4 if we calculate from the rhizotron thick root length which includes the wiggling.-->
+<!--  in the field nodal roots grow at least to a depth of 60 cm (coring data vera hecht) -->
+
+<!--
+0       0
+1		1.34
+4		1.34778125
+5		1.91675
+6		2.7285
+7		2.43525
+10		2.6697083333
+11		1.816875
+12		1.4875
+13		1.2
+28      1.2
+-->
+
+
+0	0
+9	4.277914431
+13	3.230017275
+17	2.410722966
+21	1.975344356
+24	1.098868668
+28	0.549372849
+
+
+
+
+				</SimulaTable>
+				<SimulaStochastic  name="longitudinalGrowthRateMultiplier" unit="cm" distribution="normal" mean="1" stdev="0.2"  minimum="0.0" maximum="1.5" />
+				<SimulaConstant name="diameter"  unit="cm">
+				<!-- in michaela ernst winrhizo image about 0.05-0.07 -->
+					 0.06  
+				</SimulaConstant>
+		</SimulaDirective>
+		<SimulaDirective path="seminalSteep">
+				<SimulaTable name_column1="time since creation" unit_column1="day" name_column2="growthRate" unit_column2="cm/day">
+				<!-- marc2011 pouches: growth rates 
+0		1.34
+4		1.34778125
+5		1.91675
+6		2.7285
+7		2.43525
+10		2.6697083333
+11		1.816875
+12		1.4875
+13		0.520625
+40      0.520625
+-->
+0       0
+1		1.34
+4		1.34778125
+5		1.91675
+6		2.7285
+7		2.43525
+10		2.6697083333
+11		1.816875
+12		1.4875
+13		1.2
+28      1.2
+
+				</SimulaTable>
+				<!-- SimulaStochastic  name="longitudinalGrowthRateMultiplier" unit="cm" distribution="normal" mean="1" stdev="0.1"  minimum="0.6" maximum="1.4" /-->
+				<SimulaConstant name="diameter"  unit="cm">
+				<!--marc2011 pouches: sem roots 0.6 mm thick-->
+				<!-- michaelis data 0.067 -->
+					 0.067  
+				</SimulaConstant>
+		</SimulaDirective>
+	<SimulaDirective path="nodalroots">
+		<SimulaTable name_column1="time since creation" unit_column1="day" name_column2="growthRate" unit_column2="cm/day">
+		<!--raul2006: mesocotylborn roots appear later - but sometimes overtake seminal roots in growth. However the length of these roots is very variable-->						
+			 0    0.01
+			 1    1
+			 2    2.4
+			 28   2.4
+		</SimulaTable>
+		<SimulaStochastic  name="longitudinalGrowthRateMultiplier" unit="cm" distribution="normal" mean="1" stdev="0.1"  minimum="0.6" maximum="1.2" />
+		<SimulaTable name_column1="time since creation" unit_column1="day" name_column2="diameter"  unit_column2="cm" type="double">
+		<!--greenfingerdata-->
+			 0 0.1
+			 10 0.08
+			 100 0.08   
+		</SimulaTable>
+	</SimulaDirective>
+	<SimulaDirective path="lateral">
+		<SimulaTable name_column1="time since creation" unit_column1="day" name_column2="growthRate" unit_column2="cm/day">
+		<!-- mark faget's pouches do not have lateral roots -->
+		<!-- Michaela ernst scans these are mostly quite short about 1-3 cm in a couple of days, with some long ones 4-8 after 10 days.   -->
+		
+			 0 0.01
+			 2 0.2
+			 6 0.2 
+			 10 0.0
+			 20 0.
+			 1000 0.0
+		</SimulaTable>
+		<SimulaStochastic  name="longitudinalGrowthRateMultiplier" unit="cm" distribution="lognormal"  mean="1.0" stdev="1.0" minimum="0.1" maximum="10."  /> 				
+		<SimulaConstant name="diameter"  unit="cm">
+		<!--michaela: laterals 0.23 mm-->
+			 0.023 
+		</SimulaConstant>
+	</SimulaDirective>
+	<SimulaDirective path="finelateral">
+		<SimulaTable name_column1="time since creation" unit_column1="day" name_column2="growthRate" unit_column2="cm/day">
+				<!--these stay very short, couple of mm-->						
+			 0 0.01
+			 1 0.1
+			 6 0.0 
+			 1000 0.0
+		</SimulaTable>
+		<SimulaStochastic  name="longitudinalGrowthRateMultiplier" unit="cm" distribution="lognormal"  mean="1" stdev="0.3" minimum="0.2" maximum="2.0"  /> 				
+		<SimulaConstant name="diameter"  unit="cm">
+			 <!--michaela data about 0.160 mm -->
+			 0.0160
+		</SimulaConstant>
+	</SimulaDirective>
+</SimulationModelIncludeFile>			
+

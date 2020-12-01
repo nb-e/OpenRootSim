@@ -1,0 +1,711 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright © 2016 Forschungszentrum Jülich GmbH
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, are permitted under the GNU General Public License v3 and provided that the following conditions are met:
+1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+
+Disclaimer
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+You should have received the GNU GENERAL PUBLIC LICENSE v3 with this file in license.txt but can also be found at http://www.gnu.org/licenses/gpl-3.0.en.html
+
+ -->
+<?xml-stylesheet type="text/xsl" href="XML/treeview.xsl"?>
+<SimulationModelIncludeFile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../scripts/XML/SimulaXMLSchema.xsd">
+	<SimulaDirective path="shoot">
+		<SimulaConstant name="increaseInRGRDuringRecovery">
+				
+				<!--model normally scales growth rate of leaf growth relative to its size. 
+				This allows for greater rgr, so the plant can recover from stress completely
+				number should be between 0 (no recovery (growth rate is scaled) to 1 (growth rate is not scaled at all)
+				stress adjusted leaf area increase = potential * rrgr
+				rgr = this number + leafArea/potentialLeafArea 
+				lim(rgr)= 0-1
+				 -->
+			0.1
+		</SimulaConstant>
+		<SimulaTable
+			name_column1="time"
+			name_column2="leafAreaExpantionRate"
+			unit_column1="day"
+			unit_column2="cm2/day"> 
+<!-- 
+very rough estimate based on curve fitting on m.ernst data (6 experiments, not using experiment 5 which has much 
+faster growth. Also assuming SLA is 500 and stem fraction of the shoot is 0 0 10 0 20 50 28 50 
+
+wet
+0	0
+1	0.5
+2	3
+3	1
+10	2
+15	3
+20	5.5
+25	12
+28	19
+
+dry (with recovery)
+0	0
+1	0.5
+2	3
+3	1
+10	1
+15	2.2
+20	2.2
+25	12
+28	19
+
+calculation from Vera Hecht (Pilottest 1), until 19 DAG, DAG>19 -> values calculated with formula
+leafAreaEstimation based on formula given by Dornbusch et al. 2011, Area=max.Length*max.width*Shape factor ft
+ft for Barke on average 0.7; for leaf1(=youngest)=0.88, for leaf2-9: ft=-0.0171*(leaf rank)+0.8043
+
+fitting exponential curve into data provides following formula, where y is the leaf area in cm²/day, and x=DAG
+Sca Rhizo High (5 plants) y=0.4674e^0.1547x R²=0.96; y=0.1336x^1.3144 R²=0.87
+Sca Rhizo Low (1 plant) y=0.0611e^0.2645x, R²=0.75; y=0.0036x^2.5583 R²=0.8842
+Sca Pot Low (1 plant) y=0.1731e^0.2432x R²=0.85; y=0.016x^2.216 R²=0.92
+So we have to take the first derivative (erste Ableitung) of this function to 
+get the slope (=leaf area expansion rate)
+and these values have to go into to table in SimRoot
+1. Ableitung for Sca Rhizo High
+y=0.4674*0.1547*e^0.1547x
+x is now DAG, and y is the leaf expansion rate for that day
+
+the following tables contain the leaf area values 
+on which the function is based, 
+of which we have to take the first derivative 
+to get leaf area expansion rate
+
+IL Rhizo High (5 plants) y=0.2754e^0.1924x R²=0.8029; y=0.0379x^1.8252 R²=0.91
+IL Rhizo Low (1 plant) y=0.3285e^0.2008x, R²=0.9241; y=0.054x^1.7865 R²=0.9218
+IL Pot Low (1 plant) y=0.242e^0.2352x R²=0.8596; y=0.0241x^2.1789 R²=0.9293
+
+Sca Rhizo High (LEAF AREA)
+3	0.78273125
+5	1.204
+7	1.099
+10	1.8298
+12	3.9137
+14	3.3215
+17	7.3836
+19	8.7416
+23	16.309 (8.235)
+28 	35.553 (10.665)
+40	227.564 (17.0433)
+
+IL Rhizo High
+3	0.168933333
+5	1.5876
+7	1.2495
+10	2.3184
+12	3.7352
+14	4.5654
+17	5.6161
+19	8.2719
+23	23.004027 (11.5895)
+28	60.19982 (16.59557)
+40	605.7512 (31.82139)
+
+Sca Rhizo Low
+3	0.022866667
+5	0.6783
+7	0.8036
+10	1.208666667
+12	1.8893
+14	2.5284
+17	4.494933333
+19	5.93845
+23	26.796 (10.965)
+28	100.560 (18.137)
+50  400 to 700 <- field data point at flowering
+82
+
+IL Rhizo Low
+3	0.348833333
+5	1.73075
+7	1.329125
+10	2.452916667
+12	3.82025
+14	4.746875
+17	9.578916667
+19	15.2726875
+23	33.28749 (14.6258)
+28	90.8474 (20.784596)
+
+Sca Pot Low
+3	0.119583333
+5	1.532125
+7	1.098125
+10	2.079
+12	4.242
+14	5.513375
+17	8.976916667
+19	14.196875
+23	46.512 (16.661)
+28	156.917 (25.765)
+
+IL Pot Low 
+3	0.171266667
+5	1.8564
+7	1.5428
+10	2.851333333
+12	4.6067
+14	7.8057
+17	10.15116667
+19	17.72603
+23	54.0972 (22.3401)
+28	175.3497 (34.2949)
+ 
+
+
+since the exponential curve is not correct in the beginning, 
+we have to fix the values, as it's very important for photosynthesis
+it is, that the plants grow in the beginning very quick, then it rests for some time 
+and then it starts really growing. 
+So here, the numbers from 0-9 DAG are adjusted numbers (by hand)
+
+DATA FROM SCARLETT
+ -->
+			0 0 1 0.295 5 0.295 6 0.01 7 0.01 8 0.22 9 0.26 10 0.3396507557 11
+			0.396476948 12 0.4628106007 13 0.5402423854 14 0.6306291051 15
+			0.7361382205 16 0.859299825 17 1.0030673163 18 1.1708882183 19
+			1.3667868521 20 1.5954608389 21 1.8623937482 22 2.173986593 23
+			2.5377113251 24 2.9622900114 25 3.4579039881 26 4.0364380074 27
+			4.7117652322 28 5.5000799127 29 6.4202857222 30 7.494449064 31
+			8.7483282215 32 10.2119910373 33 11.9205359362 34 13.9149335803 35
+			16.2430093394 36 18.9605901371 37.36363636364 20.52303661734
+			38.18181818182 21.20294212696 39 21.79314372246 39.81818181818
+			22.28184761256 40.63636363636 22.65891017008 41.45454545455
+			22.9162710891 42.27272727273 23.0483119213 43.09090909091
+			23.05211326274 43.90909090909 22.92759069675 44.72727272727
+			22.67749874737 45.54545454545 22.30730253055 46.36363636364
+			21.82492725481 47.18181818182 21.24040497876 48 20.56544503339
+			48.81818181818 19.81295857339 49.63636363636 18.99656860663
+			50.45454545455 18.13013478973 51.27272727273 17.22731782974
+			52.09090909091 16.30120232019 52.90909090909 15.36399012265
+			53.72727272727 14.42676978897 54.54545454545 13.49936164892
+			55.36363636364 12.59023347329 56.18181818182 11.70647825493 57
+			10.85384364242 57.81818181818 10.0368017551 58.63636363636
+			9.2586482831 59.45454545455 8.521620665337 60.27272727273
+			7.82702647719 61.09090909091 7.175374727049 61.90909090909
+			6.566504368615 62.72727272727 5.999705861369 63.54545454545
+			5.473832967025 64.36363636364 4.98740311194 65.18181818182
+			4.538685565099 66 4.125777382476 66.81818181818 3.746667578142
+			67.63636363636 3.399290323477 68.45454545455 3.081568184065
+			69.27272727273 2.791446506084 70.09090909091 2.52692008825
+			70.90909090909 2.286053244511 71.72727272727 2.066994292799
+			72.54545454545 1.867985416971 73.36363636364 1.687368745937
+			74.18181818182 1.523589390098 75 1.37519607372 75.81818181818
+			1.240839905864 76.63636363636 1.119271744063 77.45454545455
+			1.009338528118 78.27272727273 0.9099788921687 79.09090909091
+			0.8202183039741 79.90909090909 0.7391639294738 80.72727272727
+			0.6659993778181 81.54545454545 0.5999794483812 82.36363636364
+			0.5404249691477 83.18181818182 0.4867177934066
+
+<!--
+0 0 
+2 0 
+3.747474747475	0.2890286010938
+4.494949494949	0.3206123497218
+5.242424242424	0.355625522741
+5.989898989899	0.3944354361234
+6.737373737374	0.4374475797353
+7.484848484848	0.4851093135238
+8.232323232323	0.537913857677
+8.979797979798	0.5964045842827
+9.727272727273	0.6611796135572
+10.47474747475	0.7328967116988
+11.22222222222	0.8122784794295
+11.9696969697	0.9001178100812
+12.71717171717	0.9972835827677
+13.46464646465	1.104726539764
+14.21212121212	1.223485276363
+14.9595959596	1.354692246028
+15.70707070707	1.499579652369
+16.45454545455	1.659485061721
+17.20202020202	1.835856524777
+17.94949494949	2.030256942061
+18.69696969697	2.244367345262
+19.44444444444	2.479988693065
+20.19191919192	2.739041697953
+20.93939393939	3.023564106184
+21.68686868687	3.335704751383
+22.43434343434	3.677713592065
+23.18181818182	4.051926829839
+23.92929292929	4.460746092242
+24.67676767677	4.90661056118
+25.42424242424	5.391960843873
+26.17171717172	5.919193333751
+26.91919191919	6.490603810948
+27.66666666667	7.108319110037
+28.41414141414	7.774215861764
+29.16161616162	8.489825627486
+29.90909090909	9.256226221535
+30.65656565657	10.0739196906
+31.40404040404	10.94269831583
+32.15151515152	11.86150114086
+32.89898989899	12.82826490374
+33.64646464646	13.83977483392
+34.39393939394	14.89152250334
+35.14141414141	15.97757967147
+35.88888888889	17.09049869318
+36.63636363636	18.22125132321
+37.38383838384	19.35921841752
+38.13131313131	20.49224279889
+38.87878787879	21.6067561596
+39.62626262626	22.68798810051
+40.37373737374	23.72026115785
+41.12121212121	24.68737001147
+41.86868686869	25.57303630648
+42.61616161616	26.36142316595
+43.36363636364	27.03768627893
+44.11111111111	27.58853230709
+44.85858585859	28.00275117809
+45.60606060606	28.27168742795
+46.35353535354	28.38961763823
+47.10101010101	28.35400629424
+47.84848484848	28.16562069892
+48.59595959596	27.82849609832
+49.34343434343	27.34975370668
+50.09090909091	26.73928556271
+50.83838383838	26.00932975927
+51.58585858586	25.17396657882
+52.33333333333	24.24856978725
+53.08080808081	23.24924765686
+53.82828282828	22.19230551927
+54.57575757576	21.09375644871
+55.32323232323	19.96889993478
+56.07070707071	18.83198103079
+56.81818181818	17.69593530395
+57.56565656566	16.57221860992
+58.31313131313	15.47071569196
+59.06060606061	14.39971803824
+59.80808080808	13.36595931742
+60.55555555556	12.37469589005
+61.30303030303	11.42982010993
+62.05050505051	10.53399510685
+62.79797979798	9.688801210091
+63.54545454545	8.894885874689
+64.29292929293	8.152110736827
+65.0404040404	7.459691090886
+65.78787878788	6.816324576261
+66.53535353535	6.220307127776
+67.28282828283	5.669635268368
+68.0303030303	5.162094613411
+68.77777777778	4.695335035203
+69.52525252525	4.266933331026
+70.27272727273	3.874444485826
+71.0202020202	3.515442749976
+71.76767676768	3.187553789473
+72.51515151515	2.888479145408
+73.26262626263	2.616014168646
+74.0101010101	2.368060503087
+74.75757575758	2.142634083438
+75.50505050505	1.937869495382
+76.25252525253	1.752021437545
+80 0.5
+90 0.01
+-->
+
+<!-- these values had been in the middle of the table....
+77.45454545455	1.009338528118
+78.27272727273	0.9099788921687
+79.09090909091	0.8202183039741
+79.90909090909	0.7391639294738
+80.72727272727	0.6659993778181
+81.54545454545	0.5999794483812
+82.36363636364	0.5404249691477
+83.18181818182	0.4867177934066
+-->
+		</SimulaTable>
+		<SimulaTable
+			name_column1="time"
+			name_column2="stemDryWeightAccumulation"
+			unit_column1="day"
+			unit_column2="g/day"> 0 0 2 0 5 0.0001 10 0.0004 20 0.002 30 0.007 40 0.013
+			55 0.04 77 0.11 80 0.11
+		</SimulaTable>
+	</SimulaDirective>
+	<SimulaDirective path="hypocotyl">
+		<SimulaTable
+			name_column1="time since creation"
+			unit_column1="day"
+			name_column2="growthRate"
+			unit_column2="cm/day"> <!-- old values from Michaela?-->
+			0 0 2 0 3 1 4 4 5 0 1000 0
+		</SimulaTable>
+		<SimulaConstant
+			name="diameter"
+			unit="cm"> <!-- old value from Michaela?-->
+			0.15
+		</SimulaConstant>
+	</SimulaDirective>
+	<SimulaDirective path="primaryRoot">
+		<SimulaTable
+			name_column1="time since creation"
+			unit_column1="day"
+			name_column2="growthRate"
+			unit_column2="cm/day">
+					 <!-- does not really grow in barley only gives rise to seminals, according to sigi jahnke -->
+			0 0.1 3 0.1 5 0. 1000 0.
+		</SimulaTable>
+		<SimulaConstant
+			name="diameter"
+			unit="cm"> 0.06
+		</SimulaConstant>
+	</SimulaDirective>
+	<SimulaDirective path="seminal">
+		<SimulaTable
+			name_column1="time since creation"
+			unit_column1="day"
+			name_column2="growthRate"
+			unit_column2="cm/day">
+				<!-- marc2011 pouches: growth rates these roots stop earlier, data still to be taken, now based on estimates
+0		1.4
+10		1.4
+13		0.2
+40      	0.2
+
+Vera Hecht: PT1(from 0-14 DAG because on 17 DAG some roots already hit the bottom): 
+numerical determined as: growth rate = (cm day2- cm day1) / (DAG day2 - DAG day1); then data plotted and to this the following curves have been fitted:
+Sca High Rhizo y=0.0006x²+0.0858x+2.5433 R²=0.731; y=0.0964x+2.5007 R²=0.7308, n=5
+Sca Low Rhizo y=-0.0282x²+0.6604x-0.5833 R²=0.942; y=0.1809x+1.0336 R²=0.7732, n=4
+
+IL High Rhizo y=0.0068x²-0.0353x+2.9422 R²=0.7216; y=0.0798x+2.5541 R²=0.6777, n=5
+IL Low Rhizo y=-0.0209x²+0.4987x-0.8083 R²=0.9458; y=0.1426x+2.0092 R²=0.7921, n=4
+
+Sca High Rhizo
+0	2.54 (2.50)
+1	2.63 (2.60)
+3	2.706666667	
+5	3.32	
+7	2.81	
+10	3.673333333	
+12	3.57	
+14	3.88
+21	4.61 (4.23) (but actually, I think, there is a maximum at around 3.5)
+28	5.42 (5.20)
+
+IL High Rhizo
+0 	2.9422 (2.5541)
+1	2.9137 (2.6339)
+3	2.84
+5	3.2
+7	2.71
+10	3.273333333	
+12	3.71	
+14	3.66
+
+
+Sca Low Rhizo
+0	-0.5833 (1.0336)
+1	0.1053 (1.2145)
+3	1.25	
+5	1.9875	
+7	2.3375	
+10	3.491666667	
+12	3.35	
+14	3.0125
+21	0.8934 (4.8325)
+28	-4.2009 (6.0988)
+40	0 (estimated)
+
+IL Low Rhizo
+3	1,991666667
+5	2,9125
+7	3,4
+10	3,625
+12	3,5625
+14	3,8375
+
+
+Vera Hecht: PT1(from 0-14 DAG because on 17 DAG some roots already hit the bottom):
+average maximum rooting depth (cm) at 14 DAG divided by 14 DAG, since the growth seems to be pretty linear
+
+Sca High Rhizo
+3.307142857	SD: 0.216535806	SEM: 0.096837756
+
+Sca Low Rhizo
+2.542857143	SD: 0.24418405	SEM: 0.122092025
+
+B.REX in Jan 2014, Growth until 31 DAG, n=8 but for Barke s.t. only n=5
+	High mean=2.13
+5	2.80399061
+7	2.623239437
+9	1.550762911
+12	2.089201878
+14	1.839788732
+16	1.916079812
+19	1.533646322
+21	1.445129108
+23	1.616784038
+26	2.434467919
+28	3.488849765
+30	2.199237089
+
+		Low mean=1.53
+5	2.704812207
+7	2.262323944
+9	1.134096244
+12	1.238262911
+14	1.537558685
+16	0.685152582
+19	0.971244131
+21	1.67693662
+23	0.806924883
+26	0.870500782
+28	2.503912363
+30	2.024647887
+
+	Sg mean=1.83
+5	2.667253521
+7	2.193368545
+9	1.286678404
+12	1.348787167
+14	2.099471831
+16	0.9375
+19	1.879890454
+21	1.019659624
+23	1.525821596
+26	1.644170579
+28	0.761443662
+30	4.617077465
+
+
+-->
+<!--  average growth rate rhizotrons according to michaelas data is 1.46 cm/day (movement towards deep) and stdev of 0.88   or 
+2.4 if we calculate from the rhizotron thick root length which includes the wiggling.-->
+<!--  in the field (nodal) roots grow at least to a depth of 60 cm (coring data vera hecht) -->
+			<!--0 2.5541 < IL value >
+			1 2.6339 < IL value >
+			5 2.80399061 7 2.623239437 9 1.550762911 12 2.089201878 14
+			1.839788732 16 1.916079812 19 1.533646322 21 1.445129108 23
+			1.616784038 26 2.434467919 28 3.488849765 30 2.199237089 35 1.5 < estimated > -->
+			60 0. 100. 0. 
+		</SimulaTable>
+		<SimulaStochastic
+			name="longitudinalGrowthRateMultiplier"
+			unit="cm"
+			distribution="lognormal"
+			mean="1.0"
+			stdev="0.5"
+			minimum="0.1"
+			maximum="1.6" />
+		<SimulaConstant
+			name="diameter"
+			unit="cm">
+				<!-- in michaela ernst winrhizo image about 0.05-0.07 -->
+			0.06
+		</SimulaConstant>
+		<SimulaTable
+			name_column1="time since creation"
+			unit_column1="day"
+			name_column2="lengthMultiplier2DiameterMultiplier"
+			unit_column2="cm/day"> 0. 0.75 1. 1. 11. 3.5 
+		</SimulaTable>
+	</SimulaDirective>
+	<SimulaDirective path="seminalSteep">
+		<SimulaTable
+			name_column1="time since creation"
+			unit_column1="day"
+			name_column2="growthRate"
+			unit_column2="cm/day">
+				<!-- marc2011 pouches: growth rates 
+0		1.34
+4		1.34778125
+5		1.91675
+6		2.7285
+7		2.43525
+10		2.6697083333
+11		1.816875
+12		1.4875
+13		0.520625
+40      	0.520625
+
+Data used here are the same as for seminal (more up), Vera Hecht PT1.
+-->
+			0 2.5541 1 2.6339 3 2.84 5 3.2 7 2.71 10 3.273333333 12 3.71 14 3.66
+			21 3.6 28 3.6 30 3.0 35 1.5 60 0. 100. 0. 
+		</SimulaTable>
+				<!-- SimulaStochastic  name="longitudinalGrowthRateMultiplier" unit="cm" distribution="normal" mean="1" stdev="0.1"  minimum="0.6" maximum="1.4" /-->
+		<SimulaConstant
+			name="diameter"
+			unit="cm">
+				<!--marc2011 pouches: sem roots 0.6 mm thick-->
+				<!-- michaelas data 0.067 cm-->
+				<!--Vera Hecht: PT1: Seminals: 0.06-0.08 cm, Nodals: 0.08-1.0 cm -->
+			0.067
+		</SimulaConstant>
+	</SimulaDirective>
+	<SimulaDirective path="nodalroots">
+		<SimulaTable
+			name_column1="time since creation"
+			unit_column1="day"
+			name_column2="growthRate"
+			unit_column2="cm/day">
+		<!--
+Vera Hecht: PT2, the experiment only lasted 19 DAG, and nodal roots appeared earliest between 14 and 16 DAG.
+The length of the longest nodal root (cm) was divided by either 5 days (when appearance between 14-16DAG) or 3 days (appearance between 16-19 DAG).
+
+Sca High Rhizo (5xFert)
+2.282666667	SD: 0.592688788	SEM: 0.265058484
+
+Sca Low Rhizo (5xFert)
+2.778333333	SD: 0.286401686	SEM: 0.143200843
+
+Sca Low Rhizo (1xFert)
+2.341666667	SD: 0.772382078 SEM: 0.386191039
+
+IL High Rhizo (5xFert)
+3.824	SD: 1.307632296	SEM: 0.584790941
+
+IL Low Rhio (5xFert)
+2.492	SD: 0.404568357	SEM: 0.18092847
+
+IL Low Rhizo (1xFert)
+2.72	SD: 0.49010203	SEM: 0.219180291
+-->
+			0 0.01 1 1 2 2. 40 2. 50 0 100 0
+		</SimulaTable>
+		<SimulaStochastic
+			name="longitudinalGrowthRateMultiplier"
+			unit="cm"
+			distribution="lognormal"
+			mean="1."
+			stdev="0.5"
+			minimum="0.1"
+			maximum="2." />
+		<SimulaTable
+			name_column1="time since creation"
+			unit_column1="day"
+			name_column2="diameter"
+			unit_column2="cm"
+			type="double">
+		<!--pilottest 1 rough estimate-->
+			0 0.08 10 0.06 100 0.06
+		</SimulaTable>
+		<SimulaTable
+			name_column1="time since creation"
+			unit_column1="day"
+			name_column2="lengthMultiplier2DiameterMultiplier"
+			unit_column2="cm/day"> 0. 0.75 1. 1. 11. 3.5
+		</SimulaTable>
+	</SimulaDirective>
+	<SimulaDirective path="nodalRootsOfTillers">
+		<SimulaTable
+			name_column1="time since creation"
+			unit_column1="day"
+			name_column2="growthRate"
+			unit_column2="cm/day">
+		<!--
+Vera Hecht: PT2, the experiment only lasted 19 DAG, and nodal roots appeared earliest between 14 and 16 DAG.
+The length of the longest nodal root (cm) was divided by either 5 days (when appearance between 14-16DAG) or 3 days (appearance between 16-19 DAG).
+
+Sca High Rhizo (5xFert)
+2.282666667	SD: 0.592688788	SEM: 0.265058484
+
+Sca Low Rhizo (5xFert)
+2.778333333	SD: 0.286401686	SEM: 0.143200843
+
+Sca Low Rhizo (1xFert)
+2.341666667	SD: 0.772382078 SEM: 0.386191039
+
+-->
+			0 0.01 1 1 2 2. 30 2. 40 0 100 0
+		</SimulaTable>
+		<SimulaStochastic
+			name="longitudinalGrowthRateMultiplier"
+			unit="cm"
+			distribution="lognormal"
+			mean="1."
+			stdev="0.5"
+			minimum="0.1"
+			maximum="2.0" />
+		<SimulaTable
+			name_column1="time since creation"
+			unit_column1="day"
+			name_column2="diameter"
+			unit_column2="cm"
+			type="double">
+		<!--greenfingerdata-->
+			0 0.1 10 0.08 100 0.08
+		</SimulaTable>
+		<SimulaTable
+			name_column1="time since creation"
+			unit_column1="day"
+			name_column2="lengthMultiplier2DiameterMultiplier"
+			unit_column2="cm/day"> 0. 0.75 1. 1. 11. 3.5
+		</SimulaTable>
+	</SimulaDirective>
+	<SimulaDirective path="lateral">
+		<SimulaTable
+			name_column1="time since creation"
+			unit_column1="day"
+			name_column2="growthRate"
+			unit_column2="cm/day">
+		<!-- mark faget's pouches do not have lateral roots -->
+		<!-- Michaela ernst scans these are mostly quite short about 1-3 cm in a couple of days, with some long ones 4-8 after 10 days.   -->
+		<!-- Vera Hecht: PT1: In rhizotrons, first laterals visible after 10 DAG (check pictures) but in Keimungstest April 2014 some short laterals (up to 1.5 cm) after 7 DAS! -->
+		<!-- Vera Hecht: longest lateral from pilot test 2 at 19 days after germination 4-14 cm long -->
+			0 0.01 2 0.3 5 0.3 8 0.0 20 0. 1000 0.0
+		</SimulaTable>
+		<SimulaStochastic
+			name="longitudinalGrowthRateMultiplier"
+			unit="cm"
+			distribution="lognormal"
+			mean="1"
+			stdev="0.3"
+			minimum="0.1"
+			maximum="4" />
+		<SimulaConstant
+			name="diameter"
+			unit="cm">
+		<!--michaela: laterals 0.23 mm-->
+		<!-- Vera Hecht: laterals 0.01-0.03 cm -->
+			0.023
+		</SimulaConstant>
+		<SimulaTable
+			name_column1="time since creation"
+			unit_column1="day"
+			name_column2="lengthMultiplier2DiameterMultiplier"
+			unit_column2="cm/day">
+				<!-- if growth rate doulbes diameter increase by factor 1.5-->
+			0. 0.5 1. 1. 11. 6.
+		</SimulaTable>
+	</SimulaDirective>
+	<SimulaDirective path="finelateral">
+		<SimulaTable
+			name_column1="time since creation"
+			unit_column1="day"
+			name_column2="growthRate"
+			unit_column2="cm/day">
+				<!--these stay very short, couple of mm-->
+			0 0.01 1 0.1 6 0.0 1000 0.0
+		</SimulaTable>
+		<SimulaStochastic
+			name="longitudinalGrowthRateMultiplier"
+			unit="cm"
+			distribution="lognormal"
+			mean="1"
+			stdev="0.3"
+			minimum="0.2"
+			maximum="2.0" />
+		<SimulaConstant
+			name="diameter"
+			unit="cm">
+			 <!--michaela data about 0.160 mm -->
+			0.0160
+		</SimulaConstant>
+		<SimulaTable
+			name_column1="time since creation"
+			unit_column1="day"
+			name_column2="lengthMultiplier2DiameterMultiplier"
+			unit_column2="cm/day">
+				<!-- if growth rate doulbes diameter increase by factor 1.5-->
+			0. 0.5 1. 1. 11. 6.
+		</SimulaTable>
+	</SimulaDirective>
+</SimulationModelIncludeFile>			

@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright © 2016 Forschungszentrum Jülich GmbH All rights reserved. 
+	Redistribution and use in source and binary forms, with or without modification, 
+	are permitted under the GNU General Public License v3  -->
+<!-- 
+
+Simple one mass two springs model, displacement coupling of two RK4
+In this example we have two springs, opposite of each other and in between a mass.
+
+We give both a numerical and a analytical solution. The error is computed. 
+
+a = acceleration 
+v = velocity, the integral of a
+u = position, the integral of v
+a is a function of u
+
+a=force/mass
+
+fors is exerted by gravity (g) and the springs. 
+The force exerted by the spring is linear dependent on u , the length spring is stretched/or pushed together. 
+
+
+-->
+<SimulationModel
+	synchronizationTimeStep="10" 
+	defaultMinimumTimeStep="0.000001" 
+	defaultMaximumTimeStep="0.01" 
+	defaultStartingTimeStep="0.01" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="../../scripts/XML/SimulaXMLSchema.xsd">
+
+	<!-- variable -->
+	<SimulaBase name="RK4">
+	
+		<SimulaDerivative
+			name="a"
+			unit="cm/day"
+			function="useFormula">
+			<SimulaConstant
+				name="formula"
+				type="string"> - g - stiff/mass*u
+			</SimulaConstant>
+		</SimulaDerivative>
+		<SimulaVariable
+			name="v"
+			function="useFormula"
+			maxTimeStep="0.01"
+			minTimeStep="0.01">
+			0.
+			<SimulaConstant
+				name="formula"
+				type="string"> a
+			</SimulaConstant>
+		</SimulaVariable>
+		<SimulaVariable
+			name="u"
+			function="useFormula"
+			maxTimeStep="0.01"
+			minTimeStep="0.01">
+			0.
+			<SimulaConstant
+				name="formula"
+				type="string"> v
+			</SimulaConstant>
+		</SimulaVariable>
+		<SimulaConstant name="g"> 9.81</SimulaConstant>
+		<SimulaConstant name="mass"> 25.</SimulaConstant>
+		<SimulaConstant name="stiff"> 3500.</SimulaConstant>
+		<SimulaDerivative
+			name="analyticSolution"
+			unit="cm"
+			function="useFormula">
+			<SimulaConstant
+				name="formula"
+				type="string"> -g*mass/stiff*(1. - cos(sqrt(stiff/mass)*t))
+			</SimulaConstant>
+		</SimulaDerivative>
+		<SimulaDerivative
+			name="numericalSolution"
+			unit="cm"
+			function="useFormula">
+			<SimulaConstant
+				name="formula"
+				type="string"> u
+			</SimulaConstant>
+		</SimulaDerivative>
+		<SimulaDerivative
+			name="error"
+			unit="cm"
+			function="useFormula">
+			<SimulaConstant
+				name="formula"
+				type="string"> (analyticSolution-u)/(-g*mass/stiff)
+			</SimulaConstant>
+		</SimulaDerivative>
+	</SimulaBase>
+	<!--  SimulaBase name="FWEuler">
+		<SimulaDerivative
+			name="a"
+			unit="cm/day"
+			function="useFormula">
+			<SimulaConstant
+				name="formula"
+				type="string"> - g - stiff/mass*u
+			</SimulaConstant>
+		</SimulaDerivative>
+		<SimulaVariable
+			name="v"
+			function="useFormula"
+			maxTimeStep="0.001"
+			minTimeStep="0.001"
+			integrationFunction="ForwardEuler">
+			0.
+			<SimulaConstant
+				name="formula"
+				type="string"> a
+			</SimulaConstant>
+		</SimulaVariable>
+		<SimulaVariable
+			name="u"
+			function="useFormula"
+			maxTimeStep="0.001"
+			minTimeStep="0.001"
+			integrationFunction="ForwardEuler">
+			0.
+			<SimulaConstant
+				name="formula"
+				type="string"> v
+			</SimulaConstant>
+		</SimulaVariable>
+		<SimulaConstant name="g"> 9.81</SimulaConstant>
+		<SimulaConstant name="mass"> 25.</SimulaConstant>
+		<SimulaConstant name="stiff"> 3500.</SimulaConstant>
+		<SimulaDerivative
+			name="analyticSolution"
+			unit="cm"
+			function="useFormula">
+			<SimulaConstant
+				name="formula"
+				type="string"> -g*mass/stiff*(1. - cos(sqrt(stiff/mass)*t))
+			</SimulaConstant>
+		</SimulaDerivative>
+		<SimulaDerivative
+			name="numericalSolution"
+			unit="cm"
+			function="useFormula">
+			<SimulaConstant
+				name="formula"
+				type="string"> u
+			</SimulaConstant>
+		</SimulaDerivative>
+		<SimulaDerivative
+			name="error"
+			unit="cm"
+			function="useFormula">
+			<SimulaConstant
+				name="formula"
+				type="string"> (analyticSolution-u)/(-g*mass/stiff)
+			</SimulaConstant>
+		</SimulaDerivative>
+	</SimulaBase-->
+
+	<!--  SimulaBase name="FehlbergFixDT">
+		<SimulaDerivative
+			name="a"
+			unit="cm/day"
+			function="useFormula">
+			<SimulaConstant
+				name="formula"
+				type="string"> - g - stiff/mass*u
+			</SimulaConstant>
+		</SimulaDerivative>
+		<SimulaVariable
+			name="v"
+			function="useFormula"
+			maxTimeStep="0.01"
+			minTimeStep="0.01"
+			integrationFunction="Fehlberg">
+			0.
+			<SimulaConstant
+				name="formula"
+				type="string"> a
+			</SimulaConstant>
+		</SimulaVariable>
+		<SimulaVariable
+			name="u"
+			function="useFormula"
+			maxTimeStep="0.01"
+			minTimeStep="0.01"
+			integrationFunction="Fehlberg">
+			0.
+			<SimulaConstant
+				name="formula"
+				type="string"> v
+			</SimulaConstant>
+		</SimulaVariable>
+		<SimulaConstant name="g"> 9.81</SimulaConstant>
+		<SimulaConstant name="mass"> 25.</SimulaConstant>
+		<SimulaConstant name="stiff"> 3500.</SimulaConstant>
+		<SimulaDerivative
+			name="analyticSolution"
+			unit="cm"
+			function="useFormula">
+			<SimulaConstant
+				name="formula"
+				type="string"> -g*mass/stiff*(1. - cos(sqrt(stiff/mass)*t))
+			</SimulaConstant>
+		</SimulaDerivative>
+		<SimulaDerivative
+			name="numericalSolution"
+			unit="cm"
+			function="useFormula">
+			<SimulaConstant
+				name="formula"
+				type="string"> u
+			</SimulaConstant>
+		</SimulaDerivative>
+		<SimulaDerivative
+			name="error"
+			unit="cm"
+			function="useFormula">
+			<SimulaConstant
+				name="formula"
+				type="string"> (analyticSolution-u)/(-g*mass/stiff)
+			</SimulaConstant>
+		</SimulaDerivative>
+	</SimulaBase-->
+
+	<SimulaBase name="Fehlberg">
+		<SimulaDerivative
+			name="a"
+			unit="cm/day"
+			function="useFormula">
+			<SimulaConstant
+				name="formula"
+				type="string"> - g - stiff/mass*u
+			</SimulaConstant>
+		</SimulaDerivative>
+		<SimulaVariable
+			name="v"
+			function="useFormula"
+			integrationFunction="Fehlberg"
+			errorTolerance="1e-6" >
+			0.
+			<SimulaConstant
+				name="formula"
+				type="string"> a
+			</SimulaConstant>
+		</SimulaVariable>
+		<SimulaVariable
+			name="u"
+			function="useFormula"
+			integrationFunction="Fehlberg"
+			errorTolerance="1e-6" >
+			0.
+			<SimulaConstant
+				name="formula"
+				type="string"> v
+			</SimulaConstant>
+		</SimulaVariable>
+		<SimulaConstant name="g"> 9.81</SimulaConstant>
+		<SimulaConstant name="mass"> 25.</SimulaConstant>
+		<SimulaConstant name="stiff"> 3500.</SimulaConstant>
+		<SimulaDerivative
+			name="analyticSolution"
+			unit="cm"
+			function="useFormula">
+			<SimulaConstant
+				name="formula"
+				type="string"> -g*mass/stiff*(1. - cos(sqrt(stiff/mass)*t))
+			</SimulaConstant>
+		</SimulaDerivative>
+		<SimulaDerivative
+			name="numericalSolution"
+			unit="cm"
+			function="useFormula">
+			<SimulaConstant
+				name="formula"
+				type="string"> u
+			</SimulaConstant>
+		</SimulaDerivative>
+		<SimulaDerivative
+			name="error"
+			unit="cm"
+			function="useFormula">
+			<SimulaConstant
+				name="formula"
+				type="string"> (analyticSolution-u)/(-g*mass/stiff)
+			</SimulaConstant>
+		</SimulaDerivative>
+	</SimulaBase>
+
+
+	<SimulaBase name="simulationControls">
+		<SimulaBase name="outputParameters">
+			<SimulaBase name="table">
+				<SimulaConstant
+					name="run"
+					type="bool"> 1</SimulaConstant>
+				<SimulaConstant
+					name="searchingDepth"
+					type="integer"> 3
+				</SimulaConstant>
+				<SimulaConstant
+					name="startTime"
+					type="time"> 0.
+				</SimulaConstant>
+				<SimulaConstant
+					name="endTime"
+					type="time"> 20.
+				</SimulaConstant>
+				<SimulaConstant
+					name="timeInterval"
+					type="time"> 0.02
+				</SimulaConstant>
+			</SimulaBase>
+		</SimulaBase>
+	</SimulaBase>
+</SimulationModel>

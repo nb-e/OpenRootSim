@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright © 2016 Forschungszentrum Jülich GmbH
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, are permitted under the GNU General Public License v3 and provided that the following conditions are met:
+1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+
+Disclaimer
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+You should have received the GNU GENERAL PUBLIC LICENSE v3 with this file in license.txt but can also be found at http://www.gnu.org/licenses/gpl-3.0.en.html
+
+ -->
+<?xml-stylesheet type="text/xsl" href="XML/treeview.xsl"?>
+<SimulationModelIncludeFile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../scripts/XML/SimulaXMLSchema.xsd">
+	<SimulaDirective path="shoot">
+		<SimulaTable name_column1="time" name_column2="leafAreaExpantionRate" unit_column1="day" unit_column2="cm2/day">
+		<!-- this gives 59 cm2 in 40 days
+		dunbabin: 
+gen.	leaf no	leaf area estimate (cm2)	multiplier
+85	280		107.480820030769	1.82170881408083
+71	126.7	48.6350710639231	0.824323238371577
+1		86.7	33.2806682023846	0.564079122074315
+60	221.7	85.1017778600769	1.44240301457757
+		
+		 -->
+		 <!-- see also Ma Q, Longnecker N, Dracup M. 1997. Nitrogen deficiency slows leaf development and delays flowering in narrow-leafed lupin. Annals of Botany 79: 403.
+		 after 5 days 0.1g shoot and after 30 days 0.5, with only slightly exponential increase. 
+		 -->
+0	0
+2 0
+3 2
+10 1
+42 2.0
+60 2.4
+<SimulaConstant name="multiplier" >0.824</SimulaConstant>
+	</SimulaTable>
+	</SimulaDirective>
+	<SimulaDirective path="hypocotyl">
+		<SimulaTable name_column1="time" unit_column1="day" name_column2="growthRate" unit_column2="cm/day"> 0 1
+			1 2 3 0 1000 0</SimulaTable>
+		<SimulaConstant name="diameter" unit="cm"> 0.161</SimulaConstant>
+		<SimulaTable name_column1="root segment age" name_column2="secondaryGrowthRate" unit_column1="day"
+			unit_column2="cm/day"
+		> <!--no data on this, but looks in the picture as if the first 20 cm of primary root has some secondary thickening. maybe 1 mm in 30 days --> 
+		0 0. 10 0.0  30 0.003  60 0.004 
+		</SimulaTable>
+		<SimulaTable name_column1="distance to base of the root" name_column2="secondaryGrowthScalingFactor"
+			unit_column1="cm" unit_column2="100%"
+		> 0 1 15 1 </SimulaTable>
+	</SimulaDirective>
+	<SimulaDirective path="primaryRoot">
+		<SimulaTable name_column1="time" unit_column1="day" name_column2="growthRate" unit_column2="cm/day">
+		<!--Data Dunbabin: 
+dar004		dar060		dar071		dar085	
+ 0	2.5	 0	2.5		 0	3.4 	 0	2.5
+14	2.5	14	1.5		14	3.4 	14	1
+22	2.5	20	1  		23	1.45	19	0.5
+28	0 	25	1  		28	1.45	25	0.5
+35	0 	28	3.8		35	1.45	28	4.1
+42	0 	35	5  		42	1.45	35	5
+				42	5  							42	5
+
+
+-->		 
+		 0 3.4 14 3.4 23 1.45 60 1.45 
+		</SimulaTable>
+		<SimulaConstant name="diameter" unit="cm">
+		<!--dunbabin data sheet: 1.61 mm for dart 71. This seems to be an average, with some secondary growth in the picture-->
+		0.161 
+		</SimulaConstant>
+		<SimulaTable name_column1="root segment age" name_column2="secondaryGrowthRate" unit_column1="day"
+			unit_column2="cm/day"
+		> <!--no data on this, but looks in the picture as if the first 20 cm of primary root has some secondary thickening. maybe 1 mm in 30 days --> 
+		0 0. 10 0.0  30 0.003  60 0.004 
+		</SimulaTable>
+		<SimulaTable name_column1="distance to base of the root" name_column2="secondaryGrowthScalingFactor"
+			unit_column1="cm" unit_column2="100%"
+		> 0 1 15 0 1000 0 </SimulaTable>
+	</SimulaDirective>
+	<SimulaDirective path="lateralPrimaryRoot">
+		<SimulaTable name_column1="time" unit_column1="day" name_column2="growthRate" unit_column2="cm/day"> 
+		<!--data sheet Dunbabin: laterals of the primary root grow fairly constant rate (cone shape root system) about 6 cm / 42 days = 0.14 cm /day -->
+		
+		<!--data to mimic dar 71 0 0.5 7 0.05 20 0.03 60 0.03-->
+		0 0.2 60 0.2
+			</SimulaTable>
+		<SimulaTable name_column1="time" unit_column1="day" name_column2="longitudinalGrowthRateMultiplier" unit_column2="noUnit"> 
+				0 0.2 5 0.5 5.5 1 600 1 
+				<SimulaStochastic name="multiplier" unit="noUnit" distribution="lognormal" mean="0.43" stdev="0.2" minimum="0.2" maximum="3" />
+		</SimulaTable>
+		<SimulaConstant name="diameter" unit="cm">
+		<!--data sheet dunbabin: 0.071 for dar 71 -->
+		0.071 
+		</SimulaConstant>
+		<!-- visible secondary growth of laterals at 42 days. I expect that that will be different in later stages?-->
+	</SimulaDirective>
+	<SimulaDirective path="finelateral">
+	  <!-- upt to 2 cm long on older lateral roots, see picture dunbabin -->
+		<SimulaTable name_column1="time" unit_column1="day" name_column2="growthRate" unit_column2="cm/day"> 
+		0	0.1 100 0.1 </SimulaTable>
+		<SimulaStochastic name="longitudinalGrowthRateMultiplier" unit="cm" distribution="normal" mean="1" stdev="0.2" minimum="0"
+			maximum="2" />
+		<SimulaConstant name="diameter" unit="cm"> 
+		<!-- dunbabin diameter second order laterals dar 071 = 0.062 -->
+		0.062
+		</SimulaConstant>
+	</SimulaDirective>
+</SimulationModelIncludeFile>
+

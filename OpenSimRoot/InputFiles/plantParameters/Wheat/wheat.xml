@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Simulation file for SimRoot : plant parameters for wheat used barley parameters, adjusted for wheat, using data from Tania Gioia -->
+<SimulationModelIncludeFile>
+	<SimulaBase name="wheat" >
+		<SimulaBase name="shoot">
+			<SimulaConstant name="relativePotentialTranspiration" unit="cm3/g">
+				<!--use either cm3/cm2 leaf area/day or per cm3/g C of photosynthesis -->
+				<!--for wheat same value as for barley and maize Baldocchi 1994-->
+				<!--Zhang et al. 2004 wue for winter wheat(measured):1.11-1.61 kg/m3 -->
+				<!--Zwart & Bastiaanssen 2004 wue values from literature for winter wheat:0.60-1.7 kg/m3 -->
+				100
+			</SimulaConstant>
+			<SimulaConstant name="extinctionCoefficient" unit="noUnit" note="KDF in lintul">
+				0.85
+				<!--note that around 1 means full leaf cover at lai 3, this is not for individual leaves and 0.64 is too low -->
+				<!--KDF for maize = 0.64 Heemst 1988, p22 -->
+				<!--KDF for wheat = 0.42-0.54 Heemst 1988, p8 -->
+				<!--keep 0.85 like in barley? -->
+			</SimulaConstant>
+			<SimulaTable name_column1="time" name_column2="specificLeafArea" unit_column1="day" unit_column2="g/cm2" note="SLA in lintul">
+				<!-- for barley estimated from ernst data about 500cm2/g or 0.002 g/cm2 -->
+				<!-- for wheat can not estimate, no leaf dry mass -->
+				<!-- SLA for wheat = 0.0020 g/cm2, Heemst 1988, p9 -->
+				<!-- SLA for wheat = 0.0029 g/cm2, Rebetzke et al. 2004 -->
+				0 0.0020
+				28 0.0020
+			</SimulaTable>
+			<SimulaConstant name="lightUseEfficiency" unit="g/uMol" note="LUE in lintul">
+			<!-- michaela's plants were in low light, and I think this number should be relative high -->
+			<!-- LUE wheat (mean of several studies) = 2.8 g dryweight/MJ, max=3.1 min=2.6 g/MJ, Kiniry et al.1989 -->
+			<!-- LUE wheat (measured) = 2.0 g C MJ PAR−1,  Gallagher & Biscoe 1978 -->
+				0.44E-6 <!-- 0.28-0.40 -->
+				<!-- I am not sure which value I have to put here -->
+			</SimulaConstant>
+			<SimulaConstant name="areaPerPlant" unit="cm2">
+				<!-- rhizotron experiments with 4 plants per rhizotron (70cm x 5cm), but in field this would be about 25-35cm2 (250-350 plants/m2) -->
+				87.5
+			</SimulaConstant>
+		</SimulaBase>
+		<SimulaBase name="defaults" >
+		</SimulaBase>
+		
+		<SimulaBase name="hypocotyl" objectGenerator="copyDefaults" >
+			<SimulaConstant type="integer" name="rootClassID" note="for visualization output only">97</SimulaConstant>
+			<SimulaBase name="branchList">
+				<SimulaBase name="nodalroots">
+					<SimulaConstant type="integer" name="numberOfBranches/whorl" unit="#">
+						1
+					</SimulaConstant>
+					<SimulaConstant type="time" name="branchingTimeOffset" unit="day">
+						25.
+					</SimulaConstant>
+					<SimulaConstant name="branchingSpatialOffset" unit="cm">
+						1.5 <!--these should grow at ground level - make this equal to planting depth -->
+					</SimulaConstant>
+				</SimulaBase>
+				<!-- todo distinguish between nodal zobels mid coleoptyl root node nodals.  -->
+			</SimulaBase>
+			<SimulaConstant name="density" unit="g/cm3">
+				0.08 <!-- 0.08 upper limit michaelis data -->
+			</SimulaConstant>
+		</SimulaBase>
+		<SimulaBase name="primaryRoot" objectGenerator="copyDefaults">
+			<SimulaConstant type="integer" name="rootClassID" note="for visualization output only">100</SimulaConstant>
+			<SimulaBase name="branchList">
+				<!-- michaelas data on barley: number of seminal roots min 4 max 7 mean 5.3684210526 stdev 0.7256889686 median 5 -->
+				<SimulaBase name="seminal">
+					<SimulaConstant type="time" name="branchingTimeOffset" unit="day">1</SimulaConstant>
+					<SimulaConstant name="branchingSpatialOffset" unit="cm">
+						0.01
+					</SimulaConstant>
+					<SimulaConstant type="integer" name="numberOfBranches/whorl" unit="#">
+						4
+					</SimulaConstant>
+					<!-- todo: there is a bug in the code, random integers do not work yet. SimulaStochastic type="integer" name="numberOfBranches/whorl" unit="#" distribution="uniform" 
+						maximum="6" minimum="3" / -->
+					<SimulaConstant name="allowBranchesToFormAboveGround" type="bool">false</SimulaConstant>
+				</SimulaBase>
+				<SimulaBase name="seminalSteep">
+					<SimulaConstant type="time" name="branchingTimeOffset" unit="day">
+						0
+					</SimulaConstant>
+					<SimulaConstant name="branchingSpatialOffset" unit="cm">
+						0.01
+					</SimulaConstant>
+					<!-- SimulaStochastic type="integer" name="numberOfBranches/whorl" unit="#" distribution="uniform" minimum="1" maximum="2" / -->
+					<!-- todo fix simulastochastic integer -->
+					<SimulaConstant type="integer" name="numberOfBranches/whorl" unit="#">
+						1
+					</SimulaConstant>
+					<SimulaConstant name="allowBranchesToFormAboveGround" type="bool">false</SimulaConstant>
+				</SimulaBase>
+			</SimulaBase>
+			<SimulaConstant name="density" unit="g/cm3">
+				<!-- average density in michaelis data (dryweight/volume) is 0.037 min 0.0114379085 max 0.0826010545 mean 0.0370240644 stdev 0.0141592529 median 0.0327526685 
+					There seems to be no time or genotype or treatment effect on this. -->
+				0.037
+			</SimulaConstant>
+		</SimulaBase>
+		<SimulaBase name="braceroots" objectGenerator="copyDefaults">
+			<SimulaConstant type="integer" name="rootClassID" note="for visualization output only">102</SimulaConstant>
+			<SimulaBase name="branchList">
+				<SimulaBase name="lateralOfCrownRoots">
+					<!--SimulaConstant type="time" name="branchingTimeOffset" unit="day"> 2. </SimulaConstant --><!--this is garanteed by the length of the roottip -->
+					<SimulaConstant name="branchingSpatialOffset" unit="cm">
+						12.
+					</SimulaConstant>
+					<SimulaConstant type="integer" name="numberOfBranches/whorl" unit="#">
+						1
+					</SimulaConstant>
+					<SimulaStochastic name="branchingFrequency" unit="cm" distribution="uniform" minimum="0.1" maximum="0.3" />
+					<SimulaConstant name="lengthRootTip" unit="cm"> 1.5 </SimulaConstant>
+					<SimulaConstant name="branchEmergenceDelay" unit="day" type="Time">
+						3
+					</SimulaConstant>
+					<SimulaConstant name="allowBranchesToFormAboveGround" type="bool">false</SimulaConstant>
+				</SimulaBase>
+			</SimulaBase>
+			<SimulaConstant name="density" unit="g/cm3">
+				0.037
+			</SimulaConstant>
+		</SimulaBase>
+		<SimulaBase name="braceroots2" objectGenerator="copyDefaults">
+			<SimulaConstant type="integer" name="rootClassID" note="for visualization output only">102</SimulaConstant>
+			<SimulaBase name="branchList">
+				<SimulaBase name="lateralOfCrownRoots">
+					<!--SimulaConstant type="time" name="branchingTimeOffset" unit="day"> 2. </SimulaConstant --><!--this is garanteed by the length of the roottip -->
+					<SimulaConstant name="branchingSpatialOffset" unit="cm">
+						15.
+					</SimulaConstant>
+					<SimulaConstant type="integer" name="numberOfBranches/whorl" unit="#">
+						1
+					</SimulaConstant>
+					<SimulaStochastic name="branchingFrequency" unit="cm" distribution="uniform" minimum="0.1" maximum="0.4" />
+					<SimulaConstant name="lengthRootTip" unit="cm"> 1.5 </SimulaConstant>
+					<SimulaConstant name="branchEmergenceDelay" unit="day" type="Time">
+						3
+					</SimulaConstant>
+					<SimulaConstant name="allowBranchesToFormAboveGround" type="bool">false</SimulaConstant>
+				</SimulaBase>
+			</SimulaBase>
+			<SimulaConstant name="density" unit="g/cm3">
+				0.037
+			</SimulaConstant>
+		</SimulaBase>
+		<SimulaBase name="seminal" objectGenerator="copyDefaults">
+			<SimulaConstant type="integer" name="rootClassID" note="for visualization output only">99</SimulaConstant>
+			<SimulaBase name="branchList">
+				<SimulaBase name="lateral">
+					<!--SimulaConstant name="branchingFrequency" unit="cm">0.3</SimulaConstant -->
+					<SimulaStochastic name="branchingFrequency" unit="cm" distribution="lognormal" mean="0.62" stdev="0.15" minimum="0.1" maximum="2.0" />
+					<SimulaConstant name="lengthRootTip" unit="cm"> 5 </SimulaConstant>
+					<SimulaConstant name="branchEmergenceDelay" unit="day" type="Time">
+						6
+					</SimulaConstant>
+					<SimulaConstant name="allowBranchesToFormAboveGround" type="bool">false</SimulaConstant>
+				</SimulaBase>
+			</SimulaBase>
+			<SimulaConstant name="density" unit="g/cm3">
+				0.037
+			</SimulaConstant>
+		</SimulaBase>
+		<SimulaBase name="seminalSteep" objectGenerator="copyDefaults">
+			<SimulaConstant type="integer" name="rootClassID" note="for visualization output only">99</SimulaConstant>
+			<SimulaBase name="branchList">
+				<SimulaBase name="lateral">
+					<!--SimulaConstant name="branchingFrequency" unit="cm">0.3</SimulaConstant -->
+					<SimulaStochastic name="branchingFrequency" unit="cm" distribution="lognormal" mean="0.62" stdev="0.15" minimum="0.1" maximum="2.0" />
+					<SimulaConstant name="lengthRootTip" unit="cm"> 5 </SimulaConstant>
+					<SimulaConstant name="branchEmergenceDelay" unit="day" type="Time">
+						6
+					</SimulaConstant>
+					<SimulaConstant name="allowBranchesToFormAboveGround" type="bool">false</SimulaConstant>
+				</SimulaBase>
+			</SimulaBase>
+			<SimulaConstant name="density" unit="g/cm3">
+				0.037
+			</SimulaConstant>
+		</SimulaBase>
+		<SimulaBase name="nodalroots" objectGenerator="copyDefaults">
+			<SimulaConstant type="integer" name="rootClassID" note="for visualization output only">101</SimulaConstant>
+			<SimulaBase name="branchList">
+				<SimulaBase name="lateral">
+					<SimulaStochastic name="branchingFrequency" unit="cm" distribution="lognormal" mean="0.62" stdev="0.15" minimum="0.1" maximum="2.0" />
+					<SimulaConstant name="lengthRootTip" unit="cm"> 5 </SimulaConstant>
+					<SimulaConstant name="branchEmergenceDelay" unit="day" type="Time">
+						6
+					</SimulaConstant>
+					<SimulaConstant name="allowBranchesToFormAboveGround" type="bool">false</SimulaConstant>
+				</SimulaBase>
+			</SimulaBase>
+			<SimulaConstant name="density" unit="g/cm3">
+				0.037
+			</SimulaConstant>
+		</SimulaBase>
+		<SimulaBase name="nodalroots2" objectGenerator="copyDefaults">
+			<SimulaConstant type="integer" name="rootClassID" note="for visualization output only">101</SimulaConstant>
+			<SimulaBase name="branchList">
+				<SimulaBase name="lateral">
+					<SimulaStochastic name="branchingFrequency" unit="cm" distribution="lognormal" mean="0.62" stdev="0.15" minimum="0.1" maximum="2.0" />
+					<SimulaConstant name="lengthRootTip" unit="cm"> 1.5 </SimulaConstant>
+					<SimulaConstant name="branchEmergenceDelay" unit="day" type="Time">
+						7
+					</SimulaConstant>
+					<SimulaConstant name="allowBranchesToFormAboveGround" type="bool">false</SimulaConstant>
+				</SimulaBase>
+			</SimulaBase>
+			<SimulaConstant name="density" unit="g/cm3">
+				0.037
+			</SimulaConstant>
+		</SimulaBase>
+		<SimulaBase name="nodalroots3" objectGenerator="copyDefaults">
+			<SimulaConstant type="integer" name="rootClassID" note="for visualization output only">101</SimulaConstant>
+			<SimulaBase name="branchList">
+				<SimulaBase name="lateral">
+					<!--SimulaConstant name="branchingFrequency" unit="cm">0.3</SimulaConstant -->
+					<SimulaStochastic name="branchingFrequency" unit="cm" distribution="uniform" minimum="0.05" maximum="0.25" />
+					<SimulaConstant name="lengthRootTip" unit="cm"> 1.5 </SimulaConstant>
+					<SimulaConstant name="branchEmergenceDelay" unit="day" type="Time">
+						7
+					</SimulaConstant>
+					<SimulaConstant name="allowBranchesToFormAboveGround" type="bool">false</SimulaConstant>
+				</SimulaBase>
+			</SimulaBase>
+			<SimulaConstant name="density" unit="g/cm3">
+				0.037
+			</SimulaConstant>
+		</SimulaBase>
+		<SimulaBase name="nodalroots4" objectGenerator="copyDefaults">
+			<SimulaConstant type="integer" name="rootClassID" note="for visualization output only">101</SimulaConstant>
+			<SimulaBase name="branchList">
+				<SimulaBase name="lateral">
+					<!--SimulaConstant name="branchingFrequency" unit="cm">0.3</SimulaConstant -->
+					<SimulaStochastic name="branchingFrequency" unit="cm" distribution="uniform" minimum="0.05" maximum="0.25" />
+					<SimulaConstant name="lengthRootTip" unit="cm"> 1.5 </SimulaConstant>
+					<SimulaConstant name="branchEmergenceDelay" unit="day" type="Time">
+						5
+					</SimulaConstant>
+					<SimulaConstant name="allowBranchesToFormAboveGround" type="bool">false</SimulaConstant>
+				</SimulaBase>
+			</SimulaBase>
+			<SimulaConstant name="density" unit="g/cm3">
+				0.037
+			</SimulaConstant>
+		</SimulaBase>
+		<SimulaBase name="lateralOfCrownRoots" objectGenerator="copyDefaults">
+			<SimulaConstant type="integer" name="rootClassID" note="for visualization output only">98</SimulaConstant>
+			<SimulaBase name="branchList">
+			</SimulaBase>
+			<SimulaConstant name="density" unit="g/cm3">
+				0.037
+			</SimulaConstant>
+		</SimulaBase>
+		<SimulaBase name="lateral" objectGenerator="copyDefaults">
+			<SimulaConstant type="integer" name="rootClassID" note="for visualization output only">98</SimulaConstant>
+			<SimulaBase name="branchList">
+				<SimulaBase name="finelateral">
+					<SimulaStochastic name="branchingFrequency" unit="cm" distribution="lognormal" mean="0.5" stdev="0.15" minimum="0.3" maximum="2.0" />
+					<SimulaConstant name="lengthRootTip" unit="cm"> 1.5 </SimulaConstant>
+					<SimulaConstant name="branchEmergenceDelay" unit="day" type="Time">
+						3
+					</SimulaConstant>
+					<SimulaConstant name="allowBranchesToFormAboveGround" type="bool">false</SimulaConstant>
+				</SimulaBase>
+			</SimulaBase>
+			<SimulaConstant name="density" unit="g/cm3">
+				0.037
+			</SimulaConstant>
+		</SimulaBase>
+		<SimulaBase name="finelateral" objectGenerator="copyDefaults">
+			<SimulaConstant type="integer" name="rootClassID" note="for visualization output only">98</SimulaConstant>
+			<SimulaBase name="branchList">
+			</SimulaBase>
+			<SimulaConstant name="density" unit="g/cm3">
+				0.037
+			</SimulaConstant>
+		</SimulaBase>
+		<SimulaBase name="finelateral2" objectGenerator="copyDefaults">
+			<SimulaConstant type="integer" name="rootClassID" note="for visualization output only">98</SimulaConstant>
+			<SimulaBase name="branchList">
+			</SimulaBase>
+			<SimulaConstant name="density" unit="g/cm3">
+				0.037
+			</SimulaConstant>
+		</SimulaBase>
+		<SimulaIncludeFile fileName="plantParameters/Wheat/resources.xml" />
+		<SimulaIncludeFile fileName="plantParameters/Wheat/hydraulicConductivity.xml" />
+		<SimulaIncludeFile fileName="plantParameters/Wheat/respiration.xml" />
+		<SimulaIncludeFile fileName="plantParameters/Wheat/growthrates.xml" />
+		<SimulaIncludeFile fileName="plantParameters/Wheat/angles.xml" />
+		<SimulaIncludeFile fileName="plantParameters/Wheat/includeTopBoundary.xml" />
+		<SimulaIncludeFile fileName="plantParameters/Wheat/keepRootsInsideBox.xml" />
+		<SimulaIncludeFile fileName="plantParameters/Wheat/nitrate.xml" />
+	</SimulaBase>
+</SimulationModelIncludeFile>			
+

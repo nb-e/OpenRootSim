@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SimulationModelIncludeFile>
+	<SimulaDirective path="shoot">
+		<SimulaConstant name="relativeRespirationRateLeafs" unit="g/g/day" note="g C per g dry weight">
+			0.035
+		</SimulaConstant>
+		<SimulaConstant name="relativeRespirationRateStems" unit="g/g/day" note="based on dryweight">
+			0.02
+		</SimulaConstant>
+	</SimulaDirective>
+	<SimulaDirective path="hypocotyl">
+		<SimulaTable name_column1="time since creation" unit_column1="day" name_column2="relativeRespiration"
+			unit_column2="g/g/day"
+		> 0 0.08 2 0.04 6 0.04 1000 0.035</SimulaTable>
+	</SimulaDirective>
+	<SimulaDirective path="primaryRoot">
+		<SimulaTable name_column1="time since creation" unit_column1="day" name_column2="relativeRespiration"
+			unit_column2="g/g/day"
+		> 0 0.08 2 0.035 6 0.035 1000 0.035</SimulaTable>
+	</SimulaDirective>
+	<SimulaDirective path="lateralPrimaryRoot">
+		<SimulaTable name_column1="time since creation" unit_column1="day" name_column2="relativeRespiration"
+			unit_column2="g/g/day"
+		> 0 0.08 2 0.035 6 0.035 1000 0.035</SimulaTable>
+	</SimulaDirective>
+	<SimulaDirective path="finelateral">
+		<SimulaTable name_column1="time since creation" unit_column1="day" name_column2="relativeRespiration"
+			unit_column2="g/g/day"
+		> 0 0.08 2 0.035 6 0.035 1000 0.035</SimulaTable>
+	</SimulaDirective>
+</SimulationModelIncludeFile>

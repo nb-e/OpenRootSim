@@ -1,0 +1,444 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--?xml-stylesheet type="text/xsl" href="tree-view2.xsl"? -->
+<!--
+Copyright © 2016, The Pennsylvania State University
+All rights reserved.
+
+Copyright © 2016 Forschungszentrum Jülich GmbH
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, are permitted under the GNU General Public License v3 and provided that the following conditions are met:
+1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+
+Disclaimer
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+You should have received the GNU GENERAL PUBLIC LICENSE v3 with this file in license.txt but can also be found at http://www.gnu.org/licenses/gpl-3.0.en.html
+
+ -->
+<!--
+observations jouke:
+upto 3 orders of laterals.
+Only finest order does not have secondary growth
+some first order laterals grow very long (meter or more).
+some second order laterals still can grow long, 20 cm or so, but most stay within 10
+third order laterals are always very short, up to 1 cm. 
+primary root has all orders of laterals (fine to heavily developed). 
+lateral branching is sparce 1-3 per cm with fine order being more regular about 4/cm
+fourth order laterals are sometimes formed but hard to see with naked eye. usually only 1-2 mm long. 
+highest order laterals definetely have some gravitropism, especially deeper once. 
+primary root gets 1.3 cm thick, but agter 20 cm is 5 mm thick. 
+fast growing laterals 4 mm
+higher order (or faster developing) laterals start of thicker.
+sometimes nodal roots do form. they look similar to the fast developing laterals.
+
+ 
+-->
+<SimulationModelIncludeFile
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="../../../../scripts/XML/SimulaXMLSchema.xsd">
+	<SimulaBase name="squash">
+		<SimulaBase name="stressImpactFactors">
+			<SimulaBase name="impactOn:photosynthesis">
+				<SimulaTable
+					name_column2="impactBy:phosphorus"
+					name_column1="phosphorus stress factor">1 1 0 0.5</SimulaTable>
+				<SimulaTable
+					name_column2="impactBy:potassium"
+					name_column1="potassium stress factor">1 1 0 0</SimulaTable>
+				<SimulaTable
+					name_column2="impactBy:nitrate"
+					name_column1="nitrate stress factor">1 1 0.4 0.5 0 0</SimulaTable>
+			</SimulaBase>
+			<SimulaBase name="impactOn:leafAreaExpantionRate">
+				<SimulaTable
+					name_column2="impactBy:phosphorus"
+					name_column1="phosphorus stress factor">1 1 0 0</SimulaTable>
+				<SimulaTable
+					name_column2="impactBy:potassium"
+					name_column1="potassium stress factor">1 1 0 1</SimulaTable>
+				<SimulaTable
+					name_column2="impactBy:nitrate"
+					name_column1="nitrate stress factor">1 1 0.4 0.1 0 0</SimulaTable>
+			</SimulaBase>
+			<SimulaBase name="impactOn:rootPotentialLongitudinalGrowth">
+				<SimulaTable
+					name_column2="impactBy:phosphorus"
+					name_column1="phosphorus stress factor"> 1 1 0.1 1 0 1
+				</SimulaTable>
+				<SimulaTable
+					name_column2="impactBy:potassium"
+					name_column1="potassium stress factor"> 1 1 0.5 1 0 0
+				</SimulaTable>
+				<SimulaTable
+					name_column2="impactBy:nitrate"
+					name_column1="nitrate stress factor"> 1 1 0.5 1 0 0
+				</SimulaTable>
+			</SimulaBase>
+			<SimulaBase name="impactOn:rootSegmentCarbonCostOfExudates">
+				<SimulaTable
+					name_column2="impactBy:phosphorus"
+					name_column1="phosphorus stress factor">1 1 0 1</SimulaTable>
+				<SimulaTable
+					name_column2="impactBy:potassium"
+					name_column1="potassium stress factor">1 1 0 1</SimulaTable>
+				<SimulaTable
+					name_column2="impactBy:nitrate"
+					name_column1="nitrate stress factor">1 1 0 1</SimulaTable>
+			</SimulaBase>
+			<SimulaBase name="impactOn:rootSegmentRespiration">
+				<SimulaTable
+					name_column2="impactBy:phosphorus"
+					name_column1="phosphorus stress factor">1 1 0 1</SimulaTable>
+				<SimulaTable
+					name_column2="impactBy:potassium"
+					name_column1="potassium stress factor">1 1 0 1</SimulaTable>
+				<SimulaTable
+					name_column2="impactBy:nitrate"
+					name_column1="nitrate stress factor">1 1 0 1</SimulaTable>
+			</SimulaBase>
+			<SimulaBase name="impactOn:rootSegmentSecondaryGrowth">
+				<SimulaTable
+					name_column2="impactBy:phosphorus"
+					name_column1="phosphorus stress factor">1 1 0 0</SimulaTable>
+				<SimulaTable
+					name_column2="impactBy:potassium"
+					name_column1="potassium stress factor">1 1 0 0</SimulaTable>
+				<SimulaTable
+					name_column2="impactBy:nitrate"
+					name_column1="nitrate stress factor">1 1 0 0</SimulaTable>
+			</SimulaBase>
+			<SimulaBase name="impactOn:leafRespiration">
+				<SimulaTable
+					name_column2="impactBy:phosphorus"
+					name_column1="phosphorus stress factor">1 1 0 1</SimulaTable>
+				<SimulaTable
+					name_column2="impactBy:potassium"
+					name_column1="potassium stress factor">1 1 0 1.</SimulaTable>
+				<SimulaTable
+					name_column2="impactBy:nitrate"
+					name_column1="nitrate stress factor">1 1 0 1</SimulaTable>
+			</SimulaBase>
+			<SimulaBase name="impactOn:stemRespiration">
+				<SimulaTable
+					name_column2="impactBy:phosphorus"
+					name_column1="phosphorus stress factor">1 1 0 1</SimulaTable>
+				<SimulaTable
+					name_column2="impactBy:potassium"
+					name_column1="potassium stress factor">1 1 0 1</SimulaTable>
+				<SimulaTable
+					name_column2="impactBy:nitrate"
+					name_column1="nitrate stress factor">1 1 0 1</SimulaTable>
+			</SimulaBase>
+
+<!-- these moderate the local nutrient response - note not parameterized for squash -->
+			<SimulaBase name="impactOn:rootPotentialLongitudinalGrowthMultiplier">
+				<SimulaTable
+					name_column2="impactBy:phosphorus"
+					name_column1="phosphorus stress factor"> 1 0 0.5 1 0 1
+				</SimulaTable>
+				<SimulaTable
+					name_column2="impactBy:potassium"
+					name_column1="potassium stress factor"> 1 0 0.5 1 0 1
+				</SimulaTable>
+				<SimulaTable
+					name_column2="impactBy:nitrate"
+					name_column1="nitrate stress factor"> 1 0 0.5 1 0 1
+				</SimulaTable>
+			</SimulaBase>
+			<SimulaBase name="impactOn:branchingFrequencyMultiplier">
+				<SimulaTable
+					name_column2="impactBy:phosphorus"
+					name_column1="phosphorus stress factor"> 1 0 0.5 1 0 1
+				</SimulaTable>
+				<SimulaTable
+					name_column2="impactBy:potassium"
+					name_column1="potassium stress factor"> 1 0 0.5 1 0 1
+				</SimulaTable>
+				<SimulaTable
+					name_column2="impactBy:nitrate"
+					name_column1="nitrate stress factor"> 1 0 0.5 1 0 1
+				</SimulaTable>
+			</SimulaBase>
+			<SimulaBase name="impactOn:gravitropismMultiplier">
+				<SimulaTable
+					name_column2="impactBy:phosphorus"
+					name_column1="phosphorus stress factor"> 1 0 0.5 1 0 1
+				</SimulaTable>
+				<SimulaTable
+					name_column2="impactBy:potassium"
+					name_column1="potassium stress factor"> 1 0 0.5 1 0 1
+				</SimulaTable>
+				<SimulaTable
+					name_column2="impactBy:nitrate"
+					name_column1="nitrate stress factor"> 1 0 0.5 1 0 1
+				</SimulaTable>
+			</SimulaBase>
+		</SimulaBase>
+		<SimulaBase name="resources">
+			<SimulaConstant
+				name="carbonCostOfNitrateUptake"
+				unit="g/uMol">
+				<!--
+					Nielsen et al 1998 says, citing: "Respiration associated with ion uptake was estimated by multiplying the net uptake
+					rate of N by the specific cost of N uptake 1,2 mol CO2 /mol N" ; reviewed by Bouma, Broekhuysen & Veen (1996). this
+					is potato? This may be highest estimate of 1.16 below
+				-->
+				<!--
+				Bouma, Broekhuysen & Veen (1996): cost of nitrate uptake in  potato
+				0.39-0.67 mol 02/mol nitrate. But they state that these numbers are low compared to the literature which is more like 0.83-1.16 mol O2/mol nitrate
+					mol/mol g/mol
+					0.39	4.68
+					0.67	8.04
+					0.83	9.96
+					1.16	13.92
+				-->
+				0.00001392
+			</SimulaConstant>
+			<SimulaTable
+				name_column1="time since creation"
+				unit_column1="day"
+				name_column2="carbonAllocation2LeafsFactor"
+				unit_column2="100%">
+			<!--
+			Loy JB. 2004. Morpho-physiological aspects of productivity and quality in squash and pumpkins (Cucurbita spp.). Critical Reviews in Plant Sciences 23: 337–363.
+			leafdw/(leafdw+stemdw)=63% in mature plants
+			-->
+				0 1. 10 0.9 13 0.83 17 0.71 19 0.64 20 0.63 1000 0.63
+			</SimulaTable>
+			<SimulaConstant
+				name="maxCarbonAllocation2SecondaryGrowth"
+				unit="100%">0.70</SimulaConstant>
+			<SimulaTable
+				name_column1="time"
+				name_column2="maxCarbonAllocation2Shoot"
+				unit_column1="day"
+				unit_column2="100%"> 0 0.74 23 0.97 24 0.97 37 0.83 60 0.83
+			</SimulaTable>
+			<SimulaConstant
+				name="seedSize"
+				unit="g">
+			<!-- this is too high?, but otherwise we do not get the plant established. Left over carbon will expire. -->
+				0.2
+			</SimulaConstant>
+			<SimulaConstant
+			name="seedReserveDuration"
+			unit="day"
+			type="Time">
+			20
+			 <!--100  never -->
+			</SimulaConstant>		
+			<SimulaConstant
+				name="CtoDryWeightRatio"
+				unit="100%">
+			<!--Zhang 2008 three sisters data: squash 0.41, maize 0.45, bean 0.45 -->
+				0.41
+			</SimulaConstant>
+		</SimulaBase>
+		<SimulaBase name="shoot">
+			<SimulaConstant
+				name="relativePotentialTranspiration"
+				unit="cm3/g">
+			<!--use either cm3/cm2 leaf area/day or per cm3/g C of photosynthesis-->
+			<!--sinclair et al 1975: maize: max. during day = 0.6 mg/mm2/hour = 
+			1.44 cm3/cm2/day
+			wue (measured): 7-16 10e-3 g CO2/g H2O. = 1.9-4.3  mg/ml 229-524 where maize becomes less water efficient when stomata close?
+			-->  
+			<!--
+			http://www.dse.vic.gov.au/dpi/vro/vrosite.nsf/pages/lwm_farmwater_maize
+			maize: 30 kg dm/mm = 15 kg C/M3 = 15 mg/cm3 = 66 g/cm3 
+			-->
+			<!--gaiser et al 2004: maize-cowpea system:	11.2 kg/mm	-->
+			<!--baldocchi 1994: 
+			10-15 mg C/g water during day, but during night negative numbers because of respiration
+			~ 66-100 ml/g -->
+				100
+			</SimulaConstant>
+			<SimulaConstant
+				name="extinctionCoefficient"
+				unit="noUnit"> 1.</SimulaConstant>
+			<SimulaTable
+				name_column1="time"
+				name_column2="specificLeafArea"
+				unit_column1="day"
+				unit_column2="g/cm2"> 0 0.0012 10 0.0012 24 0.0040 40 0.0050 60
+				0.0050</SimulaTable>
+			<SimulaConstant
+				name="lightUseEfficiency"
+				unit="g/uMol"> 0.38E-6</SimulaConstant>
+			<SimulaConstant
+				name="areaPerPlant"
+				unit="cm2">
+				<!--three sisters: 3 plants / 120*60 cm = 2400 cm2/plant -->
+				2400
+			</SimulaConstant>
+		</SimulaBase>
+		<SimulaBase name="hypocotyl">
+			<SimulaBase name="branchList">
+				<SimulaBase name="lateralPrimaryRootFastGrowing">
+					<SimulaConstant
+						type="integer"
+						name="numberOfBranches/whorl"
+						unit="#"> 1</SimulaConstant>
+					<SimulaConstant
+						name="branchingFrequency"
+						unit="cm"> 0.5</SimulaConstant>
+					<SimulaConstant
+						name="maxNumberOfBranches"
+						unit="#"
+						type="integer"> 4</SimulaConstant>
+					<SimulaConstant
+						name="branchingTimeOffset"
+						unit="day"> 10</SimulaConstant>
+					<SimulaConstant
+						name="branchingSpatialOffset"
+						unit="cm"> 0.5</SimulaConstant>
+					<SimulaConstant
+						name="branchingDelay"
+						unit="day"> 2.</SimulaConstant>
+					<SimulaConstant
+						name="allowBranchesToFormAboveGround"
+						type="bool">false</SimulaConstant>
+				</SimulaBase>
+			</SimulaBase>
+			<SimulaConstant
+				name="density"
+				unit="g/cm3"> 0.1</SimulaConstant>
+		</SimulaBase>
+		<SimulaBase name="primaryRoot">
+			<SimulaBase name="branchList">
+				<SimulaBase name="lateralPrimaryRootFastGrowing">
+					<SimulaConstant
+						type="integer"
+						name="numberOfBranches/whorl"
+						unit="#"> 1</SimulaConstant>
+					<SimulaTable
+						name_column1="relative time creation last branch"
+						unit_column1="day"
+						name_column2="branchingFrequency"
+						unit_column2="cm">
+						<!--about 1 every cm for first 20 cm  of root system, than fewer later on.-->
+						0 0.5 10 1 20 10 30 500 1000 500
+					</SimulaTable>
+					<SimulaConstant
+						name="lengthRootTip"
+						unit="cm"> 6.00</SimulaConstant>
+				</SimulaBase>
+				<SimulaBase name="lateralPrimaryRoot">
+					<SimulaConstant
+						type="integer"
+						name="numberOfBranches/whorl"
+						unit="#"> 1</SimulaConstant>
+					<SimulaConstant
+						name="branchingFrequency"
+						unit="cm"> 0.5</SimulaConstant>
+					<SimulaConstant
+						name="lengthRootTip"
+						unit="cm"> 6</SimulaConstant>
+				</SimulaBase>
+			</SimulaBase>
+			<SimulaConstant
+				name="density"
+				unit="g/cm3"> 0.1</SimulaConstant>
+		</SimulaBase>
+		<SimulaBase name="lateralPrimaryRootFastGrowing">
+			<SimulaBase name="branchList">
+				<SimulaBase name="finelateralFastGrowing">
+					<SimulaConstant
+						name="branchingFrequency"
+						unit="cm"> 0.7</SimulaConstant>
+					<SimulaConstant
+						name="lengthRootTip"
+						unit="cm"> 4.0</SimulaConstant>
+				</SimulaBase>
+				<SimulaBase name="finelateral">
+					<SimulaConstant
+						name="branchingFrequency"
+						unit="cm"> 0.32</SimulaConstant>
+					<SimulaConstant
+						name="lengthRootTip"
+						unit="cm"> 4.0</SimulaConstant>
+				</SimulaBase>
+			</SimulaBase>
+			<SimulaConstant
+				name="density"
+				unit="g/cm3"> 0.1</SimulaConstant>
+		</SimulaBase>
+		<SimulaBase name="lateralPrimaryRoot">
+			<SimulaBase name="branchList">
+				<!--these seem to be quite different from the tertiary root on the long laterals and more like the quatiary roots-->
+				<SimulaBase name="finelateral">
+					<SimulaConstant
+						name="branchingFrequency"
+						unit="cm"> 0.32</SimulaConstant>
+					<SimulaConstant
+						name="lengthRootTip"
+						unit="cm">
+						1.5 <!--very short-->
+					</SimulaConstant>
+				</SimulaBase>
+			</SimulaBase>
+			<SimulaConstant
+				name="density"
+				unit="g/cm3"> 0.1</SimulaConstant>
+		</SimulaBase>
+		<!--PARAMETERS FOR tetiarySquash ROOTS-->
+		<SimulaBase name="finelateralFastGrowing">
+			<SimulaBase name="branchList">
+				<!--cuartera roots appear after 15 days. -->
+				<SimulaBase name="finelateral">
+					<SimulaConstant
+						name="branchingFrequency"
+						unit="cm"> 0.32</SimulaConstant>
+					<SimulaConstant
+						name="lengthRootTip"
+						unit="cm"> 1.</SimulaConstant>
+				</SimulaBase>
+			</SimulaBase>
+			<SimulaConstant
+				name="density"
+				unit="g/cm3"> 0.1</SimulaConstant>
+		</SimulaBase>
+		<SimulaBase name="finelateral">
+			<SimulaConstant
+				name="density"
+				unit="g/cm3"> 0.1</SimulaConstant>
+			<SimulaBase name="branchList"></SimulaBase>
+		</SimulaBase>
+		<!--these root classes are currently not used, just keep for later -->
+		<SimulaBase name="hypocotylBornRoots">
+			<SimulaConstant
+				name="density"
+				unit="g/cm3"> 0.1</SimulaConstant>
+			<SimulaBase name="branchList">
+				<SimulaBase name="lateralHypocotylBornRoots">
+					<SimulaConstant
+						name="branchingFrequency"
+						unit="cm"> 0.32</SimulaConstant>
+					<SimulaConstant
+						name="lengthRootTip"
+						unit="cm"> 1.</SimulaConstant>
+				</SimulaBase>
+			</SimulaBase>
+		</SimulaBase>
+		<SimulaBase name="lateralHypocotylBornRoots">
+			<SimulaConstant
+				name="density"
+				unit="g/cm3"> 0.1</SimulaConstant>
+			<SimulaBase name="branchList"></SimulaBase>
+		</SimulaBase>
+		<SimulaIncludeFile fileName="plantParameters/Squash/default/growthrates.xml" />
+		<SimulaIncludeFile fileName="plantParameters/Squash/default/phosphorus.xml" />
+		<SimulaIncludeFile fileName="plantParameters/Squash/default/nitrate.xml" />
+		<SimulaIncludeFile fileName="plantParameters/Squash/default/potassium.xml" />
+		<SimulaIncludeFile fileName="plantParameters/Squash/default/respiration.xml" />
+		<!-- The exudation parameters for this species lead to a very high fraction of carbon produced being spent on exudation. Because of this, exudation has been disabled by default until new measurements of the parameters are available. Take care when enabling this again. -->
+		<!--SimulaIncludeFile fileName="plantParameters/Squash/default/exudates.xml" /-->
+		<SimulaIncludeFile fileName="plantParameters/Squash/default/rootHairs.xml" />
+		<SimulaIncludeFile fileName="plantParameters/Squash/default/angles.xml" />
+		<SimulaIncludeFile
+			fileName="plantParameters/Squash/default/keepRootsInsideBox.xml" />
+	</SimulaBase>
+</SimulationModelIncludeFile>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	Simulation file for SimRoot 
+
+	note: this one is just created to get some roothair images. 
+	
+-->
+<SimulationModelIncludeFile>			
+	<SimulaBase name="roothairs">
+		<SimulaBase name="hypocotyl">
+			<SimulaConstant  name="growthRate" unit="cm/day"> 0</SimulaConstant>
+			<SimulaConstant name="diameter"  unit="cm">0.2 </SimulaConstant>
+			<SimulaBase name="branchList">	</SimulaBase>	
+			<SimulaConstant name="numberOfXylemPoles" type="integer"> 50</SimulaConstant>
+			<SimulaConstant name="soilImpedence" > 0.3 </SimulaConstant>
+			<SimulaConstant name="gravitropism" > -0.5 </SimulaConstant>
+			<SimulaConstant  name="density" unit="g/cm3"> 0.1 </SimulaConstant>
+			<SimulaConstant  name="relativeRespiration" unit="g/g/day">0.1 </SimulaConstant>
+		</SimulaBase>
+		<SimulaBase name="primaryRoot">
+			<SimulaTable name_column1="time since creation" unit_column1="day" name_column2="growthRate" unit_column2="cm/day">
+				 0 16
+				 1 0
+				 3 0
+				 1000 0.0
+			</SimulaTable>
+			<SimulaConstant name="diameter"  unit="cm"> 0.1 </SimulaConstant>
+			<SimulaConstant name="branchingAngle"  unit="degrees">	 0 	</SimulaConstant>
+			<SimulaBase name="branchList">	
+				<SimulaBase name="roothairs">
+						<SimulaConstant  name="branchingFrequency" unit="cm">0.01</SimulaConstant>
+						<!--SimulaStochastic  name="branchingFrequency" unit="cm" distribution="uniform" minimum="0.1" maximum="0.4" /--> 
+						<SimulaConstant  name="lengthRootTip" unit="cm"> 2 	</SimulaConstant>
+				</SimulaBase>
+			</SimulaBase>	
+			<SimulaConstant name="numberOfXylemPoles" type="integer">	 50 	</SimulaConstant>
+			<SimulaConstant name="soilImpedence" >	 0.01 	</SimulaConstant>
+			<SimulaConstant name="gravitropism" > 0.1 	</SimulaConstant>
+			<SimulaConstant  name="density" unit="g/cm3">	 0.1	</SimulaConstant>
+			<SimulaConstant  name="relativeRespiration" unit="g/g/day"> 0.1 </SimulaConstant>
+		</SimulaBase>
+		<SimulaBase name="roothairs">
+		    
+			<SimulaTable name_column1="time since creation" unit_column1="day" name_column2="growthRate" unit_column2="cm/day">
+			    0 0.5
+			  0.5 0.5
+			  3.0 0.5
+			 1000 0.0
+			</SimulaTable>
+			
+			<SimulaConstant name="diameter"  unit="cm"> 0.008 	</SimulaConstant>
+			<SimulaConstant name="branchingAngle"  unit="degrees">	 90 </SimulaConstant>
+			<SimulaConstant name="numberOfXylemPoles" type="integer"> 800 	</SimulaConstant>
+			<SimulaConstant name="regularTopology" type="integer">	 0 	</SimulaConstant>
+			<SimulaConstant name="topologyOffset" type="integer"> 0 </SimulaConstant>
+			<SimulaConstant name="soilImpedence" >	 0.5 </SimulaConstant>
+			<SimulaConstant name="gravitropism" >	 0.000 	</SimulaConstant>
+			<SimulaBase name="branchList">	</SimulaBase>
+			<SimulaConstant  name="density" unit="g/cm3">	 0.0	</SimulaConstant>
+			<SimulaConstant  name="relativeRespiration" unit="g/g/day"> 0.0	</SimulaConstant>
+		</SimulaBase>
+	</SimulaBase>
+</SimulationModelIncludeFile>
+
+
+

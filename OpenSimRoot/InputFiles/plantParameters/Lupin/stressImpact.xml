@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<SimulationModelIncludeFile>
+
+	<SimulaBase name="stressImpactFactors">
+		<!--
+			Jordan-Meille L, Pellerin S. 2004. Leaf area establishment of a maize
+			(Zea Mays L.) field crop under potassium deficiency. Plant and Soil
+			265: 75-92. field grown maize and potassium: - leaf area is reduced,
+			by half in 0 potassium treatment, but not because of carbon
+			limitations but because of water relations
+		-->
+		<SimulaBase name="impactOn:photosynthesis">
+			<!--
+				for phosphorus this is based on Lynch et al 1991 figure 4 where
+				severe P stress reduced photosynthesis by ~ 1/2 (2/3 if you take the
+				extremes). The response was linear and measured in bean leaves
+			-->
+			<!--
+				for maize: Usuda, H. & Shimogawara, K., 1991. Phosphate Deficiency
+				in Maize. I. Leaf Phosphate Status, Growth, Photosynthesis and
+				Carbon Partitioning. Plant Cell Physiol., 32(4), 497-504. this
+				reference shows even a 3 fold decrease from 35-10 uMol/m2/s see fig
+				3 but the max of the light curve shifts about 50%
+			-->
+			<SimulaTable name_column2="impactBy:phosphorus"
+				name_column1="phosphorus stress factor">1 1 0.5 1 0 0.5</SimulaTable>
+			<SimulaTable name_column2="impactBy:potassium"
+				name_column1="potassium stress factor">
+				1 1 0 0</SimulaTable>
+			<SimulaTable name_column2="impactBy:nitrate" name_column1="nitrate stress factor">
+				<!--
+					Sinclair TR, Horie T. 1989. Leaf Nitrogen, Photosynthesis, and Crop
+					Radiation Use Efficiency: A Review. Crop Sci 29: 90-98.
+				-->
+				1 1 0.4 0.5 0 0
+			</SimulaTable>
+		</SimulaBase>
+		<SimulaBase name="impactOn:leafAreaExpantionRate">
+			<!--
+				note that, by definition these must have no more growth when stress
+				is max so they need to end on 0 0
+			-->
+			<SimulaTable name_column2="impactBy:phosphorus"
+				name_column1="phosphorus stress factor"> 1 1 0 0 </SimulaTable>
+			<SimulaTable name_column2="impactBy:potassium" name_column1="potassium stress factor">
+				1 1 0.2 0.5 0 0 </SimulaTable>
+			<SimulaTable name_column2="impactBy:nitrate" name_column1="nitrate stress factor">
+				1 1 0.3 0.1 0 0</SimulaTable>
+		</SimulaBase>
+		<SimulaBase name="impactOn:rootPotentialLongitudinalGrowth">
+			<SimulaTable name_column2="impactBy:phosphorus"
+				name_column1="phosphorus stress factor"> 
+				1 1 0.1 1 0 1 </SimulaTable>
+			<SimulaTable name_column2="impactBy:potassium" name_column1="potassium stress factor">
+				1 1 0.5 1 0 0</SimulaTable>
+			<SimulaTable name_column2="impactBy:nitrate" name_column1="nitrate stress factor">
+				1 1 0.5 1 0 0</SimulaTable>
+		</SimulaBase>
+		<SimulaBase name="impactOn:rootSegmentSecondaryGrowth">
+			<SimulaTable name_column2="impactBy:phosphorus"
+				name_column1="phosphorus stress factor"> 1 1 0.5 0.2 0 0 </SimulaTable>
+			<SimulaTable name_column2="impactBy:potassium" name_column1="potassium stress factor">
+				1 1 0.5 0.2 0 0 </SimulaTable>
+			<SimulaTable name_column2="impactBy:nitrate" name_column1="nitrate stress factor">
+				1 1 0.5 0.2 0 0 </SimulaTable>
+		</SimulaBase>
+		<SimulaBase name="impactOn:rootSegmentCarbonCostOfExudates">
+			<SimulaTable name_column2="impactBy:phosphorus"
+				name_column1="phosphorus stress factor"> 1 1 0 1 </SimulaTable>
+			<SimulaTable name_column2="impactBy:potassium"
+				name_column1="potassium stress factor">
+				1 1 0 1 </SimulaTable>
+			<SimulaTable name_column2="impactBy:nitrate" name_column1="nitrate stress factor">
+				1 1 0 1 </SimulaTable>
+		</SimulaBase>
+		<SimulaBase name="impactOn:rootSegmentRespiration">
+			<SimulaTable name_column2="impactBy:phosphorus"
+				name_column1="phosphorus stress factor">1 1 0 1</SimulaTable>
+			<SimulaTable name_column2="impactBy:potassium"
+				name_column1="potassium stress factor">
+				1 1 0 1</SimulaTable>
+			<SimulaTable name_column2="impactBy:nitrate" name_column1="nitrate stress factor">
+				1 1 0 1</SimulaTable>
+		</SimulaBase>
+		<SimulaBase name="impactOn:leafRespiration">
+			<SimulaTable name_column2="impactBy:phosphorus"
+				name_column1="phosphorus stress factor">1 1 0 1</SimulaTable>
+			<SimulaTable name_column2="impactBy:potassium"
+				name_column1="potassium stress factor">
+				1 1 0 1</SimulaTable>
+			<SimulaTable name_column2="impactBy:nitrate" name_column1="nitrate stress factor">
+				1 1 0 1</SimulaTable>
+		</SimulaBase>
+		<SimulaBase name="impactOn:stemRespiration">
+			<SimulaTable name_column2="impactBy:phosphorus"
+				name_column1="phosphorus stress factor">1 1 0 1</SimulaTable>
+			<SimulaTable name_column2="impactBy:potassium"
+				name_column1="potassium stress factor">
+				1 1 0 1</SimulaTable>
+			<SimulaTable name_column2="impactBy:nitrate" name_column1="nitrate stress factor">
+				1 1 0 1</SimulaTable>
+		</SimulaBase>
+
+<!-- these moderate the local nutrient response -->
+		<SimulaBase name="impactOn:rootPotentialLongitudinalGrowthMultiplier">
+			<SimulaTable name_column2="impactBy:phosphorus" name_column1="phosphorus stress factor">
+				1 0 0.5 1 0 1
+			</SimulaTable>
+			<SimulaTable name_column2="impactBy:potassium" name_column1="potassium stress factor">
+				1 0 0.5 1 0 1
+			</SimulaTable>
+			<SimulaTable name_column2="impactBy:nitrate" name_column1="nitrate stress factor">
+				1 0 0.5 1 0 1
+			</SimulaTable>
+		</SimulaBase>
+		<SimulaBase name="impactOn:branchingFrequencyMultiplier">
+			<SimulaTable name_column2="impactBy:phosphorus" name_column1="phosphorus stress factor">
+				1 0 0.5 1 0 1
+			</SimulaTable>
+			<SimulaTable name_column2="impactBy:potassium" name_column1="potassium stress factor">
+				1 0 0.5 1 0 1
+			</SimulaTable>
+			<SimulaTable name_column2="impactBy:nitrate" name_column1="nitrate stress factor">
+				1 0 0.5 1 0 1
+			</SimulaTable>
+		</SimulaBase>
+		<SimulaBase name="impactOn:gravitropismMultiplier">
+			<SimulaTable name_column2="impactBy:phosphorus" name_column1="phosphorus stress factor">
+				1 0 0.5 1 0 1
+			</SimulaTable>
+			<SimulaTable name_column2="impactBy:potassium" name_column1="potassium stress factor">
+				1 0 0.5 1 0 1
+			</SimulaTable>
+			<SimulaTable name_column2="impactBy:nitrate" name_column1="nitrate stress factor">
+				1 0 0.5 1 0 1
+			</SimulaTable>
+		</SimulaBase>
+
+
+
+	</SimulaBase>
+</SimulationModelIncludeFile>

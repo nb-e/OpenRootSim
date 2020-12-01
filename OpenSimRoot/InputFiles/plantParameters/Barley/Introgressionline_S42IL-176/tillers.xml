@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright © 2016 Forschungszentrum Jülich GmbH
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, are permitted under the GNU General Public License v3 and provided that the following conditions are met:
+1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+
+Disclaimer
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+You should have received the GNU GENERAL PUBLIC LICENSE v3 with this file in license.txt but can also be found at http://www.gnu.org/licenses/gpl-3.0.en.html
+
+ -->
+<?xml-stylesheet type="text/xsl" href="XML/treeview.xsl"?>
+<SimulationModelIncludeFile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../scripts/XML/SimulaXMLSchema.xsd">
+	<SimulaDirective path="shoot"> 
+		<SimulaTable name_column1="time" name_column2="leafAreaExpantionRatePerTiller" unit_column1="day" unit_column2="cm2/day"> 0. 0 2. 0 4. 0.3 9.5 0.3 12.8 0.4 15. 0.5 30. 1.3 35. 1.45 40. 1.45 45 0.0001 20000 0.0001 </SimulaTable> 
+		<SimulaBase name="tillers">
+			<SimulaTable name_column1="time" name_column2="timeDelayBetweenTillers" unit_column1="day" unit_column2="day" interpolationMethod="step">
+			<!-- Vera Hecht: data from PT1
+			DAG 		3	5	7	10		12		14		17		19		21		23		24, so add 2 days to get DAS 
+			TillScaLow	 1	1	1	1		1		1,2		1,6		2,2		3		3,6		4
+			TillScaHigh	 1	1	1	1		1,24	1,48	2,24	2,32	3,16	3,92	4,52
+			TillILLow	1	1	1	1		1		2,25	3,5		4,25	5,25	7,25	8,75
+			TillILHigh 	1	1	1	1,0333	1,4667	2,0333	2,8667	3,5		3,9333	4,46667	5,3333
+			
+						
+			IL High (5 plants per rhizotron, 4cm distance to neighbor): 
+			DAS TillNo
+			 5 	1
+			 7 	1	
+			 9 	1	
+			 12 1.0333	
+			 14 1.4667
+			 16 2.0333	
+			 19 2.8667	
+			 21 3.5	
+			 23 3.9333	
+			 25 4.4667	
+			 26 5.333
+			 			 
+			 IL Low (1 plant per rhizotron): 
+			DAS TillNo
+			 5 	1
+			 7 	1	
+			 9 	1	
+			 12 1	
+			 14 1	
+			 16 2.25	
+			 19 3.5	
+			 21 4.25	
+			 23 5.25	
+			 25 7.25	
+			 26 8.75 
+			 
+			 Vera Hecht: data from field CKA2013, inter-row-distance: 20.8cm
+			 PD1: 24 plants/m2, distance to neighbor: 21 cm
+			 PD5: 120 plants/m2, distance to neighbor: 4 cm
+			 PD10: 340 plants/m2, distance to neighbor: 1.4 cm
+			 
+			 DAS		16		29		41		48		49		54		56		57		91		98
+			 			 
+			 ScaPD1		1		5,2		13,5333	7,4		18,8	25,3	22,2	29,3333	31,75	31,6667
+			 ScaPD5		1		4,6667	8,53333	13,6	9		6,7		6,4		6,33333	7		8,1111
+			 ScaPD10	1		3,6111	4,33333	6		6		5,7		2,6		4		4,5556	4,1111
+			 
+			 ILPD1		1,4667	6,2667	18,7333	24		23,3333	28,6667	35		38		x		41
+			 ILPD5		1,3333	6,8		15,9333	10,6667	17,3333	11		7,3333	12,3333	x		x	
+			 
+			 
+			 combined tables 
+			 	it is that in 1st column are the DAS-values of the simulation and in 2nd column are the delay-values of what I measured
+			 	delay-values: how many days later (=delay) the plants grow the 1st tiller, and how many days later the 2nd and so on.
+			 	so SimRoot checks on DAS 0, 16 days later will be produce 1 tiller -> on DAS 16, 1 tiller will grow
+			 	on DAS 15 SimRoot sees, that there will be in 6 days a tiller -> on DAS 21, 1 tiller will grow
+			 Low PD (1 plant per rhizotron, 21 cm distance to neighbor)
+				0 	16
+				15 	4
+				19	2
+				23	1	(5 Tillers)			
+				35	2	(17 Tillers)
+				47	1	(23 Tillers)
+				54	0.6 (30 Tillers)
+				60	300	(40 Tillers)
+				
+			High PD (5 plants per rhizo)=medium in field
+				0 	14
+				13 	6
+				19 	4
+				23	2
+				37	4	(11 Tiller)
+				41	200
+			Very High PD (Scarlett values, since there are no IL-values)
+				0 	14
+				13 	6
+				19 	4
+				23	4
+				29	200
+			
+			 -->
+			
+				0 	16
+				15 	4
+				19	2
+				23	1				
+				35	2	
+				47	1	
+				54	0.6 
+				60	300	
+				
+			</SimulaTable>
+			<SimulaTable name_column1="time" name_column2="crownDiameter" unit_column1="day" unit_column2="cm" interpolationMethod="step">0 0.5 14 0.5 40 1. 100 1.</SimulaTable>
+
+			<!--SimulaConstant name="numberOfTillers" type="int"> 5 </SimulaConstant>
+			<SimulaConstant name="maxTillerOrder" type="int"> 3 </SimulaConstant-->
+			<!--SimulaBase name="tillerPositions1">
+				<SimulaConstant name="1" type="coordinate" startTime="10.0"> 1 0 1 </SimulaConstant>
+				<SimulaConstant name="2" type="coordinate" startTime="12.0"> 1 0 -1 </SimulaConstant>
+				<SimulaConstant name="3" type="coordinate" startTime="13.0"> -1 0 -1 </SimulaConstant>
+			</SimulaBase>
+			<SimulaBase name="tillerPositions2">
+				<SimulaConstant name="1" type="coordinate" startTime="15.0"> 2 0 2 </SimulaConstant>
+				<SimulaConstant name="2" type="coordinate" startTime="16.0"> 2 0 -2 </SimulaConstant>
+				<SimulaConstant name="3" type="coordinate" startTime="18.0"> -2 0 -2 </SimulaConstant>
+			</SimulaBase-->
+			<!--SimulaConstant name="verticalOffset" unit="day"> 1 </SimulaConstant>
+			<SimulaConstant name="relativeTillerPositions" type="bool"> 1 </SimulaConstant>
+			<SimulaConstant name="firstTillerTime" unit="day"> 3 </SimulaConstant>
+			<SimulaConstant name="timeDelayBetweenTillerOrders" unit="day">	10 </SimulaConstant>
+			<SimulaConstant name="tillerRootType1" type="string"> nodalRootsOfTillers </SimulaConstant>
+			<SimulaConstant name="tillerRootType2" type="string"> nodalRootsOfTillers </SimulaConstant>
+			<SimulaConstant name="tillerRootType3" type="string"> nodalRootsOfTillers </SimulaConstant-->
+		</SimulaBase>
+		<SimulaTable name_column1="time" name_column2="stemDryWeightAccumulation" unit_column1="day" unit_column2="g/day"> 0 0 2 0 5 0.0001 10 0.0004 20 0.002 30 0.007 40 0.013 55 0.04 77 0.11 80 0.11 </SimulaTable> 
+	</SimulaDirective> 
+</SimulationModelIncludeFile>			
+

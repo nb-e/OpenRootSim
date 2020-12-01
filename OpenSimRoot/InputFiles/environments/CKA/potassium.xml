@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright © 2016 Forschungszentrum Jülich GmbH
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, are permitted under the GNU General Public License v3 and provided that the following conditions are met:
+1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+
+Disclaimer
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+You should have received the GNU GENERAL PUBLIC LICENSE v3 with this file in license.txt but can also be found at http://www.gnu.org/licenses/gpl-3.0.en.html
+
+ -->
+<?xml-stylesheet type="text/xsl" href="XML/treeview.xsl"?>
+<SimulationModelIncludeFile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../scripts/XML/SimulaXMLSchema.xsd">
+	<SimulaDirective path="environment/soil">
+		<SimulaBase name="potassium">
+			<!--depth: negative is below ground, 0 is soil surface -->
+				<!--Dunham and Nye, 1976 potassium: De 17.2 10-6 cm2/s-->
+				<!--Claasen et al, 1986 (range varries by soil type)
+				Cli (uMol/cm3) 0.087-5.44 (THese numbers are strange high - 2 times Km maybe a better guess. )
+				De (cm2/s) 0.72-3.910 * 10-7
+				b 2.9-22.8
+				
+				clay: 0.260/1.66/9.9
+				
+				-->
+					<!-- barber book:
+K applied			0 mg/kg	0 mg/kg	500 mg/kg	500 mg/kg
+temperature		15 C		29 C		15 C		9 C
+==========================================================
+Cli	mmol/l		0.0460	0.0900	6.2600	8.1000
+b							39			23			1.2			1.2
+De 10e-7cm2/s	0.15		0.39		5				7.5
+Imax nmol/m/s	56			112			56			112
+Km	uM/l			14			28			14			28
+Cmin	umol/l	1.6			0.89		1.6			0.89
+L0		cm			3070		3070		2260		2260
+K		10e6s			1.29		2.38		1.46		2.49
+r0	cm				0.021		0.018		0.026		0.023
+v0 10e6cm3/cm2 0.7		1.2			0.76		1.3
+	-->
+			<SimulaTable
+				name_column1="depth"
+				unit_column1="cm"
+				name_column2="concentration"
+				unit_column2="uMol/ml">
+					<!-- 1000 0
+					 0.00001    0
+					 0 0.300
+					 -1000 0.300 -->
+					<!--  hannah according to tobias data
+					 1000 0
+					 0.00001 0
+					 0 0.0396
+					 -20 0.0396
+					 -40 0.0364
+					 -60 0.0152
+					 -250 0.0152
+					  -->
+				1000 0 0.00001 0 0 0.050 -20 0.050 -40 0.045 -60 0.019 -250 0.019
+			</SimulaTable>
+			<SimulaTable
+				name_column1="depth"
+				unit_column1="cm"
+				name_column2="diffusionCoefficient"
+				unit_column2="cm2/day">
+				<!-- 0.0143 , source barber book?-->
+				<!--based on calculations frp, diffusion in free water at 1.56 cm2/day: 0.067-->
+				<!--Lal R. 2006. Encyclopedia of soil science. CRC Press.
+				Effective diffusion coeeficients at a volumetric water content of 0.4
+				nitrate 1e-6 cm2/s  = 0.8
+				potassium 1e-7 cm2/s  = 0.08
+				phosphorus 1-9 cm2/s  = 0.0008
+				-->
+				1000 0.067 -1000 0.067
+			</SimulaTable>
+			<SimulaTable
+				name_column1="depth"
+				unit_column1="cm"
+				name_column2="bufferPower"
+				unit_column2="noUnit"> 1000 10 -1000 10 
+			</SimulaTable>
+				<!--note that these parameters define the spatial configuration of barber-cushman and 
+				thereby can, together with the timestep, significantly effect memory use, performance
+				 and accuracy of the data -->
+				 <!--make sure you take roothair length into account here-->
+			<SimulaConstant
+				name="r1-r0"
+				unit="cm"> 1.5 </SimulaConstant>
+				<!--SimulaConstant name="dr" unit="cm"> 0.05 </SimulaConstant-->
+			
+			<!--SWMS only-->
+			<SimulaConstant
+				name="saturatedDiffusionCoefficient"
+				unit="cm2/day">
+				<!-- this is not saturated but difussion in free water -->
+				<!-- Fell and Hutchinson 1971: diffusion in water: 22e-5 cm2/sec = 19 cm2/day -->
+				<!-- Lobo VMM, Ribeiro ACF, Verissimo LMP. 1998. Diffusion coefficients in aqueous solutions of potassium chloride at high and low concentrations. Journal of Molecular Liquids 78: 139-149.
+				1.8e-9 m2/sec = 1.56 cm2/day -->
+				1.56
+			</SimulaConstant>
+			<SimulaConstant name="increaseTimeStep">1.01</SimulaConstant>
+			<SimulaConstant
+				name="longitudinalDispersivity"
+				unit="cm"> 1. </SimulaConstant>
+			<SimulaConstant
+				name="transverseDispersivity"
+				unit="cm"> 0.5 </SimulaConstant>
+			<SimulaConstant
+				name="adsorptionCoefficient"
+				unit="uMol/cm">
+			<!-- note to make this equal to the barber-cushman module, you need to divide the buffer for the barber-cushman model by the water content given by the barber cushman model -->
+				40
+			</SimulaConstant>
+		</SimulaBase>
+	</SimulaDirective>
+</SimulationModelIncludeFile>
+	

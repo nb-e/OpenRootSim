@@ -1,0 +1,208 @@
+#!/usr/bin/Rscript
+
+#get list of command line arguments
+args <- commandArgs(TRUE)
+
+#define function to set values based on commandline arguments
+getArgument<-function(argn,defaultsetting){
+  n= 1+c(1:length(args))[args==argn]
+  if(length(n)){
+     args[n]
+  }else{
+     defaultsetting
+  }
+}
+
+  #print help and exit
+printhelp<-function(){
+  cat(
+"\
+R script for plotting SimRoot data. Example usage:\
+\
+1) cat tabled_output1.tab tabled_output2.tab | grep 'leafArea\\|rootLength' | plot\
+2) .. | plot -o leafArea -ylab '~\"leaf area (cm\"^2*\")\"' -legend \"dry,wet\" \
+3) .. | plot -o leafArea -ylab '~\"leaf area (cm\"^2*\")\"' -legend \"dry,wet\" -xaxis rootLength \
+\
+additional arguments behind plotting command:\
+  -h -help --help   this help\
+  -o                filename (without extension)\
+  -r -rates         plot the derivative data\
+  -ylab             label y axis either as\
+                       single quoted string\
+                       or double quoted expression\
+  -legend           comma delimited string for legend text\
+  -xaxis            plotting against this data instead of time\
+                       optionally add number e.g. rootLength1 to\
+                       indicate what file the data should come from\
+  -qo               filename keep quite (just write file)\
+  -noShow           do not open the plot and show it\
+\
+"
+)
+}
+#print help
+h=sum(args=="-h")+sum(args=="--help")+sum(args=="-help")
+if(h){
+  printhelp()
+  quit('no')
+}
+
+#set labels
+ylabel=getArgument("-ylab","")
+
+#set xcolumn
+xaxis=getArgument("-xaxis","time")
+
+#set filename
+fn=getArgument("-o","rpGraph")
+qfn=getArgument("-qo","")
+if(nchar(qfn)>0) fn=qfn
+
+#set terminal printing width
+#Sys.getenv("COLUMNS")
+options(width=150)
+stdin = file(description="stdin",open="r")
+
+#read the data from standard in 
+read.table(stdin)->d
+
+#join variable names and path
+#d<-d[with(d, order(V6)), ] #sort on path
+d$orilabels=d$V1
+if(length(levels(d$V6))>1) d$V1<-as.factor(paste(as.vector(d$V6),as.vector(d$V1),sep='/'))
+d$colors<-c(d$V1)
+
+#see if we should label the data as it may have come from different files
+cnt=1
+filelabels<-vector()
+for(i in 2:length(d[,2])){
+   filelabels[i-1]=cnt
+   if((d[i,2]-d[i-1,2])<0) cnt=cnt+1
+}
+filelabels[length(d[,2])]=cnt
+d$V1<-as.factor(paste(gsub(" +"," ",as.vector(d$V1)),as.vector(filelabels),sep=''))
+d$filelabels<-filelabels
+
+#print summary of data
+if(nchar(qfn)==0) summary(d)
+write.table(d,file=paste(fn,"dat",sep='.'))
+
+#see if we should plot column 3 or 4 (which contains the rates)
+rates=sum(args=="-rates")+sum(args=="-r")
+if(rates){
+   c=4
+   unitadd="/day"
+}else{
+   c=3
+   unitadd=""
+}
+
+
+
+#set scaling factor for plot
+scalingfactor=as.numeric(getArgument("-scalingfactor","1"))
+
+#set legend text (default use variable names)
+legendtext=getArgument("-legend","legend")
+autolegend=TRUE
+if(legendtext!="legend"){
+   legendtext=c("legend",unlist(strsplit(legendtext,',')))
+   autolegend=FALSE
+}
+
+#split table in x and y
+x=d[,2] #time, replaced below
+xlab1="time (days after germination)"
+xsel=(d[,"orilabels"]==xaxis) #see if there is a selection
+if(!sum(xsel)) xsel=(d[,1]==xaxis)
+if(sum(xsel)){
+   if(length(levels(d[,1]))<2){
+     print("Error -xaxis label found, but no data for the y axis found, plotting against time")
+     x=d[d[,1]==levels(d[,1])[1],2]
+     xsel[xsel]=F
+   }else{
+     x=d[xsel,3]
+     xfl=d[xsel,"filelabels"]
+     xlab1=paste(xaxis," (",d[xsel,5][1],")",sep="")
+   }
+}else if (xaxis!="time"){
+   print ("Error -xaxis label not found in table, plotting against time. Possible labels:")
+   print (levels(d[,1]))
+}
+xmin=min(x,na.rm=T)
+xmax=max(x,na.rm=T)
+
+xlab=getArgument("-xlab",xlab1)
+
+sel= (d[,1]!=xaxis) & (d[,"orilabels"]!=xaxis)
+lev=levels( factor( d[ sel  ,1])  )
+
+ymax=1.1*max(scalingfactor*d[sel,c])
+ymax=as.numeric(getArgument("-ymax",ymax))
+ymin=min(scalingfactor*d[sel,c])
+ymin=as.numeric(getArgument("-ymin",ymin))
+
+#text size
+textsize=as.numeric(getArgument("-textsize","12"))
+legendlocation=getArgument("-lloc","topleft")
+graphtitle=getArgument("-title","")
+#plot parameters
+#X11()
+#par(ask=T) 
+svg(filename=paste(fn,"svg",sep='.'),width=7,height=7)
+par(mfcol=c(1,1),ps=textsize,lwd=4,bty='l',mar=c(5,5,4,0) + 0.50 ) #one graph with large text
+
+if(substr(ylabel,1,1)=='~'){
+  print("Found ~ in ylab, assuming this is an double quoted expression")
+  plot(xmin,ymin,col=0, xlab=xlab,ylab=parse(text=ylabel),xlim=c(xmin,xmax),ylim=c(ymin,ymax),type='l')
+}else{
+  plot(xmin,ymin,col=0, xlab=xlab,ylab=ylabel,xlim=c(xmin,xmax),ylim=c(ymin,ymax),type='l')
+}
+
+#plot the lines
+count=0
+colors<-vector()
+linetypes<-vector()
+
+for(jl in lev){
+   ds=d [d[,1]==jl,] #selection of variables
+   y=scalingfactor*ds[,c]
+   count=count+1 #counter for colors
+   colors[count]=ds$colors[1]
+   fl=ds$filelabels[1]
+   linetypes[count]=fl
+   if(length(x)==length(y)) {
+     xs=x
+   }else if (exists("xfl")){
+     xs=x[xfl==fl]
+   }else{
+     xs=ds[,"V2"]
+   }
+   lines(xs,y,col=colors[count],lty=linetypes[count])
+   #add variable to legend text
+   if(autolegend){
+       u=ds[1,5]
+       legendtext=c(legendtext,paste(gsub(' ','',jl),' (',u,unitadd,')',sep=''))
+   }
+}
+
+#print legend
+legend(legendlocation, "(x,y)",legend=legendtext[2:length(legendtext)],lty=linetypes,col=colors,bty="n",y.intersp=1.3)
+
+#title
+title(graphtitle)
+
+#disconnect
+invisible(dev.off())
+
+#show plot with evince
+#see if we should plot column 3 or 4 (which contains the rates)
+noShow=sum(args=="-noShow")
+if(!noShow && nchar(qfn)==0 ){
+system(paste("xdg-open ",fn,".svg",sep=""),wait=T)#system("xdg-open rpGraph.svg",wait=T)
+#system("gnome-open *.pdf",wait=T)
+#readline(prompt="press enter to exit")
+#Sys.sleep(10)
+}
+
+

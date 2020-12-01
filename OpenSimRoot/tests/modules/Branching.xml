@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright © 2016 Forschungszentrum Jülich GmbH
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, are permitted under the GNU General Public License v3 and provided that the following conditions are met:
+1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+
+Disclaimer
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+You should have received the GNU GENERAL PUBLIC LICENSE v3 with this file in license.txt but can also be found at http://www.gnu.org/licenses/gpl-3.0.en.html
+
+ -->
+<SimulationModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../scripts/XML/SimulaXMLSchema.xsd">
+
+<!-- 
+Very simple root model which start with
+a single root that keeps branching roots
+of the same root type. 
+-->
+
+	<SimulaConstant name="plantType" type="string">myPlant
+	</SimulaConstant>
+	<SimulaBase name="plantPosition">
+		<SimulaConstant name="root" type="coordinate">
+			0. 0. 0.
+			<SimulaConstant name="rootType" type="string">myRoot
+			</SimulaConstant>
+			<SimulaBase name="branches">
+				<SimulaBase name="myRoot" objectGenerator="rootBranches">
+				</SimulaBase>
+			</SimulaBase>
+			<SimulaBase name="dataPoints" objectGenerator="rootDataPoints">
+			</SimulaBase>
+			<SimulaPoint name="growthpoint" function="rootGrowthDirection"
+				minTimeStep="0.05" maxTimeStep="0.05">
+				0. 0. 0.
+				<SimulaVariable name="rootLongitudinalGrowth" unit="cm"
+					function="potentialRootGrowthRate" garbageCollectionOff="true" />
+				<SimulaDerivative name="rootDiameter" unit="cm"
+					function="rootDiameter.v2" />
+			</SimulaPoint>
+		</SimulaConstant>
+	</SimulaBase>
+
+	<SimulaBase name="siblingRootTemplate">
+		<SimulaBase name="branches" />
+		<SimulaBase name="dataPoints" objectGenerator="rootDataPoints">
+		</SimulaBase>
+		<SimulaPoint name="growthpoint" function="rootGrowthDirection"
+			minTimeStep="0.05" maxTimeStep="0.05">
+			0. 0. 0.
+			<SimulaVariable name="rootLongitudinalGrowth" unit="cm"
+				function="potentialRootGrowthRate" garbageCollectionOff="true" />
+			<SimulaDerivative name="rootDiameter" unit="cm"
+				function="rootDiameter.v2" />
+		</SimulaPoint>
+	</SimulaBase>
+
+	<SimulaBase name="dataPointTemplate">
+		<SimulaDerivative name="rootDiameter" unit="cm"
+			function="rootDiameter" />
+	</SimulaBase>
+
+	<SimulaBase name="rootTypeParameters">
+		<SimulaBase name="myPlant">
+			<SimulaBase name="myRoot">
+				<SimulaBase name="branchList">
+					<SimulaBase name="myRoot">
+						<SimulaConstant name="lengthRootTip" unit="cm">1
+						</SimulaConstant>
+						<!-- SimulaConstant type="time" name="branchingTimeOffset" unit="day">
+							2.	
+						</SimulaConstant-->
+						<SimulaConstant  name="branchingSpatialOffset" unit="cm">
+							1.
+						</SimulaConstant>
+						<SimulaConstant type="integer" name="numberOfBranches/whorl" unit="#">
+							  1 
+						</SimulaConstant>
+						<SimulaStochastic  name="branchingFrequency" unit="cm" distribution="uniform" minimum="0.5" maximum="1.5" /> 
+						<SimulaConstant name="allowBranchesToFormAboveGround" type="bool">false</SimulaConstant>
+					</SimulaBase>
+				</SimulaBase>
+				<SimulaConstant name="numberOfXylemPoles" unit="cm"
+					type="integer">3</SimulaConstant>
+				<SimulaConstant name="branchingAngle" unit="degrees">
+					45</SimulaConstant>
+				<SimulaConstant name="rootDiameter" unit="cm">1
+				</SimulaConstant>
+				<SimulaConstant name="growthRate" unit="cm/day">1
+				</SimulaConstant>
+				<!-- SimulaStochastic name="longitudinalGrowthRateMultiplier"
+					unit="cm" distribution="normal" mean="1" stdev="0.5" minimum="0.1"
+					maximum="10" />
+				<SimulaTable name_column1="longitudinalGrowthRateMultiplier"
+					name="lengthMultiplier2DiameterMultiplier">
+					0. 0.5
+					1. 1.
+					100. 50.
+				</SimulaTable-->
+				<SimulaConstant name="soilImpedence.v2" type="coordinate"
+					unit="cm"> 0. 0. 0.
+				</SimulaConstant>
+				<SimulaConstant name="gravitropism.v2" type="coordinate"
+					unit="cm"> 0 -0.01 0
+				</SimulaConstant>
+			</SimulaBase>
+		</SimulaBase>
+	</SimulaBase>
+
+
+	<SimulaBase name="simulationControls">
+		<SimulaConstant name="randomNumberGeneratorSeed" type="integer"> 1234	</SimulaConstant>
+		<SimulaBase name="integrationParameters">
+			<SimulaConstant name="defaultSpatialIntegrationLength"
+				unit="cm"> 0.2
+			</SimulaConstant>
+		</SimulaBase>
+		<SimulaBase name="outputParameters">
+			<SimulaBase name="defaults">
+				<SimulaConstant name="startTime" type="time"> 0.
+				</SimulaConstant>
+				<SimulaConstant name="endTime" type="time"> 10
+				</SimulaConstant>
+				<SimulaConstant name="timeInterval" type="time"> 0.1
+				</SimulaConstant>
+			</SimulaBase>
+			<SimulaBase name="vtp">
+				<SimulaConstant name="run" type="bool"> 1  </SimulaConstant>
+			</SimulaBase>
+			<SimulaBase name="table">
+				<SimulaConstant name="run" type="bool"> 1 </SimulaConstant>
+				<SimulaConstant name="searchingDepth" type="integer"> 10
+				</SimulaConstant>
+				<SimulaConstant name="skipTheseVariables" type="string">
+					rootTypeParameters, environment,
+					rootDiameter
+				</SimulaConstant>
+			</SimulaBase>
+		</SimulaBase>
+	</SimulaBase>
+
+</SimulationModel>

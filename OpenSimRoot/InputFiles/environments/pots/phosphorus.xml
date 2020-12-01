@@ -1,0 +1,143 @@
+<!--SimRoot parameter file-->
+<SimulationModelIncludeFile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../scripts/XML/SimulaXMLSchema.xsd">
+<!--environmental parameters start here. -->
+	<SimulaDirective path="environment/soil">
+
+			<!--SimulaMatrix name="soilP" unit="mg/g" dim="3" size="3,3,3" interpolation="nearestpoint|linear|etc" >
+			this is really a table with more dimensions?
+			some numbers here
+			but what if each number needs to be simulated -> instead of numbers we could have nodes: type="Simula....."
+			if we do that than this is really just a 'container' of points and values or another database
+			</SimulaMatix-->
+			<SimulaBase name="phosphorus">
+			<!--depth: negative is below ground, 0 is soil surface -->
+				<SimulaTable name_column1="depth" unit_column1="cm" name_column2="concentrationNU" unit_column2="uMol/ml">
+				<!--barber 1995 lists 13.6 uMol/l = 13.6e-3 uMol/ml-->
+				<!--Dunbabin: Top dressed treatment: 20mg/kg P added to the top 3 cm of soil (in the amended layer)
+				or banded treatment. 
+				
+				 20 mg/kg P was per kg of the whole pot. In both treatment 146 mg was added either to the top soil
+				 or the amended layer.
+				 
+				 1) amanded layer is 146 mg/235.6 cm3 = 0.620 mg/cm3 = 20 umol/cm3 = 89e-3 umol/cm3 + 1.8e-3 = 91e-3
+				 2) banded layer is 146 mg /4 cm3 = 36.5 mg/cm3 = 1100 umol/cm3 = 5.2 umol/cm3  + 1.8 e-3 = 5.2 umol/cm3 
+				   
+				
+				rest of the bulk soil had 8 mg/kg P e-3
+				
+				buffering was 223.
+				10.2% water 
+				bulk density of 1.55 kg/l
+				
+				8 ug/g = 12.4ug/cm3 = 0.0554 ug/cm3 dissolved = 1.79e-3 umol/cm3 
+				
+				20 mg/kg =  31 ug/cm3 = 1.39 ug/cm3 dissolved = 4.49e-3 umol/cm3   
+				-->
+				
+				1000 0 
+				0.1 0
+				0 91e-3
+				-3 91e-3
+				<!---100 91e-3-->	 
+				 -3.2 1.8e-3
+				-100 1.8e-3
+
+				</SimulaTable>
+				<SimulaGrid name="concentration" unit="uMol/ml"  interpolationMethod="nearestNeighbourInterpolation" >
+<!--following in combination with nearestNeighbour gives banded treatment dunbabin
+0	-4.5	0	1.80E-002
+0	-5.5	0	4.50E-002
+0	-6.5	0	1.80E-002
+-4	-4.5	0	1.80E-002
+-4	-5.5	0	1.80E-002
+-4	-6.5	0	1.80E-002
+4	-7	0	1.80E-002
+4	-8	0	1.80E-002
+4	-9	0	1.80E-002
+0	-40	0	1.80E-002
+ -->		
+
+0	-4.5	0	1.80E-003
+0	-5.5	0	5.2
+0	-6.5	0	1.80E-003
+-4	-4.5	0	1.80E-003
+-4	-5.5	0	1.80E-003
+-4	-6.5	0	1.80E-003
+4	-7	0	1.80E-003
+4	-8	0	1.80E-003
+4	-9	0	1.80E-003
+0	-40	0	1.80E-003
+
+				</SimulaGrid>
+				<SimulaTable name_column1="depth" unit_column1="cm" name_column2="diffusionCoefficient" unit_column2="cm2/day" >
+				<!--Note, this is effective diffusion coefficient-->
+				<!--Source: barber 1995, page 223 De=2.3E-9 cm2/s = 1.9872e-4 cm2/day -->
+				<!--Source: Bhadoria, P. B. S., J. Kaselowsky, N. Claassen, and A. Jungk. 1991. “Soil Phosphate Diffusion Coefficients: Their Dependence on Phosphorus Concentration and Buffer Power.” Soil Sci Soc Am J 55:56-60.
+				    De: low, middle, and high p: 2.2, 6, 13.9 * e-9 cm2/s = 
+				    desorption bufferpower ranges from 400-1 with higher values representing soils with lower P
+				    --> 
+				<!--Lal R. 2006. Encyclopedia of soil science. CRC Press. Lal references Barber for this and Nielsen 1996
+				Effective diffusion coefficients at a volumetric water content of 0.4
+				nitrate 1e-6 cm2/s  = 0.8
+				potassium 1e-7 cm2/s  = 0.08
+				phosphorus 1-9 cm2/s  = 0.0008
+				-->		
+				<!-- based on calculations from the diffusion coeffof phosphate in water the De should be at least a factor 10 higher 3e-3 cm2/day or so-->		    
+					1000       1.9872E-4
+					-1000		1.9872E-4
+				</SimulaTable>	
+				<SimulaTable name_column1="depth" unit_column1="cm" name_column2="bufferPower" unit_column2="noUnit" >
+				<!--note: this is Psolidphase/Psolution-->
+				<!--Source: baraber 1995, page 223 b=163-->
+				<!--400-1 for source see De-->
+				<!-- dunbabin used sand, which practically had no buffering - dunbabin says liquid/solid = 0.0554/12.4 ug P = 223 -->
+					1000		223
+					-1000		223
+				</SimulaTable>
+				<!--note that these parameters define the spatial configuration of barber-cushman and 
+				thereby can, together with the timestep, significantly effect memory use, performance
+				 and accuracy of the data -->
+				 <!--make sure you take roothair length into account here-->	
+				<SimulaConstant name="r1-r0" unit="cm"> 0.3 </SimulaConstant>
+				<!--SimulaConstant name="dr" unit="cm"> 0.01 </SimulaConstant-->
+
+			<!--SWMS only-->
+				<SimulaConstant name="saturatedDiffusionCoefficient" unit="cm2/day">
+				<!-- Fell and Hutchinson 1971: diffusion in water: 22e5 cm2/sec = huge -->
+				<!-- Lobo VMM, Ribeiro ACF, Verissimo LMP. 1998. Diffusion coefficients in aqueous solutions of potassium chloride at high and low concentrations. Journal of Molecular Liquids 78: 139-149.
+				1.8e-9 m2/sec = 1.56 cm2/day -->
+				<!--0.00494697290633534 based on reverse solving De->D using theta of 0.3 and thetas of 0.45
+				or if theta is 0.2 and thetaS=0.35 is should be 0.014-->
+				<!-- PO4 in water: ~1 x 10-5 cm2/sec = 0.864 cm2/day
+				http://www.its.caltech.edu/~brokawc/Bi145/Diffusion.html
+				--><!--
+				PO4 in marine sediment: 3.6 10-6 cm2/s = 0.311 cm2/day
+				Krom MD, Berner RA. 1980. The Diffusion Coefficients of Sulfate, Ammonium, and Phosphate Ions in Anoxic Marine Sediments. Limnology and Oceanography 25: 327-337.
+				-->
+				<!--
+				Hira GS, Singh NT. 1977. Observed and Predicted Rates of Phosphorus Diffusion in Soils of Varying Bulk Density and Water Content. Soil Sci Soc Am J 41: 537-540.
+				
+				Diffusion of h2po4 in water = 8.9 x 10-6 cm2/sec = 0.769 cm2/day 
+				-->
+				<!--
+				Hira GS, Singh NT. 1977. Observed and Predicted Rates of Phosphorus Diffusion in Soils of Varying Bulk Density and Water Content. Soil Sci Soc Am J 41: 537-540.
+				They find indeed that observed diffusion coefficients are much smaller than predicted based on tortuosity factor. 
+				-->
+				0.00495
+				</SimulaConstant>
+				<SimulaConstant name="increaseTimeStep" >1.</SimulaConstant>
+				<SimulaConstant name="longitudinalDispersivity" unit="cm"> 1. </SimulaConstant>
+				<SimulaConstant name="transverseDispersivity" unit="cm"> 0.5 </SimulaConstant>
+				<SimulaConstant name="adsorptionCoefficient" unit="uMol/cm"> 
+				<!-- note to make this equal to the barber-cushman module, you need to divide the buffer for the barber-cushman model by the water content given for the barber cushman model -->
+				0
+				</SimulaConstant>
+
+
+			</SimulaBase>
+
+
+
+	</SimulaDirective>
+</SimulationModelIncludeFile>
+	

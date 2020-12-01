@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--?xml-stylesheet type="text/xsl" href="tree-view2.xsl"? -->
+<!--
+Copyright © 2016, The Pennsylvania State University
+All rights reserved.
+
+Copyright © 2016 Forschungszentrum Jülich GmbH
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, are permitted under the GNU General Public License v3 and provided that the following conditions are met:
+1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+
+Disclaimer
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+You should have received the GNU GENERAL PUBLIC LICENSE v3 with this file in license.txt but can also be found at http://www.gnu.org/licenses/gpl-3.0.en.html
+
+ -->
+
+<SimulationModelIncludeFile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../scripts/XML/SimulaXMLSchema.xsd">
+	<SimulaDirective path="environment/soil">
+		<SimulaBase name="organic">
+			<!--mineralisation using simple empirical model from yang 1994 (wageningen, phd)
+			  Yang HS, Janssen BH. 2000. A mono-component model of carbon mineralization with a dynamic rate constant. European Journal of Soil Science 51: 517-529.
+			  see also yang's phd thesis
+			-->
+			<SimulaTable
+				name_column1="depth"
+				name_column2="carbonContent"
+				unit_column1="cm"
+				unit_column2="g/g">
+	   <!--note that this is a mineralizable pool-->
+	   <!--this is in 100% base on weight -->
+				0 0.02 -10 0.02 -30 0.01 -40 0.005 -200 0.005
+			</SimulaTable>
+			<SimulaTable
+				name_column1="depth"
+				name_column2="CNratio"
+				unit_column1="cm"
+				unit_column2="g/g">
+	   <!-- this is the N content (uMol) of a gram of organic matter -->
+				0 10 -10000 10
+			</SimulaTable>
+			<SimulaConstant name="speedOfAging"> 
+	   <!--Speed of aging in yangs model, see publication for more examples, Green manure=0.64,Straw=0.66,Roots=0.67,FYM=0.49,SOM=0.46-->
+	   <!-- this is a unit less exponent in yangs model where K, the relative mineralisation rate is: K = r * t^(-s)-->
+				0.46
+			</SimulaConstant>
+			<SimulaTable
+				name_column1="depth"
+				unit_column1="cm"
+				name_column2="initialRelativeMineralisationRate">
+	   <!--The initial relative mineralisation rate in (YEAR**(SOA-1)). Green manure=1.39,Straw=1.11,Roots=0.80,FYM=0.82,SOM=0.057 (0.037 estimate for experimental farm 'vredepeel' based on potential mineralisation measurements)-->
+				0 0.037 -10 0.037 -25 0 -1000 0
+			</SimulaTable>
+			<SimulaConstant name="assimilationEfficiencyMicrobes">
+	   <!--ratio between respiration and assimilation by microbes eff.=assimilation/respiration -->
+				1.0
+			</SimulaConstant>
+			<SimulaConstant
+				name="CNRatioMicrobes"
+				unit="uMol/uMol">
+	   <!-- C / N ratio of the living microbial biomass, 10 for fungi, 5 for bacteria -->
+				10
+			</SimulaConstant>
+			<SimulaConstant
+				name="timeOffset"
+				unit="day"> 30
+			</SimulaConstant>
+		</SimulaBase>
+	</SimulaDirective>
+</SimulationModelIncludeFile>

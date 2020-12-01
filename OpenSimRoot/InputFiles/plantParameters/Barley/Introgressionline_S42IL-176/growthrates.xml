@@ -1,0 +1,507 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<!-- Growthrate parameters for barleyIntrogressionlineS42IL-176	-->
+<SimulationModelIncludeFile>
+	<SimulaDirective path="shoot">	
+		<SimulaConstant name="increaseInRGRDuringRecovery"> 0.1 </SimulaConstant> 		
+			<SimulaTable name_column1="time" name_column2="leafAreaExpantionRate"  unit_column1="day" unit_column2="cm2/day"> 
+<!-- 
+very rought estimate based on curve fitting on m.ernst data (6 experiments, not using experiment 5 which has much 
+faster growth. Also assuming SLA is 500 and stem fraction of the shoot is 0 0 10 0 20 50 28 50 
+
+wet
+0	0
+1	0.5
+2	3
+3	1
+10	2
+15	3
+20	5.5
+25	12
+28	19
+
+dry (with recovery)
+0	0
+1	0.5
+2	3
+3	1
+10	1
+15	2.2
+20	2.2
+25	12
+28	19
+
+calculation from Vera Hecht (Pilottest 1), until 19 DAG, DAG>19 -> values calculated with formula
+leafAreaEstimation based on formula given by Dornbusch et al. 2011, Area=max.Length*max.width*Shape factor ft
+ft for Barke on average 0.7; for leaf1(=youngest)=0.88, for leaf2-9: ft=-0.0171*(leaf rank)+0.8043
+
+fitting exponential curve into data provides following formula, where y is the expansion rate in cm²/day, and x=DAG
+Sca Rhizo High (5 plants) y=0.4674e^0.1547x R²=0.96; y=0.1336x^1.3144 R²=0.87
+Sca Rhizo Low (1 plant) y=0.0611e^0.2645x, R²=0.75; y=0.0036x^2.5583 R²=0.8842
+Sca Pot Low (1 plant) y=0.1731e^0.2432x R²=0.85; y=0.016x^2.216 R²=0.92
+
+IL Rhizo High (5 plants) y=0.2754e^0.1924x R²=0.8029; y=0.0379x^1.8252 R²=0.91
+IL Rhizo Low (1 plant) y=0.3285e^0.2008x, R²=0.9241; y=0.054x^1.7865 R²=0.9218
+IL Pot Low (1 plant) y=0.242e^0.2352x R²=0.8596; y=0.0241x^2.1789 R²=0.9293
+
+So we have to take the first derivative (erste Ableitung) of this function to 
+get the slope (=leaf area expansion rate)
+and these values have to go into to table in SimRoot
+y=a * e^(b*x)
+y'=a * b * e^(b*x)
+1. Ableitung for IL Rhizo High
+y'=0.2754*0.1924*e^0.1924x
+x is now DAG, and y is the leaf expansion rate for that day
+
+the following tables contain the leaf area values 
+on which the function is based, 
+of which we have to take the first derivative 
+to get leaf area expansion rate
+
+Sca Rhizo High
+3	0.78273125
+5	1.204
+7	1.099
+10	1.8298
+12	3.9137
+14	3.3215
+17	7.3836
+19	8.7416
+23	16.309 (8.235)
+28 	35.553 (10.665)
+40	227.564 (17.0433)
+
+IL Rhizo High
+3	0.168933333
+5	1.5876
+7	1.2495
+10	2.3184
+12	3.7352
+14	4.5654
+17	5.6161
+19	8.2719
+23	23.004027 (11.5895)
+28	60.19982 (16.59557)
+40	605.7512 (31.82139)
+
+Sca Rhizo Low
+3	0.022866667
+5	0.6783
+7	0.8036
+10	1.208666667
+12	1.8893
+14	2.5284
+17	4.494933333
+19	5.93845
+23	26.796 (10.965)
+28	100.560 (18.137)
+
+IL Rhizo Low
+3	0.348833333
+5	1.73075
+7	1.329125
+10	2.452916667
+12	3.82025
+14	4.746875
+17	9.578916667
+19	15.2726875
+23	33.28749 (14.6258)
+28	90.8474 (20.784596)
+
+Sca Pot Low
+3	0.119583333
+5	1.532125
+7	1.098125
+10	2.079
+12	4.242
+14	5.513375
+17	8.976916667
+19	14.196875
+23	46.512 (16.661)
+28	156.917 (25.765)
+
+IL Pot Low 
+3	0.171266667
+5	1.8564
+7	1.5428
+10	2.851333333
+12	4.6067
+14	7.8057
+17	10.15116667
+19	17.72603
+23	54.0972 (22.3401)
+28	175.3497 (34.2949)
+
+since the exponential curve is not correct in the beginning, 
+we have to fix the values, as it's very important for photosynthesis
+it is, that the plants grow in the beginning very quick, then it rests for some time 
+and then it starts really growing. 
+So here, the numbers from 0-9 DAG are adjusted numbers (by hand)
+
+FOR IL RHIZO HIGH
+ -->
+
+0	0
+1	0.295
+5	0.295
+6	0.01
+7	0.01
+8	0.25
+9	0.30
+10	0.362869967
+11	0.43985469
+12	0.533172117
+13	0.646287314
+14	0.78340048
+15	0.949602907
+16	1.15106603
+17	1.395270588
+18	1.691284395
+19	2.050099047
+20	2.485038067
+21	3.012251629
+22	3.651316251
+23	4.425961708
+24	5.364952168
+25	6.503154267
+26	7.882831775
+27	9.555214938
+28	11.58240276
+29	14.03966887
+30	17.01825658
+31	20.62876693
+32	25.00526556
+33	30.31026081
+34	36.74073799
+35	44.53547386
+36	53.98390289
+37	65.43686457
+38	79.31963077
+39	96.4769697
+40	116.5459237
+			</SimulaTable>
+		</SimulaDirective>
+		<SimulaDirective path="hypocotyl">
+				<SimulaTable name_column1="time since creation" unit_column1="day" name_column2="growthRate" unit_column2="cm/day"> <!-- old values from Michaela?-->
+					 0 0
+					 2 0
+					 3 1
+					 4 4
+					 5 0
+					 1000 0
+				</SimulaTable>
+				<SimulaConstant name="diameter"  unit="cm"> <!-- old value from Michaela?-->
+					 0.15 
+				</SimulaConstant>
+		</SimulaDirective>
+
+
+		<SimulaDirective path="primaryRoot">
+				<SimulaTable name_column1="time since creation" unit_column1="day" name_column2="growthRate" unit_column2="cm/day">
+					 <!-- does not really grow in barley only gives rise to seminals, according to sigi jahnke -->
+					 0	0.1
+					 3	0.1 
+					 5	0. 
+					 1000	0.
+				</SimulaTable>
+				<SimulaConstant name="diameter"  unit="cm">
+				<!--raul2006: 0.65 mm-->
+					 0.065 
+				</SimulaConstant>
+		</SimulaDirective>
+		<SimulaDirective path="seminal">
+				<SimulaTable name_column1="time since creation" unit_column1="day" name_column2="growthRate" unit_column2="cm/day">
+				<!-- marc2011 pouches: growth rates these roots stop earlier, data still to be taken, now based on estimates
+0		1.4
+10		1.4
+13		0.2
+40      	0.2
+
+Vera Hecht: PT1(from 0-14 DAG because on 17 DAG some roots already hit the bottom): 
+numerical determined as: growth rate = (cm day2- cm day1) / (DAG day2 - DAG day1); then data plotted and to this the following curves have been fitted:
+Sca High Rhizo y=0.0006x²+0.0858x+2.5433 R²=0.731; y=0.0964x+2.5007 R²=0.7308, n=5
+Sca Low Rhizo y=-0.0282x²+0.6604x-0.5833 R²=0.942; y=0.1809x+1.0336 R²=0.7732, n=4
+
+IL High Rhizo y=0.0068x²-0.0353x+2.9422 R²=0.7216; y=0.0798x+2.5541 R²=0.6777, n=5
+IL Low Rhizo y=-0.0209x²+0.4987x-0.8083 R²=0.9458; y=0.1426x+2.0092 R²=0.7921, n=4
+
+Sca High Rhizo
+0	2.54 (2.50)
+1	2.63 (2.60)
+3	2.706666667	
+5	3.32	
+7	2.81	
+10	3.673333333	
+12	3.57	
+14	3.88
+21	4.61 (4.23) (but actually, I think, there is a maximum at around 3.5)
+28	5.42 (5.20)
+
+IL High Rhizo
+0 	2.9422 (2.5541)
+1	2.9137 (2.6339)
+3	2.84
+5	3.2
+7	2.71
+10	3.273333333	
+12	3.71	
+14	3.66
+
+
+Sca Low Rhizo
+0	-0.5833 (1.0336)
+1	0.1053 (1.2145)
+3	1.25	
+5	1.9875	
+7	2.3375	
+10	3.491666667	
+12	3.35	
+14	3.0125
+21	0.8934 (4.8325)
+28	-4.2009 (6.0988)
+40	0 (estimated)
+
+IL Low Rhizo
+3	1,991666667
+5	2,9125
+7	3,4
+10	3,625
+12	3,5625
+14	3,8375
+
+
+Vera Hecht: PT1(from 0-14 DAG because on 17 DAG some roots already hit the bottom):
+average maximum rooting depth (cm) at 14 DAG divided by 14 DAG, since the growth seems to be pretty linear
+
+Sca High Rhizo
+3.307142857	SD: 0.216535806	SEM: 0.096837756
+
+Sca Low Rhizo
+2.542857143	SD: 0.24418405	SEM: 0.122092025
+
+-->
+<!--  average growth rate rhizotrons according to michaelas data is 1.46 cm/day (movement towards deep) and stdev of 0.88   or 
+2.4 if we calculate from the rhizotron thick root length which includes the wiggling.-->
+<!--  in the field (nodal) roots grow at least to a depth of 60 cm (coring data vera hecht) -->
+
+0	2.5541 
+1	2.6339 
+3	2.84
+5	3.2
+7	2.71
+10	3.273333333	
+12	3.71	
+14	3.66
+21	3.6
+28	3.6
+30	3.0
+35	1.5
+60	1.5
+				</SimulaTable>
+				<SimulaStochastic  name="longitudinalGrowthRateMultiplier" unit="cm" distribution="normal" mean="1" stdev="0.02"  minimum="0.0" maximum="1.5" />
+				<SimulaConstant name="diameter"  unit="cm">
+				<!-- in michaela ernst winrhizo image about 0.05-0.07 -->
+					 0.06  
+				</SimulaConstant>
+		</SimulaDirective>
+		<SimulaDirective path="seminalSteep">
+				<SimulaTable name_column1="time since creation" unit_column1="day" name_column2="growthRate" unit_column2="cm/day">
+				<!-- marc2011 pouches: growth rates 
+0		1.34
+4		1.34778125
+5		1.91675
+6		2.7285
+7		2.43525
+10		2.6697083333
+11		1.816875
+12		1.4875
+13		0.520625
+40      	0.520625
+
+Data used here are the same as for seminal (more up), Vera Hecht PT1.
+-->
+0	2.5541 
+1	2.6339 
+3	2.84
+5	3.2
+7	2.71
+10	3.273333333	
+12	3.71	
+14	3.66
+21	3.6
+28	3.6
+30	3.0
+35	1.5
+60	1.5
+
+				</SimulaTable>
+				<!-- SimulaStochastic  name="longitudinalGrowthRateMultiplier" unit="cm" distribution="normal" mean="1" stdev="0.1"  minimum="0.6" maximum="1.4" /-->
+				<SimulaConstant name="diameter"  unit="cm">
+				<!--marc2011 pouches: sem roots 0.6 mm thick-->
+				<!-- michaelas data 0.067 cm-->
+				<!--Vera Hecht: PT1: Seminals: 0.06-0.08 cm, Nodals: 0.08-1.0 cm -->
+					 0.067  
+				</SimulaConstant>
+		</SimulaDirective>
+	<SimulaDirective path="nodalroots">
+		<SimulaTable name_column1="time since creation" unit_column1="day" name_column2="growthRate" unit_column2="cm/day">
+		<!--raul2006: mesocotylborn roots appear later - but sometimes overtake seminal roots in growth. However the length of these roots is very variable						
+			 0    0.01
+			 1    1
+			 2    2.4
+			 28   2.4
+Vera Hecht: PT2, the experiment only lasted 19 DAG, and nodal roots appeared earliest between 14 and 16 DAG.
+The length of the longest nodal root (cm) was divided by either 5 days (when appearance between 14-16DAG) or 3 days (appearance between 16-19 DAG).
+
+Sca High Rhizo (5xFert)
+2.282666667	SD: 0.592688788	SEM: 0.265058484
+
+Sca Low Rhizo (5xFert)
+2.778333333	SD: 0.286401686	SEM: 0.143200843
+
+Sca Low Rhizo (1xFert)
+2.341666667	SD: 0.772382078 SEM: 0.386191039
+
+IL High Rhizo (5xFert)
+3.824	SD: 1.307632296	SEM: 0.584790941
+
+IL Low Rhio (5xFert)
+2.492	SD: 0.404568357	SEM: 0.18092847
+
+IL Low Rhizo (1xFert)
+2.72	SD: 0.49010203	SEM: 0.219180291
+-->
+		0	0.01
+		1	1
+		2	3.824
+		28	3.824
+		60	3.824		
+		
+
+		</SimulaTable>
+		<SimulaStochastic  name="longitudinalGrowthRateMultiplier" unit="cm" distribution="normal" mean="1" stdev="0.1"  minimum="0.6" maximum="1.2" />
+		<SimulaTable name_column1="time since creation" unit_column1="day" name_column2="diameter"  unit_column2="cm" type="double">
+		<!--greenfingerdata-->
+			 0 0.1
+			 10 0.08
+			 100 0.08   
+		</SimulaTable>
+	</SimulaDirective>
+		<SimulaDirective path="nodalRootsOfTillers">
+		<SimulaTable name_column1="time since creation" unit_column1="day" name_column2="growthRate" unit_column2="cm/day">
+		<!--
+Vera Hecht: PT2, the experiment only lasted 19 DAG, and nodal roots appeared earliest between 14 and 16 DAG.
+The length of the longest nodal root (cm) was divided by either 5 days (when appearance between 14-16DAG) or 3 days (appearance between 16-19 DAG).
+
+Sca High Rhizo (5xFert)
+2.282666667	SD: 0.592688788	SEM: 0.265058484
+
+Sca Low Rhizo (5xFert)
+2.778333333	SD: 0.286401686	SEM: 0.143200843
+
+Sca Low Rhizo (1xFert)
+2.341666667	SD: 0.772382078 SEM: 0.386191039
+
+IL High Rhizo (5xFert)
+3.824	SD: 1.307632296	SEM: 0.584790941
+
+IL Low Rhizo (5xFert)
+2.492	SD: 0.404568357	SEM: 0.18092847
+
+IL Low Rhizo (1xFert)
+2.72	SD: 0.49010203	SEM: 0.219180291
+
+-->
+		0	0.01
+		1	1
+		2	3.824
+		28	3.824
+		60	3.824
+		
+		</SimulaTable>
+		<SimulaStochastic  name="longitudinalGrowthRateMultiplier" unit="cm" distribution="normal" mean="1" stdev="0.1"  minimum="0.6" maximum="1.2" />
+		<SimulaTable name_column1="time since creation" unit_column1="day" name_column2="diameter"  unit_column2="cm" type="double">
+		<!--greenfingerdata-->
+			 0 0.1
+			 10 0.08
+			 100 0.08   
+		</SimulaTable>
+	</SimulaDirective>
+	<SimulaDirective path="nodalroots2"><!--these data are just copied from nodalroots above-->
+		<SimulaTable name_column1="time since creation" unit_column1="day" name_column2="growthRate" unit_column2="cm/day">
+		<!--raul2006: mesocotylborn roots appear later - but sometimes overtake seminal roots in growth. However the length of these roots is very variable						
+			 0    0.01
+			 1    1
+			 2    2.4
+			 28   2.4
+Vera Hecht: PT2, the experiment only lasted 19 DAG, and nodal roots appeared earliest between 14 and 16 DAG.
+The length of the longest nodal root (cm) was divided by either 5 days (when appearance between 14-16DAG) or 3 days (appearance between 16-19 DAG).
+
+Sca High Rhizo (5xFert)
+2.282666667	SD: 0.592688788	SEM: 0.265058484
+
+Sca Low Rhizo (5xFert)
+2.778333333	SD: 0.286401686	SEM: 0.143200843
+
+Sca Low Rhizo (1xFert)
+2.341666667	SD: 0.772382078 SEM: 0.386191039
+
+IL High Rhizo (5xFert)
+3.824	SD: 1.307632296	SEM: 0.584790941
+
+IL Low Rhizo (5xFert)
+2.492	SD: 0.404568357	SEM: 0.18092847
+
+IL Low Rhizo (1xFert)
+2.72	SD: 0.49010203	SEM: 0.219180291
+
+-->
+		0	0.01
+		1	1
+		2	3.824
+		28	3.824
+		60	3.824
+
+		</SimulaTable>
+		<SimulaStochastic  name="longitudinalGrowthRateMultiplier" unit="cm" distribution="normal" mean="1" stdev="0.1"  minimum="0.6" maximum="1.2" />
+		<SimulaTable name_column1="time since creation" unit_column1="day" name_column2="diameter"  unit_column2="cm" type="double">
+		<!--greenfingerdata-->
+			 0 0.1
+			 10 0.08
+			 100 0.08   
+		</SimulaTable>
+	</SimulaDirective>
+	<SimulaDirective path="lateral">
+		<SimulaTable name_column1="time since creation" unit_column1="day" name_column2="growthRate" unit_column2="cm/day">
+		<!-- mark faget's pouches do not have lateral roots -->
+		<!-- Michaela ernst scans these are mostly quite short about 1-3 cm in a couple of days, with some long ones 4-8 after 10 days.   -->
+		<!-- Vera Hecht: PT1: In rhizotrons, first laterals visible after 10 DAG (check pictures) but in Keimungstest April 2014 some short laterals (up to 1.5 cm) after 7 DAS! -->
+		
+			 0 0.01
+			 2 0.2
+			 6 0.2 
+			 10 0.0
+			 20 0.
+			 1000 0.0
+		</SimulaTable>
+		<SimulaStochastic  name="longitudinalGrowthRateMultiplier" unit="cm" distribution="lognormal"  mean="1.0" stdev="1.0" minimum="0.1" maximum="10."  /> 				
+		<SimulaConstant name="diameter"  unit="cm">
+		<!--michaela: laterals 0.23 mm-->
+		<!-- Vera Hecht: laterals 0.01-0.03 cm -->
+			 0.023 
+		</SimulaConstant>
+	</SimulaDirective>
+	<SimulaDirective path="finelateral">
+		<SimulaTable name_column1="time since creation" unit_column1="day" name_column2="growthRate" unit_column2="cm/day">
+				<!--these stay very short, couple of mm-->						
+			 0 0.01
+			 1 0.1
+			 6 0.0 
+			 1000 0.0
+		</SimulaTable>
+		<SimulaStochastic  name="longitudinalGrowthRateMultiplier" unit="cm" distribution="lognormal"  mean="1" stdev="0.3" minimum="0.2" maximum="2.0"  /> 				
+		<SimulaConstant name="diameter"  unit="cm">
+			 <!--michaela data about 0.160 mm -->
+			 0.0160
+		</SimulaConstant>
+	</SimulaDirective>
+</SimulationModelIncludeFile>			

@@ -1,0 +1,49 @@
+<!--SimRoot parameter file-->
+<SimulationModelIncludeFile>
+<!--environmental parameters start here. -->
+<!--Dunbabin used:
+Radiation (MJ/m2) = 6.4
+MaxT (degC) =24.8
+MinT (degC) = 9.42
+Pan evap (mm) = 1.08
+-->
+	<SimulaDirective path="environment">
+		<SimulaBase name="atmosphere">
+			<SimulaConstant name="irradiation"  unit="uMol/cm2/day" note="par/rdd in lintul"> 
+			<!--dubabin says 6.4 Mj/m2 is what she used, which seems pretty low light conditions
+			6.4 Mj/m2/day = 6.4*4.6*100 = 2944 uMol/cm2/day --> 
+					2944
+			  <!-- average estimate for green houses tyson 800 uMol/m2/s  = 3456.0 uMol/cm2/day (12 hour light)
+			  5184 for 1200uMol/m2/s
+			 average Raul experiment 2006 green houses tyson 590 uMol/m2/s measurements taken from 10am-1pm 
+			    2548.8 uMol/cm2/day (based on 12 hour day)
+			    about 25% less because of mornings and evenings ?
+			    		   
+              2.8330E-3 Mj/cm2/d sunny summers day in the Netherlands: day 190 year 1999 data KNMI ; NOTE: use PAR/RDD ratio of 0.5--> 
+			</SimulaConstant>
+			<SimulaConstant name="PAR/RDD"  unit="100%" >
+			<!--note="optional conversion factor from RDD to PAR - normally 0.5; only used if irradiation isn't converted yet otherwise set to 1"--> 
+					1. 
+			</SimulaConstant>
+			<SimulaTable name_column2="precipitation" name_column1="time" unit_column1="day" unit_column2="cm/day" interpolationMethod="step"> 
+			  <!--
+			  Rocksprings, PA, maize season 2009
+			  1 0 2 1 3 0.29 4	0 5 0 6 0.61 7 0 8 0 9 0.25 10 0.03 11 0 12 0.64 13 0.33 14 0 15 0 16 0 17 0 18 1.8 19 0.2 20 0 21 2.84 22 0.38 23 0
+				24 0 25 0 26 0 27 0.18 28 0 29 0.46 30 0 31 1.35 32 0.13 33 0.23 34 0.25 35 0 36 0 37 0 38 0 39 0 40 0 41 0 42 1.42 -->
+				<!--dunbabin says she did not water the pot 			reality they weighted the pots so water=transpiration
+			looks from the nutrient balance they had some leaching as well-->
+0.000	   0.05
+42.000	0.13
+			</SimulaTable>
+			<SimulaTable name_column2="evaporation" name_column1="time" unit_column1="day" unit_column2="cm/day" interpolationMethod="step">
+			<!--this is 'estimated' data for rocksprings. Maybe not be so accurate -->
+			<!--dunbabin see above, but in document says no evaporation -> plastic beats on top of pot
+-->
+0.000	   0.0
+42.000	0.0
+			</SimulaTable>
+		</SimulaBase>
+	</SimulaDirective>
+</SimulationModelIncludeFile>
+
+		

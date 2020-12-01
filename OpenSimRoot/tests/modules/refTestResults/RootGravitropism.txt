@@ -1,0 +1,4 @@
+THE MODEL PUT OUT WARNINGS:
+At 10 days mem usage was 9 mB.	1x
+GenerateRootNodes::generate: creating nodes further than 2.0*defaultSpatialIntegrationLength=0.020000 cm apart	282x
+OpenSimRoot was build on Mar 22 2019 from git version a87967cb674eb434cb4b5a7b98885a91217db3f9	1x

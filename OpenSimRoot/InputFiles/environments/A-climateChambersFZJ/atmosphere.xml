@@ -1,0 +1,62 @@
+<!--SimRoot parameter file-->
+<SimulationModelIncludeFile>
+<!--environmental parameters start here. -->
+	<SimulaDirective path="environment">
+		<SimulaBase name="atmosphere">
+			<SimulaConstant name="irradiation"  unit="uMol/cm2/day" note="par/rdd in lintul"> 
+					3900
+					<!-- c-chambers fzj have 150 umol/m2/s =1296 umol/cm2/24 hours-->
+			  <!-- average estimate for green houses tyson 800 uMol/m2/s  = 3456.0 uMol/cm2/day (12 hour light)
+			  5184 for 1200uMol/m2/s
+			 average Raul experiment 2006 green houses tyson 590 uMol/m2/s measurements taken from 10am-1pm 
+			    2548.8 uMol/cm2/day (based on 12 hour day)
+			    about 25% less because of mornings and evenings ?
+			    		   
+              2.8330E-3 Mj/cm2/d sunny summers day in the Netherlands: day 190 year 1999 data KNMI ; NOTE: use PAR/RDD ratio of 0.5--> 
+			</SimulaConstant>
+			<SimulaConstant name="PAR/RDD"  unit="100%" >
+			<!--note="optional conversion factor from RDD to PAR - normally 0.5; only used if irradiation isn't converted yet otherwise set to 1"--> 
+					1. 
+			</SimulaConstant>
+			<SimulaTable name_column2="precipitation" name_column1="time" unit_column1="day" unit_column2="cm/day" interpolationMethod="step"> 
+			   <!-- vera rhizotrons  0 0 30 3 40 3 -->
+			   0 0 40 0
+			</SimulaTable>
+			<SimulaTable name_column2="evaporation" name_column1="time" unit_column1="day" unit_column2="cm/day" interpolationMethod="step">
+			<!--this is 'estimated' from vera's rhizotrons -->
+				0 0.32 40 0.32
+			</SimulaTable>
+
+
+<!-- for pennman monteith -->
+<!-- numbers need to be checked -->
+			<SimulaConstant name="netRadiationSoil" unit="W/m2"> 200 </SimulaConstant>
+			<SimulaConstant name="netRadiation" unit="W/m2"> 200 </SimulaConstant>
+			<SimulaConstant name="windSpeed" unit="m/s"> 4. </SimulaConstant>
+			<SimulaConstant name="relativeHumidity" unit="m/s"> 60 </SimulaConstant>
+			<SimulaTable name_column2="averageDailyTemperature" name_column1="time" unit_column1="day" unit_column2="degreesC"
+				interpolationMethod="linear">
+				0 20
+				100 20
+			</SimulaTable>
+
+<!-- these are necessary to compute incoming radiation by the radiation module -->
+			<SimulaConstant name="albedoSoil" unit="noUnit"> 0.17 </SimulaConstant>
+			<SimulaConstant name="albedoCrop" unit="noUnit"> 0.23 </SimulaConstant>
+			<!-- 0.23 grass 0.17 bare soil 0.05 open water 0.4 desert sand -->
+			<SimulaConstant name="altitude" unit="m"> 91 </SimulaConstant>
+			<SimulaConstant name="startDay" unit="noUnit" type="integer"> 22 </SimulaConstant>
+			<SimulaConstant name="startMonth" unit="noUnit" type="integer"> 6 </SimulaConstant>
+			<SimulaConstant name="latitude" unit="noUnit"> 50.8 </SimulaConstant>
+			<SimulaTable name_column2="actualDurationofSunshine" name_column1="time" unit_column1="day" unit_column2="hour"
+				interpolationMethod="step">
+				<!-- time of the day that there are no clouds -->
+				0 6
+				60 6
+			</SimulaTable>
+
+		</SimulaBase>
+	</SimulaDirective>
+</SimulationModelIncludeFile>
+
+		

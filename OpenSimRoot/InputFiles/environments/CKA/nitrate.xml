@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright © 2016 Forschungszentrum Jülich GmbH
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, are permitted under the GNU General Public License v3 and provided that the following conditions are met:
+1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+
+Disclaimer
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+You should have received the GNU GENERAL PUBLIC LICENSE v3 with this file in license.txt but can also be found at http://www.gnu.org/licenses/gpl-3.0.en.html
+
+ -->
+<?xml-stylesheet type="text/xsl" href="XML/treeview.xsl"?>
+<SimulationModelIncludeFile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../scripts/XML/SimulaXMLSchema.xsd">
+	<SimulaDirective path="environment/soil">
+		<SimulaBase name="nitrate">
+				<!--depth: negative is below ground, 0 is soil surface -->
+			<SimulaTable
+				name_column1="depth"
+				unit_column1="cm"
+				name_column2="concentration"
+				unit_column2="uMol/ml">
+					
+					<!--	 1000 0
+						 0.00001    0
+						 0 30.
+						 -2 30.
+						 -10 18.
+						 -50 12.
+
+						 -1000 12.-->
+					<!--
+						rocksprings at beginning of cropping season as measured by maria 
+						HP: 100 0 0.01 0 0 50 -5 43.27 -15 24.35 -25 3.71 -35 2.15 -45 0.45 -55 0.33 -1000 0.33 
+						LP: 100 0 0.01 0 0 2.8  -5 2.36 -15 4.02 -25 3.15 -35 2.17 -45 1.67 -55 1.59 -1000 1.59
+						
+june/4/2009
+Depth	HN-NY	HN-OH	LN-NY	LN-OH
+0 – 10	43.14	119.30	2.82	2.30
+10 – 20	33.16	15.50	2.63	3.86
+20 – 30	5.28	2.02	2.75	3.08
+30 – 40	3.94	0.33	1.88	2.10
+40 – 50	0.51	0.39	1.62	1.61
+50 – 60	0.21	0.46	2.16	1.54
+						
+					-->
+
+<!-- LP rocksprings had in the first 60 cm of the profile 152 umol N /cm2 = (time 1,4) 213 kg/ha -->
+				100 0 0.01 0 0 7.68 -20 7.68 -40 3.6 -60 1.332 -250 1.332
+	         <!--100 20 -1000 20-->
+			</SimulaTable>
+			<SimulaTable
+				name_column1="depth"
+				unit_column1="cm"
+				name_column2="diffusionCoefficient"
+				unit_column2="cm2/day">
+					<!--Note, this is effective diffusion coefficient-->
+					<!--Source: barber 1995, page 223 De=2.5E-6 cm2/s = 0.216 cm2/day -->
+					<!--based on calculations, see below this should be 0.070 cm2/day -->
+				<!--Lal R. 2006. Encyclopedia of soil science. CRC Press.
+				Effective diffusion coeeficients at a volumetric water content of 0.4
+				nitrate 1e-6 cm2/s  = 0.8
+				potassium 1e-7 cm2/s  = 0.08
+				phosphorus 1-9 cm2/s  = 0.0008
+				-->
+				1000 1e-8 0.00001 1e-8 -0 0.7 -1000 0.7
+			</SimulaTable>
+			<SimulaTable
+				name_column1="depth"
+				unit_column1="cm"
+				name_column2="bufferPower"
+				unit_column2="noUnit"> 1000 0.4 -1000 0.4 
+			</SimulaTable>	
+					<!-- 2cm, will mean about no competition, anything smaller will probably introduce competition-->
+			<SimulaConstant
+				name="r1-r0"
+				unit="cm"> 4 </SimulaConstant>
+
+					<!--following is for swms, note that tables with depth are allowed-->
+			<SimulaConstant
+				name="saturatedDiffusionCoefficient"
+				unit="cm2/day">
+					<!-- corresponding effective difussion coefficient if volumetric water content is 0.3 and saturated water content is 0.45:
+						De= theta * tortuosity * D (dispersion is than ignored)
+
+						tortuosity = (theta ^7/3) / (thetaS ^2)
+
+						With dispersion we get in the longitudinal direction
+						De+= (Dl-Dt) v ??
+						
+						De= 0.3 * (0.3^(7/3))/0.45 * 1.6416 = 0.0659
+						
+						assuming that water uptake is 0.00864 cm/day than dispersivity is
+						
+						Dd= (1-0.5)* 0.00864 = 0.00432
+						
+						Dd+De = 0.070
+					
+					--> 
+					<!-- 
+					Kreft JU, Picioreanu C, Wimpenny JW, van Loosdrecht MC. Individual-based modelling of biofilms. Microbiology. 2001 Nov147(Pt 11):2897-912. 
+					diffusion coefficient of nitrate in water is 1700 um2/s = 1.469 cm2/day
+					-->
+					<!-- note to get a de of about 0.8 this needs to be about 20 -->
+					<!--(Robinson & Stokes, 1965)
+					 Diffusion constant for nitrate in free water is about 1e-9 m2/s =  0.864 cm2/day
+					 
+					-->
+				1.6416
+			</SimulaConstant>
+			<SimulaConstant name="increaseTimeStep">1.00</SimulaConstant>
+			<SimulaConstant
+				name="longitudinalDispersivity"
+				unit="cm"> 1. </SimulaConstant>
+			<SimulaConstant
+				name="transverseDispersivity"
+				unit="cm"> 0.5 </SimulaConstant>
+			<SimulaConstant
+				name="adsorptionCoefficient"
+				unit="uMol/cm"> 0. </SimulaConstant>
+		</SimulaBase>
+	</SimulaDirective>
+</SimulationModelIncludeFile>
+	

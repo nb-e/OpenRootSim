@@ -1,0 +1,150 @@
+<!--SimRoot parameter file-->
+<SimulationModelIncludeFile>
+<!--environmental parameters start here. -->
+<!--rocksprings has a hagerstown silt loam--> 
+<!--
+	hodnet and tomasella 2002 table 6:  
+	                 a      n     hs    hr 
+Loamy sand       0.837  1.672 0.438 0.062 
+Silty clay loam  0.298 1.513 0.586 0.267 
+Silt loam        0.191 1.644 0.601 0.223 
+-->
+<!--
+Leij, Alves, and van Genuchten, 1996
+Soil                ths   thr     alpha    n     Ks(cm hr-1)
+Sand 	              0.43 	0.045 	0.145 	2.68 	29.7
+Loamy sand 	        0.41 	0.057 	0.124 	2.28 	14.6
+Sandy loam 	        0.41 	0.065 	0.075 	1.89 	4.42
+Loam 	              0.43 	0.078 	0.036 	1.56 	1.04
+Silt 	              0.46 	0.034 	0.016 	1.37 	0.25
+Silt loam 	        0.45 	0.067 	0.020 	1.41 	0.45
+Sandy clay loam 	  0.39 	0.100 	0.059 	1.48 	1.31
+Clay loam 	        0.41 	0.095 	0.019 	1.31 	0.26
+Silty clay loam 	  0.43 	0.089 	0.010 	1.23 	0.07
+Sandy clay 	        0.38 	0.100 	0.027 	1.23 	0.12
+Silty clay 	        0.36 	0.070 	0.005 	1.09 	0.02
+Clay 	              0.38 	0.068 	0.008 	1.09 	0.20
+-->
+<!--
+J.H.M. Wo¨sten et al.rGeoderma 90 (1999) 169–185 177
+Table 4
+Mualem-van Genuchten parameters for the fits on the geometric mean curves
+
+Topsoils		  ur    us     a      n      m     l     Ks(cm/d)
+Coarse 			0.025 0.403 0.0383 1.3774 0.2740 1.2500 60.000
+Medium 			0.010 0.439 0.0314 1.1804 0.1528 2.3421 12.061
+Mediumfine 	0.010 0.430 0.0083 1.2539 0.2025 0.5884 2.272
+Fine 				0.010 0.520 0.0367 1.1012 0.0919 1.9772 24.800
+Very Fine 	0.010 0.614 0.0265 1.1033 0.0936 2.5000 15.000
+Subsoils
+Coarse 			0.025 0.366 0.0430 1.5206 0.3424 1.2500 70.000
+Medium 			0.010 0.392 0.0249 1.1689 0.1445 0.7437 10.755
+Mediumfine 	0.010 0.412 0.0082 1.2179 0.1789 0.5000 4.000
+Fine 0.010 	0.481 0.0198 1.0861 0.0793 3.7124 8.500
+Very Fine 	0.010 0.538 0.0168 1.0730 0.0680 0.0001 8.235
+Organica 		0.010 0.766 0.0130 1.2039 0.1694 0.4000 8.000
+-->
+	<SimulaDirective path="environment/soil">
+		<SimulaBase name="water">
+				<SimulaTable name_column2="NUinitialHydraulicHead" name_column1="depth" unit_column1="cm" unit_column2="cm"> -0 -400
+			 -1 -300.  -2 -240.  -5 -220. -10 -200. 
+			-15 -190. -20 -180. -25 -175. -30 -170. 
+			-35 -165. -40 -160. -45 -155. -50 -150.
+		 -151 -50. -200 0.
+				</SimulaTable>
+				<SimulaGrid name="initialHydraulicHead" unit="cm" regular="true" gridSpacing="4" interpolationMethod="inverseDistanceWeightedAverage" >
+		
+<!-- x 	y	z	value -->
+-4.1782012512	-7.0048109908	2.5100548938	-471.3788072113
+-4.1762879421	-9.0371496696	-3.9142567711	-173.5313623212
+3.9444738463	-6.207108954	-0.3333141305	-304.7633754322
+4.1965512978	-15.852559437	4.2690100917	-80.8449621545
+0.1985454187	-12.7237853128	-4.6332659479	-171.8842571136
+-1.5225626645	-16.6025309404	-1.4275746257	-42.3551842105
+2.8248641524	-14.0690417355	-1.9898286555	-3.8942417596
+2.4972885661	-7.7588577289	0.4290593718	-57.251998689
+-4.7885275283	-5.7344889781	2.5547019625	-13.163832482
+-0.5889406102	-16.9161286391	-4.7803394566	-275.220495183
+0.1606780989	-15.0439723628	-0.349389778	-203.7076585693
+-2.9232877051	-11.8225919176	4.0236153826	-109.6553233219
+0.1135571185	-13.7778292177	3.7367665325	-412.7867567586
+-0.447574975	-17.1174649429	4.0175008005	-483.3317315206
+-1.343171515	-16.3752704393	2.4656234775	-30.321459868
+2.6461024373	-16.4197319793	3.4348414908	-332.8183797421
+4.3238502066	-17.032737215	1.105575955	-118.1346131489
+-0.1214264403	-1.0870931484	-3.7219864386	-19.9037793791
+0.5911630066	-9.9918958405	-4.3553262041	-354.6428231057
+
+
+		<SimulaConstant name="power">10</SimulaConstant>
+</SimulaGrid>				
+				<SimulaTable name_column2="residualWaterContent" name_column1="depth" unit_column1="cm" unit_column2="100%">
+				  0 0.067
+				  -300 0.067
+				</SimulaTable>
+				<SimulaTable name_column2="saturatedWaterContent" name_column1="depth" unit_column1="cm" unit_column2="100%" TinterpolationMethod="step">
+				<!--Luo L, Lin H, Halleck P. 2008. Quantifying Soil Structure and Preferential Flow in Intact Soil Using X-ray Computed Tomography. Soil Sci Soc Am J 72: 1058-1069.-->
+				    0 0.460
+					-15	0.450
+					-25	0.430
+					-35	0.390
+					-65	0.390
+					-300	0.390
+				</SimulaTable>
+				<SimulaTable name_column2="vanGenuchten:alpha" name_column1="depth" unit_column1="cm" unit_column2="1/cm">
+				<!--see hodnet and tomasella 2002 - rocksprings has a hagerstown silt loam--> 
+				  0 0.02
+				  -300 0.02
+				</SimulaTable>
+				<SimulaTable name_column2="vanGenuchten:n" name_column1="depth" unit_column1="cm" unit_column2="noUnit"> 
+				<!--see hodnet and tomasella 2002 - rocksprings has a hagerstown silt loam--> 
+				  0 1.41
+				  -300 1.41
+				</SimulaTable>
+				<SimulaTable name_column2="NUsaturatedConductivity" name_column1="depth" unit_column1="cm" unit_column2="cm/day" TinterpolationMethod="step">
+				<!--Luo L, Lin H, Halleck P. 2008. Quantifying Soil Structure and Preferential Flow in Intact Soil Using X-ray Computed Tomography. Soil Sci Soc Am J 72: 1058-1069.
+					  0	74.000
+					-15 74.000
+					-25 64.800
+					-35 50.400
+					-65 50.400
+					-300 50.400 -->
+					<!--These numbers seem high, may rocksprings is more like a sandy clay loam?-->
+					<!-- silt loam 0.45*24=10.8 -->
+					0 10.8
+					-300 10.8
+				</SimulaTable>
+				<SimulaGrid name="saturatedConductivity" unit="cm/day" regular="true" gridSpacing="4" interpolationMethod="inverseDistanceWeightedAverage" >
+		
+<!-- x 	y	z	value -->
+2.1793401986	-5.7519793604	-2.2707572789	5.4170474026
+-0.7824093243	-18.6314904084	1.4965529484	9.9417912646
+1.3995248429	-11.0210627504	3.1318827486	7.0154587447
+-3.6580311041	-18.9193483582	1.5426629619	8.3883503883
+1.8484502635	-10.8613310847	-0.1082579605	5.8661504032
+0.6482918933	-2.4200306879	2.9559364496	6.1514864885
+3.2977050636	-12.0209353697	-1.3595748367	5.1094953029
+-2.4562809663	-2.9013572447	-2.8828827338	5.3341484885
+2.1111895633	-14.7614162322	3.718981212	6.1699134693
+1.5700294566	-0.8369909413	3.5787899699	7.4377947371
+1.7486609425	-10.2935433341	-2.1001519426	8.350198121
+0.9996227617	-18.299206458	0.574796719	5.4375408893
+2.8964236542	-8.3121206611	-3.6687409109	7.5111318554
+-0.8471700712	-6.7141721211	-3.4975980152	7.0414341253
+-1.7137166345	-13.0298577901	4.7112264717	9.6468447149
+3.0933315051	-6.1515213922	-2.0936813136	7.4064963905
+3.8682245417	-3.6675408622	-1.8070307886	9.08428928
+0.5497084861	-5.7121839421	-4.0158405807	6.7662956635
+-3.2545846654	-17.5387729239	-0.2959005488	8.735460802
+
+
+
+		<SimulaConstant name="power">10</SimulaConstant>
+</SimulaGrid>				
+				<SimulaConstant name="volumetricWaterContentInBarberCushman" unit="cm3/cm3">0.3</SimulaConstant>
+			</SimulaBase>
+	</SimulaDirective>
+</SimulationModelIncludeFile>
+
+		
+		

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SimulationModelIncludeFile>
+	<SimulaDirective path="hypocotyl">
+		<SimulaConstant name="numberOfXylemPoles" type="integer"> 4</SimulaConstant>
+		<SimulaStochastic name="soilImpedence.v2" unit="cm" type="coordinate" distribution="uniform" minimum="-0.01"
+			maximum="0.01" />
+		<SimulaStochastic name="gravitropism.v2" unit="cm" type="coordinate" distribution="uniform" minimum="0.5"
+			maximum="0.6" />
+	</SimulaDirective>
+	<SimulaDirective path="primaryRoot">
+		<SimulaConstant name="branchingAngle" unit="degrees"> 0</SimulaConstant>
+		<SimulaConstant name="numberOfXylemPoles" type="integer"> 4</SimulaConstant>
+		<SimulaStochastic name="soilImpedence.v2" unit="cm" type="coordinate" distribution="normal" mean="0."	stdev="0.08" />
+		<SimulaStochastic name="gravitropism.v2" unit="cm" type="coordinate" distribution="normal" mean="-0.08" stdev="0.002" minimum="-0.25"	maximum="-0.001" />
+	</SimulaDirective>
+	<SimulaDirective path="lateralPrimaryRoot">
+		<SimulaConstant name="branchingAngle" unit="degrees"> 90 </SimulaConstant>
+		<SimulaConstant name="numberOfXylemPoles" type="integer"> 4</SimulaConstant>
+		<SimulaConstant name="regularTopology" type="integer"> 0</SimulaConstant>
+		<SimulaConstant name="topologyOffset" type="integer"> 0</SimulaConstant>
+		<SimulaStochastic name="soilImpedence.v2" unit="cm" type="coordinate" distribution="normal" mean="0" stdev="0.02" />
+		<SimulaConstant name="gravitropism.v2" type="coordinate"> 0 0 0</SimulaConstant>
+	</SimulaDirective>
+	<SimulaDirective path="finelateral">
+		<SimulaConstant name="branchingAngle" unit="degrees"> 90</SimulaConstant>
+		<SimulaConstant name="numberOfXylemPoles" type="integer"> 4</SimulaConstant>
+		<SimulaConstant name="regularTopology" type="integer"> 0</SimulaConstant>
+		<SimulaConstant name="topologyOffset" type="integer"> 0</SimulaConstant>
+		<SimulaStochastic name="soilImpedence.v2" unit="cm" type="coordinate" distribution="normal" mean="0" stdev="0.02" />
+		<SimulaConstant name="gravitropism.v2" type="coordinate"> 0 0 0</SimulaConstant>
+	</SimulaDirective>
+	<SimulaIncludeFile fileName="plantParameters/Lupin/includeTopBoundary.xml"/>
+	<SimulaIncludeFile fileName="plantParameters/Lupin/keepRootsInsideBox.xml"/>
+</SimulationModelIncludeFile>

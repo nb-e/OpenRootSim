@@ -1,0 +1,29 @@
+body       { font-family: sans-serif; font-size: 80%; background-color: white; color: black }
+
+.connector { font-family: monospace; }
+
+.name      { color: navy; background-color: white; text-decoration: underline; font-weight: bold;
+               padding-top: 0px; padding-bottom: 1px; padding-left: 3px; padding-right: 3px }
+.description { padding-top: 3px; padding-bottom: 8px; padding-left: 3px; padding-right: 3px }
+.altname   { color: navy; text-decoration: underline }
+.uri       { color: #444; font-style: italic }
+.value     { color: #040; background-color: #CCC; font-weight: bold }
+.escape    { color: #620; font-family: monospace }
+
+.root      { color: yellow; background-color: black }
+.element   { color: yellow; background-color: navy }
+.namespace { color: yellow; background-color: #333 }
+.attribute { color: yellow; background-color: #040 }
+.name      { color: yellow; background-color: #400 }
+.extref    { color: yellow; background-color: #400 }
+.xpath     { color: yellow; background-color: #400 }
+.text      { color: yellow; background-color: #400 }
+.pi        { color: yellow; background-color: #044 }
+.comment   { color: yellow; background-color: #303 }
+.attribute { color: blue; background-color: white }
+.unit      { color: yellow; background-color: #303 }
+.type      { color: yellow; background-color: gray }
+
+.root,.element,.attribute,.namespace,.text,.comment,.pi
+  { font-weight: bold;
+    padding-top: 0px; padding-bottom: 1px; padding-left: 3px; padding-right: 3px }

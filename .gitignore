@@ -1,0 +1,5 @@
+/.project
+OpenSimRoot/StaticBuild/OpenSimRoot
+OpenSimRoot/tests/modules/testResults/
+OpenSimRoot/tests/modules/gravitropismTest/
+OpenSimRoot/tests/engine/testResults/

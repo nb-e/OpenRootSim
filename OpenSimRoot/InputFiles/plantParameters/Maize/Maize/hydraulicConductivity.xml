@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--?xml-stylesheet type="text/xsl" href="tree-view2.xsl"? -->
+<!--
+Copyright © 2016, The Pennsylvania State University
+All rights reserved.
+
+Copyright © 2016 Forschungszentrum Jülich GmbH
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, are permitted under the GNU General Public License v3 and provided that the following conditions are met:
+1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+
+Disclaimer
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+You should have received the GNU GENERAL PUBLIC LICENSE v3 with this file in license.txt but can also be found at http://www.gnu.org/licenses/gpl-3.0.en.html
+
+ -->
+	<!--
+		north and nobel 1996 as a rough guess: 2e-7 m/s/MPa = 1.728e-4 cm/day/hPa	
+		this 1 cm3/cm2 surface area in 1 day when	there is a pressure difference of 1 kPa
+		
+		the root was ~3mm thick, ~1/4 of radius was steel, 3/4 cortex so per unit of
+		cortical thickness 1.7e-4*0.12 cm =2.07e-5
+	-->
+	<!--
+		Frensch J, Steudle E. 1989. 
+		Axial and radial hydraulic resistance to roots of maize ( Zea mays L.). Plant Physiology
+		91: 719-726. 
+		radial conductance 20e8-25e8 m/s/MPa 
+		25e-8 m/s/MPa= 2.16e-4 cm/day/hPa
+		with a diameter of 1-1.4 mm: 2.16e-4 cm/day/hPa * 0.04	cm cortex = 8.64 e-6
+		
+		Doussan C, Vercambre G, Pagès L. 1998. Modelling of the hydraulic architecture of root systems: An integrated approach to water absorption - Distribution of axial and radial conductances in maize. Annals of Botany 81: 225-232.
+		they did not measure but used 2.2 10-7 m/s/MPa through out the root system
+
+		
+	-->
+<SimulationModelIncludeFile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../scripts/XML/SimulaXMLSchema.xsd">
+	<SimulaDirective path="resources">
+	</SimulaDirective>
+	<SimulaDirective path="shoot">
+	</SimulaDirective>
+	<SimulaDirective path="hypocotyl">
+		<SimulaTable
+			name_column1="time since planting"
+			name_column2="radialHydraulicConductivity"
+			unit_column1="day"
+			unit_column2="cm/day/hPa"> 0 0 60 0</SimulaTable>
+		<SimulaConstant
+			name="lengthRootTipWithoutXylemVessels"
+			unit="cm"> 2</SimulaConstant>
+	</SimulaDirective>
+	<SimulaDirective path="primaryRoot">
+		<SimulaTable
+			name_column1="time since planting"
+			name_column2="radialHydraulicConductivity"
+			unit_column1="day"
+			unit_column2="cm/day/hPa"> 0 0 1 2.16e-4 10 2.16e-4 20 2.16e-4 30
+			1.16e-4 40 0.5e-4 60 0</SimulaTable>
+		<SimulaConstant
+			name="lengthRootTipWithoutXylemVessels"
+			unit="cm"> 2</SimulaConstant>
+	</SimulaDirective>
+	<SimulaDirective path="braceroots">
+		<SimulaTable
+			name_column1="time since planting"
+			name_column2="radialHydraulicConductivity"
+			unit_column1="day"
+			unit_column2="cm/day/hPa"> 0 0 1 2.16e-4 10 2.16e-4 20 2.5e-4 30
+			2.16e-4 40 1e-4 60 0</SimulaTable>
+		<SimulaConstant
+			name="lengthRootTipWithoutXylemVessels"
+			unit="cm"> 2</SimulaConstant>
+	</SimulaDirective>
+	<SimulaDirective path="braceroots2">
+		<SimulaTable
+			name_column1="time since planting"
+			name_column2="radialHydraulicConductivity"
+			unit_column1="day"
+			unit_column2="cm/day/hPa"> 0 0 1 2.16e-4 10 2.16e-4 20 2.5e-4 30
+			2.16e-4 40 1e-4 60 0</SimulaTable>
+		<SimulaConstant
+			name="lengthRootTipWithoutXylemVessels"
+			unit="cm"> 2</SimulaConstant>
+	</SimulaDirective>
+	<SimulaDirective path="seminal">
+		<SimulaTable
+			name_column1="time since planting"
+			name_column2="radialHydraulicConductivity"
+			unit_column1="day"
+			unit_column2="cm/day/hPa"> 0 0 1 2.16e-4 10 2.16e-4 20 2.5e-4 30
+			2.16e-4 40 1e-4 60 0</SimulaTable>
+		<SimulaConstant
+			name="lengthRootTipWithoutXylemVessels"
+			unit="cm"> 2</SimulaConstant>
+	</SimulaDirective>
+	<SimulaDirective path="nodalroots">
+		<SimulaTable
+			name_column1="time since planting"
+			name_column2="radialHydraulicConductivity"
+			unit_column1="day"
+			unit_column2="cm/day/hPa"> 0 0 1 2.16e-4 10 2.16e-4 20 2.5e-4 30
+			2.16e-4 40 1e-4 60 0</SimulaTable>
+		<SimulaConstant
+			name="lengthRootTipWithoutXylemVessels"
+			unit="cm"> 2</SimulaConstant>
+	</SimulaDirective>
+	<SimulaDirective path="nodalroots2">
+		<SimulaTable
+			name_column1="time since planting"
+			name_column2="radialHydraulicConductivity"
+			unit_column1="day"
+			unit_column2="cm/day/hPa"> 0 0 1 2.16e-4 10 2.16e-4 20 2.5e-4 30
+			2.16e-4 40 1e-4 60 0</SimulaTable>
+		<SimulaConstant
+			name="lengthRootTipWithoutXylemVessels"
+			unit="cm"> 2</SimulaConstant>
+	</SimulaDirective>
+	<SimulaDirective path="nodalroots3">
+		<SimulaTable
+			name_column1="time since planting"
+			name_column2="radialHydraulicConductivity"
+			unit_column1="day"
+			unit_column2="cm/day/hPa"> 0 0 1 2.16e-4 10 2.16e-4 20 2.5e-4 30
+			2.16e-4 40 1e-4 60 0</SimulaTable>
+		<SimulaConstant
+			name="lengthRootTipWithoutXylemVessels"
+			unit="cm"> 2</SimulaConstant>
+	</SimulaDirective>
+	<SimulaDirective path="nodalroots4">
+		<SimulaTable
+			name_column1="time since planting"
+			name_column2="radialHydraulicConductivity"
+			unit_column1="day"
+			unit_column2="cm/day/hPa"> 0 0 1 2.16e-4 10 2.16e-4 20 2.5e-4 30
+			2.16e-4 40 1e-4 60 0</SimulaTable>
+		<SimulaConstant
+			name="lengthRootTipWithoutXylemVessels"
+			unit="cm"> 2</SimulaConstant>
+	</SimulaDirective>
+	<SimulaDirective path="lateralOfCrownRoots">
+		<SimulaTable
+			name_column1="time since planting"
+			name_column2="radialHydraulicConductivity"
+			unit_column1="day"
+			unit_column2="cm/day/hPa"> 0 0 1 2.16e-4 60 2.16e-4</SimulaTable>
+		<SimulaConstant
+			name="lengthRootTipWithoutXylemVessels"
+			unit="cm"> 2</SimulaConstant>
+	</SimulaDirective>
+	<SimulaDirective path="lateral">
+		<SimulaTable
+			name_column1="time since planting"
+			name_column2="radialHydraulicConductivity"
+			unit_column1="day"
+			unit_column2="cm/day/hPa"> 0 0 1 4.16e-4 60 4.16e-4</SimulaTable>
+		<SimulaConstant
+			name="lengthRootTipWithoutXylemVessels"
+			unit="cm"> 2</SimulaConstant>
+	</SimulaDirective>
+	<SimulaDirective path="finelateral">
+		<SimulaTable
+			name_column1="time since planting"
+			name_column2="radialHydraulicConductivity"
+			unit_column1="day"
+			unit_column2="cm/day/hPa"> 0 0 1 4.16e-4 60 4.16e-4</SimulaTable>
+		<SimulaConstant
+			name="lengthRootTipWithoutXylemVessels"
+			unit="cm"> 2</SimulaConstant>
+	</SimulaDirective>
+	<SimulaDirective path="finelateral2">
+		<SimulaTable
+			name_column1="time since planting"
+			name_column2="radialHydraulicConductivity"
+			unit_column1="day"
+			unit_column2="cm/day/hPa"> 0 0 1 4.16e-4 60 4.16e-4</SimulaTable>
+		<SimulaConstant
+			name="lengthRootTipWithoutXylemVessels"
+			unit="cm"> 2</SimulaConstant>
+	</SimulaDirective>
+</SimulationModelIncludeFile>

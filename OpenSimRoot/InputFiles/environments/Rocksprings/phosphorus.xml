@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--?xml-stylesheet type="text/xsl" href="tree-view2.xsl"? -->
+<!--
+Copyright © 2016, The Pennsylvania State University
+All rights reserved.
+
+Copyright © 2016 Forschungszentrum Jülich GmbH
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, are permitted under the GNU General Public License v3 and provided that the following conditions are met:
+1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+
+Disclaimer
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+You should have received the GNU GENERAL PUBLIC LICENSE v3 with this file in license.txt but can also be found at http://www.gnu.org/licenses/gpl-3.0.en.html
+
+ -->
+
+<SimulationModelIncludeFile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../scripts/XML/SimulaXMLSchema.xsd">
+	<SimulaDirective path="environment/soil">
+
+			<!--SimulaMatrix name="soilP" unit="mg/g" dim="3" size="3,3,3" interpolation="nearestpoint|linear|etc" >
+			this is really a table with more dimensions?
+			some numbers here
+			but what if each number needs to be simulated -> instead of numbers we could have nodes: type="Simula....."
+			if we do that than this is really just a 'container' of points and values or another database
+			</SimulaMatix-->
+		<SimulaBase name="phosphorus">
+			<!--depth: negative is below ground, 0 is soil surface -->
+			<SimulaTable
+				name_column1="depth"
+				unit_column1="cm"
+				name_column2="concentration"
+				unit_column2="uMol/ml">
+				<!--barber 1995 lists 13.6 uMol/l = 13.6e-3 uMol/ml-->
+				<!--severe stress-->
+				<!-- 1e-3 = 1.8 mol/hectare (0-60 cm) x 95 g/mol = 0.171 kg/ha -->
+				<!-- gradient gives 0.168 kg/ha PO4 -->
+				<!--	 1000 0
+					 0.00001    0
+					 0 1.e-3
+					 -1000 1.e-3 -->
+				1000 0 0.0001 0 0 1.75e-3 -29 1.75e-3 -30 0.25e-3 -1000 0.24e-3
+			</SimulaTable>
+			<SimulaTable
+				name_column1="depth"
+				unit_column1="cm"
+				name_column2="diffusionCoefficient"
+				unit_column2="cm2/day">
+				<!--Note, this is effective diffusion coefficient-->
+				<!--Source: barber 1995, page 223 De=2.3E-9 cm2/s = 1.9872e-4 cm2/day -->
+				<!--Source: Bhadoria, P. B. S., J. Kaselowsky, N. Claassen, and A. Jungk. 1991. “Soil Phosphate Diffusion Coefficients: Their Dependence on Phosphorus Concentration and Buffer Power.” Soil Sci Soc Am J 55:56-60.
+				    De: low, middle, and high p: 2.2, 6, 13.9 * e-9 cm2/s = 
+				    desorption bufferpower ranges from 400-1 with higher values representing soils with lower P
+				    --> 
+				<!--Lal R. 2006. Encyclopedia of soil science. CRC Press. Lal references Barber for this and Nielsen 1996
+				Effective diffusion coefficients at a volumetric water content of 0.4
+				nitrate 1e-6 cm2/s  = 0.8
+				potassium 1e-7 cm2/s  = 0.08
+				phosphorus 1-9 cm2/s  = 0.0008
+				-->		
+				<!-- based on calculations from the diffusion coeffof phosphate in water the De should be at least a factor 10 higher 3e-3 cm2/day or so-->
+				1000 1.9872E-4 -1000 1.9872E-4
+			</SimulaTable>
+			<SimulaTable
+				name_column1="depth"
+				unit_column1="cm"
+				name_column2="bufferPower"
+				unit_column2="noUnit">
+				<!--note: this is Psolidphase/Psolution-->
+				<!--Source: baraber 1995, page 223 b=163-->
+				<!--400-1 for source see De-->
+				1000 400 -1000 400
+			</SimulaTable>
+				<!--note that these parameters define the spatial configuration of barber-cushman and 
+				thereby can, together with the timestep, significantly effect memory use, performance
+				 and accuracy of the data -->
+				 <!--make sure you take roothair length into account here-->
+			<SimulaConstant
+				name="r1-r0"
+				unit="cm"> 0.3</SimulaConstant>
+				<!--SimulaConstant name="dr" unit="cm"> 0.01 </SimulaConstant-->
+
+			<!--SWMS only-->
+			<SimulaConstant
+				name="saturatedDiffusionCoefficient"
+				unit="cm2/day">
+				<!-- Fell and Hutchinson 1971: diffusion in water: 22e5 cm2/sec = huge -->
+				<!-- Lobo VMM, Ribeiro ACF, Verissimo LMP. 1998. Diffusion coefficients in aqueous solutions of potassium chloride at high and low concentrations. Journal of Molecular Liquids 78: 139-149.
+				1.8e-9 m2/sec = 1.56 cm2/day -->
+				<!--0.00494697290633534 based on reverse solving De->D using theta of 0.3 and thetas of 0.45
+				or if theta is 0.2 and thetaS=0.35 is should be 0.014-->
+				<!-- PO4 in water: ~1 x 10-5 cm2/sec = 0.864 cm2/day
+				http://www.its.caltech.edu/~brokawc/Bi145/Diffusion.html
+				--><!--
+				PO4 in marine sediment: 3.6 10-6 cm2/s = 0.311 cm2/day
+				Krom MD, Berner RA. 1980. The Diffusion Coefficients of Sulfate, Ammonium, and Phosphate Ions in Anoxic Marine Sediments. Limnology and Oceanography 25: 327-337.
+				-->
+				<!--
+				Hira GS, Singh NT. 1977. Observed and Predicted Rates of Phosphorus Diffusion in Soils of Varying Bulk Density and Water Content. Soil Sci Soc Am J 41: 537-540.
+				
+				Diffusion of h2po4 in water = 8.9 x 10-6 cm2/sec = 0.769 cm2/day 
+				-->
+				<!--
+				Hira GS, Singh NT. 1977. Observed and Predicted Rates of Phosphorus Diffusion in Soils of Varying Bulk Density and Water Content. Soil Sci Soc Am J 41: 537-540.
+				They find indeed that observed diffusion coefficients are much smaller than predicted based on tortuosity factor. 
+				-->
+				0.00495
+			</SimulaConstant>
+			<SimulaConstant name="increaseTimeStep">1.1
+			</SimulaConstant>
+			<SimulaConstant
+				name="longitudinalDispersivity"
+				unit="cm"> 0.</SimulaConstant>
+			<SimulaConstant
+				name="transverseDispersivity"
+				unit="cm"> 0.</SimulaConstant>
+			<SimulaConstant
+				name="adsorptionCoefficient"
+				unit="uMol/cm"> 
+				<!-- note to make this equal to the barber-cushman module, you need to divide the buffer for the barber-cushman model by the water content given by the barber cushman model -->
+				1333.3
+			</SimulaConstant>
+		</SimulaBase>
+	</SimulaDirective>
+</SimulationModelIncludeFile>

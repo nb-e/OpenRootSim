@@ -1,0 +1,153 @@
+<?xml version="1.0"?>
+<VTKFile type="PolyData" version="0.1" byte_order="LittleEndian">
+   <PolyData>
+ <Piece NumberOfPoints="14" NumberOfLines="1" NumberOfVerts="0" NumberOfStrips="0" NumberOfPolys="0">
+    <Points>
+       <DataArray type="Float32" Name="Position" NumberOfComponents="3" format="ascii">
+0.000	0.000	0.000
+-0.047	-3.998	0.100
+-0.049	-7.998	0.106
+-0.050	-11.998	0.106
+-0.050	-15.998	0.106
+-0.050	-19.998	0.106
+-0.050	-23.998	0.106
+-0.050	-27.998	0.106
+-0.050	-31.998	0.106
+-0.050	-35.998	0.106
+-0.050	-39.998	0.106
+-0.050	-44.373	0.106
+-0.050	-48.773	0.106
+-0.050	-49.998	0.106
+		    </DataArray>
+         </Points>
+         <Lines>
+            <DataArray type="Int32" Name="connectivity" NumberOfComponents="1" format="ascii">
+ 0 1 2 3 4 5 6 7 8 9 10 11 12 13
+            </DataArray>
+            <DataArray type="Int32" Name="offsets" NumberOfComponents="1" format="ascii">
+ 14
+            </DataArray>
+            <DataArray type="UInt8"  Name="types" NumberOfComponents="1" format="ascii">
+6
+            </DataArray>
+         </Lines>
+         <PointData>
+           <DataArray type="Float32" Name="combinedRootClassID" NumberOfComponents="1" format="ascii">
+ -2.000e+00 -2.000e+00 -2.000e+00 -2.000e+00 -2.000e+00 -2.000e+00 -2.000e+00 -2.000e+00 -2.000e+00 -2.000e+00 -2.000e+00 -2.000e+00 -2.000e+00 0.000e+00
+           </DataArray>
+           <DataArray type="Float32" Name="hydraulicHeadAtRootSurface" NumberOfComponents="1" format="ascii">
+ -2.000e+02 -2.000e+02 -2.000e+02 -2.000e+02 -2.000e+02 -2.000e+02 -2.000e+02 -2.000e+02 -2.000e+02 -2.000e+02 -2.000e+02 -2.000e+02 -2.000e+02 -2.000e+02
+           </DataArray>
+           <DataArray type="Float32" Name="lateralHydraulicConductivity" NumberOfComponents="1" format="ascii">
+ 4.320e-02 4.320e-02 4.320e-02 4.320e-02 4.320e-02 4.320e-02 4.320e-02 4.320e-02 4.320e-02 4.320e-02 4.320e-02 4.320e-02 4.320e-02 0.000e+00
+           </DataArray>
+           <DataArray type="Float32" Name="parentRootClassID" NumberOfComponents="1" format="ascii">
+ -3.000e+00 -3.000e+00 -3.000e+00 -3.000e+00 -3.000e+00 -3.000e+00 -3.000e+00 -3.000e+00 -3.000e+00 -3.000e+00 -3.000e+00 -3.000e+00 -3.000e+00 0.000e+00
+           </DataArray>
+           <DataArray type="Float32" Name="plantID" NumberOfComponents="1" format="ascii">
+ 2.100e+01 2.100e+01 2.100e+01 2.100e+01 2.100e+01 2.100e+01 2.100e+01 2.100e+01 2.100e+01 2.100e+01 2.100e+01 2.100e+01 2.100e+01 2.100e+01
+           </DataArray>
+           <DataArray type="Float32" Name="plantTypeID" NumberOfComponents="1" format="ascii">
+ 0.000e+00 0.000e+00 0.000e+00 0.000e+00 0.000e+00 0.000e+00 0.000e+00 0.000e+00 0.000e+00 0.000e+00 0.000e+00 0.000e+00 0.000e+00 0.000e+00
+           </DataArray>
+           <DataArray type="Float32" Name="radialHydraulicConductivity" NumberOfComponents="1" format="ascii">
+ 1.728e-04 1.728e-04 1.728e-04 1.728e-04 1.728e-04 1.728e-04 1.728e-04 1.728e-04 1.728e-04 1.728e-04 1.728e-04 1.728e-04 1.728e-04 0.000e+00
+           </DataArray>
+           <DataArray type="Float32" Name="rootCircumference" NumberOfComponents="1" format="ascii">
+ 1.257e+00 1.257e+00 1.257e+00 1.257e+00 1.257e+00 1.257e+00 1.257e+00 1.257e+00 1.257e+00 1.257e+00 1.257e+00 1.257e+00 1.257e+00 1.257e+00
+           </DataArray>
+           <DataArray type="Float32" Name="rootClassID" NumberOfComponents="1" format="ascii">
+ -2.000e+00 -2.000e+00 -2.000e+00 -2.000e+00 -2.000e+00 -2.000e+00 -2.000e+00 -2.000e+00 -2.000e+00 -2.000e+00 -2.000e+00 -2.000e+00 -2.000e+00 0.000e+00
+           </DataArray>
+           <DataArray type="Float32" Name="rootRadius" NumberOfComponents="1" format="ascii">
+ 2.000e-01 2.000e-01 2.000e-01 2.000e-01 2.000e-01 2.000e-01 2.000e-01 2.000e-01 2.000e-01 2.000e-01 2.000e-01 2.000e-01 2.000e-01 2.000e-01
+           </DataArray>
+           <DataArray type="Float32" Name="rootLength2Base" NumberOfComponents="1" format="ascii">
+ 0.000e+00 4.000e+00 8.000e+00 1.200e+01 1.600e+01 2.000e+01 2.400e+01 2.800e+01 3.200e+01 3.600e+01 4.000e+01 4.437e+01 4.877e+01 0.000e+00
+           </DataArray>
+           <DataArray type="Float32" Name="rootPotentialSecondaryGrowth" NumberOfComponents="1" format="ascii">
+ 4.000e-01 4.000e-01 4.000e-01 4.000e-01 4.000e-01 4.000e-01 4.000e-01 4.000e-01 4.000e-01 4.000e-01 4.000e-01 4.000e-01 4.000e-01 4.000e-01
+           </DataArray>
+           <DataArray type="Float32" Name="rootSegmentAge" NumberOfComponents="1" format="ascii">
+ 2.000e+01 1.920e+01 1.840e+01 1.760e+01 1.680e+01 1.600e+01 1.520e+01 1.440e+01 1.360e+01 1.280e+01 1.200e+01 1.100e+01 9.400e+00 0.000e+00
+           </DataArray>
+           <DataArray type="Float32" Name="rootSegmentDryWeight" NumberOfComponents="1" format="ascii">
+ 5.027e-02 5.027e-02 5.027e-02 5.027e-02 5.027e-02 5.027e-02 5.027e-02 5.027e-02 5.027e-02 5.027e-02 5.498e-02 5.529e-02 1.539e-02 0.000e+00
+           </DataArray>
+           <DataArray type="Float32" Name="rootSegmentLateralHydraulicConductivity" NumberOfComponents="1" format="ascii">
+ 1.080e-02 1.080e-02 1.080e-02 1.080e-02 1.080e-02 1.080e-02 1.080e-02 1.080e-02 1.080e-02 1.080e-02 9.874e-03 9.818e-03 3.527e-02 0.000e+00
+           </DataArray>
+           <DataArray type="Float32" Name="rootSegmentLength" NumberOfComponents="1" format="ascii">
+ 4.000e+00 4.000e+00 4.000e+00 4.000e+00 4.000e+00 4.000e+00 4.000e+00 4.000e+00 4.000e+00 4.000e+00 4.375e+00 4.400e+00 1.225e+00 0.000e+00
+           </DataArray>
+           <DataArray type="Float32" Name="rootSegmentLengthDuration" NumberOfComponents="1" format="ascii">
+ 7.840e+01 7.520e+01 7.200e+01 6.880e+01 6.560e+01 6.240e+01 5.920e+01 5.600e+01 5.280e+01 4.960e+01 5.041e+01 4.530e+01 1.094e+01 0.000e+00
+           </DataArray>
+           <DataArray type="Float32" Name="rootSegmentRadialHydraulicConductivity" NumberOfComponents="1" format="ascii">
+ 8.686e-04 8.686e-04 8.686e-04 8.686e-04 8.686e-04 8.686e-04 8.686e-04 8.686e-04 8.686e-04 8.686e-04 9.500e-04 9.554e-04 2.660e-04 0.000e+00
+           </DataArray>
+           <DataArray type="Float32" Name="rootSegmentSurfaceArea" NumberOfComponents="1" format="ascii">
+ 5.027e+00 5.027e+00 5.027e+00 5.027e+00 5.027e+00 5.027e+00 5.027e+00 5.027e+00 5.027e+00 5.027e+00 5.498e+00 5.529e+00 1.539e+00 0.000e+00
+           </DataArray>
+           <DataArray type="Float32" Name="rootSegmentVolume" NumberOfComponents="1" format="ascii">
+ 5.027e-01 5.027e-01 5.027e-01 5.027e-01 5.027e-01 5.027e-01 5.027e-01 5.027e-01 5.027e-01 5.027e-01 5.498e-01 5.529e-01 1.539e-01 0.000e+00
+           </DataArray>
+           <DataArray type="Float32" Name="rootSegmentWaterUptake" NumberOfComponents="1" format="ascii">
+ 5.405e+00 4.071e+00 3.057e+00 2.286e+00 1.703e+00 1.263e+00 9.317e-01 6.844e-01 5.006e-01 3.653e-01 2.844e-01 2.002e-01 4.417e-02 0.000e+00
+           </DataArray>
+           <DataArray type="Float32" Name="rootSegmentWaterUptakeRate" NumberOfComponents="1" format="ascii">
+ 5.251e-01 3.959e-01 2.986e-01 2.253e-01 1.700e-01 1.285e-01 9.732e-02 7.395e-02 5.653e-02 4.365e-02 3.672e-02 2.919e-02 7.323e-03 0.000e+00
+           </DataArray>
+           <DataArray type="Float32" Name="spatialRootDensity" NumberOfComponents="1" format="ascii">
+ 0.000e+00 0.000e+00 0.000e+00 0.000e+00 0.000e+00 0.000e+00 0.000e+00 0.000e+00 0.000e+00 0.000e+00 0.000e+00 0.000e+00 0.000e+00 0.000e+00
+           </DataArray>
+           <DataArray type="Float32" Name="xylemWaterPotential" NumberOfComponents="1" format="ascii">
+ -8.045e+02 -6.558e+02 -5.437e+02 -4.593e+02 -3.958e+02 -3.480e+02 -3.120e+02 -2.851e+02 -2.651e+02 -2.503e+02 -2.387e+02 -2.305e+02 -2.275e+02 0.000e+00
+           </DataArray>
+           <DataArray type="Float32" Name="lineSegmentLength" NumberOfComponents="1" format="ascii">
+ 3.999e+00 4.000e+00 4.000e+00 4.000e+00 4.000e+00 4.000e+00 4.000e+00 4.000e+00 4.000e+00 4.000e+00 4.375e+00 4.400e+00 1.225e+00 0
+           </DataArray>
+           <DataArray type="Float32" Name="nextxyz" NumberOfComponents="3" format="ascii">
+-0.047	-3.998	0.100
+-0.049	-7.998	0.106
+-0.050	-11.998	0.106
+-0.050	-15.998	0.106
+-0.050	-19.998	0.106
+-0.050	-23.998	0.106
+-0.050	-27.998	0.106
+-0.050	-31.998	0.106
+-0.050	-35.998	0.106
+-0.050	-39.998	0.106
+-0.050	-44.373	0.106
+-0.050	-48.773	0.106
+-0.050	-49.998	0.106
+-0.050	-49.998	0.106
+
+           </DataArray>
+           <DataArray type="Float32" Name="growthvector" NumberOfComponents="3" format="ascii">
+-0.047	-3.998	0.100
+-0.002	-4.000	0.005
+-0.000	-4.000	0.000
+-0.000	-4.000	0.000
+-0.000	-4.000	0.000
+-0.000	-4.000	0.000
+-0.000	-4.000	0.000
+-0.000	-4.000	0.000
+-0.000	-4.000	0.000
+-0.000	-4.000	0.000
+-0.000	-4.375	0.000
+-0.000	-4.400	0.000
+0.000	-1.225	0.000
+0.000	0.000	0.000
+
+           </DataArray>
+           <DataArray type="Float32" Name="next" NumberOfComponents="1" format="ascii">
+ 1 2 3 4 5 6 7 8 9 10 11 12 13 -1
+           </DataArray>
+           <DataArray type="Float32" Name="previous" NumberOfComponents="1" format="ascii">
+ -1 0 1 2 3 4 5 6 7 8 9 10 11 12
+           </DataArray>
+         </PointData>
+      </Piece>
+   </PolyData>
+</VTKFile>

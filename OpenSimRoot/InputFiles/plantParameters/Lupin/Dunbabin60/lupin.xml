@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	Simulation file for SimRoot 
+	RootSystem: Lupin
+	Source: Data from Vanessa Dunbabin, adapted from bean
+	Author: Jouke Postma
+-->
+<SimulationModelIncludeFile>
+	<SimulaBase name="lupin-dart-060">
+		<SimulaBase name="resources">
+		  <SimulaConstant name="CtoDryWeightRatio"  unit="100%">
+			<!--Dunbabin, unpublished: dart 004 - 40.80% -->
+			0.4080
+			</SimulaConstant>
+		
+			<SimulaConstant name="carbonCostOfNitrateUptake" unit="g/uMol">
+	<!--
+		Nielsen et al 1998 says, citing: "Respiration associated with ion uptake was estimated by multiplying the net uptake
+		rate of N by the specific cost of N uptake 1,2 mol CO2 /mol N" ; reviewed by Bouma, Broekhuysen & Veen (1996). this
+		is potato? This may be highest estimate of 1.16 below
+	-->
+	<!--
+	Bouma, Broekhuysen & Veen (1996): cost of nitrate uptake in  potato
+	0.39-0.67 mol 02/mol nitrate. But they state that these numbers are low compared to the literature which is more like 0.83-1.16 mol O2/mol nitrate
+mol/mol g/mol
+0.39	4.68
+0.67	8.04
+0.83	9.96
+1.16	13.92
+	-->
+				0.00001392			
+ 
+			</SimulaConstant>
+			<SimulaConstant name="carbonCostOfBiologicalNitrogenFixation" unit="g/uMol">
+	<!--
+		cropgro uses 7.06 g glucose/g N fixed - this is halfway values reported for soyabean by LaRue and Patterson (1981) and Ryle et al (1979) 
+		7.06 g glucose/g N = 2.8 g C / g N = 39.5 g C/ mol N 
+		0r 11000 umol N = 0.43 g C
+		
+	-->
+	<!--note this is much more than for uptake. But uptake does not include cost of root growth or cost for N assimilation?-->
+				0.0000395			
+ 
+			</SimulaConstant>
+			<SimulaConstant name="relativeRelianceOnBNF"  unit="100%">
+			<!-- Fixation as % of total N:
+            TD       Band
+#71     66%    88%
+#04     74%    84%
+#85     64%    80%
+#60     63%    66%
+ -->
+			0.65
+			</SimulaConstant>
+			<SimulaConstant name="maxCarbonAllocation2SecondaryGrowth" unit="100%">0.50</SimulaConstant>
+			<SimulaTable name_column1="time" name_column2="maxCarbonAllocation2Shoot" unit_column1="day" unit_column2="100%">
+			   0  0.95
+			   100 0.95
+		</SimulaTable>
+			<SimulaConstant name="seedSize" unit="g">
+			<!-- Dunbabin (e-mail) 
+			DArT code	Weight of 100 seeds (g)
+			4		6.5
+			60		11.2
+			71		12.7
+			85		14.1
+			-->
+			0.112
+			</SimulaConstant>
+			<SimulaTable name_column1="time since creation" unit_column1="day" name_column2="carbonAllocation2LeafsFactor" unit_column2="100%">
+			<!--as portion of the carbon allocation to the shoot-->
+				0 0.90
+				10 0.90
+				30 0.68
+				42 0.55
+				60 0.55
+			</SimulaTable>
+		</SimulaBase>
+		<SimulaBase name="shoot">
+			<SimulaConstant name="relativePotentialTranspiration"  unit="cm3/g">
+			<!--use either cm3/cm2 leaf area/day or per cm3/g C of photosynthesis-->
+			<!--sinclair et al 1975: maize: max. during day = 0.6 mg/mm2/hour = 
+			1.44 cm3/cm2/day
+			wue (measured): 7-16 10e-3 g CO2/g H2O. = 1.9-4.3  mg/ml 229-524 where maize becomes less water efficient when stomata close?
+			-->  
+			<!--
+			http://www.dse.vic.gov.au/dpi/vro/vrosite.nsf/pages/lwm_farmwater_maize
+			maize: 30 kg dm/mm = 15 kg C/M3 = 15 mg/cm3 = 66 g/cm3 
+			-->
+			<!--gaiser et al 2004: maize-cowpea system:	11.2 kg/mm	-->
+			<!--baldocchi 1994: 
+			10-15 mg C/g water during day, but during night negative numbers because of respiration
+			~ 66-100 ml/g -->
+			
+			   50  
+			</SimulaConstant>			
+			<SimulaConstant name="extinctionCoefficient"  unit="noUnit" note="KDF in lintul"> 
+				1 
+			   <!--note that around 1 means full leaf cover at lai 3, this is not for individual leaves and 0.64 is too low -->			
+			   		   <!--KDF for maize = 0.64 Heemst 1988, p22 --> 
+			   <!--this really depends on angle between the leaf surface area and the sun rays. 
+			   for high standing sun it should be higher for bean, for low higher for maize. 
+			   values between 0.4-1 are realistic see g-function in tsubo and walker 2002-->
+			   <!-- bean leaves can track the sun light -->
+			</SimulaConstant>
+			<SimulaTable name_column1="time" name_column2="specificLeafArea"  unit_column1="day" unit_column2="g/cm2" note="SLA in lintul">
+			<!--dunbabin sheet about 20 m2/kg or about = 0.005 g/cm2 --> 
+			   0 0.00523
+			   60 0.00523   
+			</SimulaTable>
+			<SimulaConstant name="lightUseEfficiency"  unit="g/uMol" note="LUE in lintul"> 
+			   0.38E-6
+			</SimulaConstant>
+			<SimulaConstant name="areaPerPlant"  unit="cm2"> 
+			   100    
+			   <!-- RJ French, K McCarthy and WL Smart, Australian Journal of Experimental Agriculture 34(4) 491 - 497  doi:10.1071/EA9940491
+			   Optimum density for lupin in western australia ranged from 14 to 138 plants/m2
+			   -->
+			</SimulaConstant>
+		</SimulaBase>
+	<SimulaBase name="defaults" objectGenerator="copyDefaults">
+		<SimulaBase name="branchList">
+		</SimulaBase>	
+		<SimulaConstant  name="density" unit="g/cm3">
+			 0.057
+		</SimulaConstant>
+	</SimulaBase>
+	<SimulaBase name="hypocotyl" objectGenerator="copyDefaults">
+		<SimulaBase name="branchList">
+		</SimulaBase>	
+		<SimulaConstant  name="density" unit="g/cm3">
+			0.057
+		</SimulaConstant>
+	</SimulaBase>
+	<SimulaBase name="primaryRoot" objectGenerator="copyDefaults">
+		<SimulaBase name="branchList">
+			<SimulaBase name="lateralPrimaryRoot">
+			  <SimulaTable name_column2="branchingFrequency" name_column1="time" unit_column2="cm" unit_column1="day">
+			  0 0.1 4 0.1 11 0.4  16 0.4 26 0.6 60 0.6
+			    <SimulaStochastic name="multiplier" unit="noUnit" distribution="lognormal" mean="1" stdev="0.3" minimum="0.05" maximum="7" />
+			  </SimulaTable> 
+				<SimulaConstant name="lengthRootTip" unit="cm"> 14 </SimulaConstant>
+			</SimulaBase>
+		</SimulaBase>
+		<SimulaConstant name="density" unit="g/cm3"> 0.057</SimulaConstant>
+	</SimulaBase>
+	<SimulaBase name="lateralPrimaryRoot" objectGenerator="copyDefaults">
+		<SimulaBase name="branchList">
+			<SimulaBase name="finelateral">
+				<SimulaConstant  name="branchingSpatialOffset" unit="cm"> 4 </SimulaConstant>
+				<SimulaStochastic name="branchingFrequency" unit="cm" distribution="lognormal" mean="1" stdev="0.2" minimum="0.5" maximum="8" />
+				<SimulaConstant name="lengthRootTip" unit="cm"> 1.0 </SimulaConstant>
+			</SimulaBase>
+		</SimulaBase>
+		<SimulaConstant name="density" unit="g/cm3"> 0.057</SimulaConstant>
+	</SimulaBase>
+	<SimulaBase name="finelateral" objectGenerator="copyDefaults">
+		<SimulaBase name="branchList">
+		</SimulaBase>
+		<SimulaConstant name="density" unit="g/cm3"> 0.057</SimulaConstant>
+	</SimulaBase>
+	<SimulaIncludeFile fileName="plantParameters/Lupin/Dunbabin60/growthrates.xml"/>
+	<SimulaIncludeFile fileName="plantParameters/Lupin/phosphorus.xml"/>
+	<SimulaIncludeFile fileName="plantParameters/Lupin/nitrate.xml"/>
+	<!--SimulaIncludeFile fileName="plantParameters/Lupin/potassium.xml"/-->
+	<SimulaIncludeFile fileName="plantParameters/Lupin/respiration.xml"/>
+	<SimulaIncludeFile fileName="plantParameters/Lupin/exudates.xml"/>
+	<SimulaIncludeFile fileName="plantParameters/Lupin/Dunbabin60/rootHairs.xml"/>
+	<SimulaIncludeFile fileName="plantParameters/Lupin/angles.xml"/>
+	<SimulaIncludeFile fileName="plantParameters/Lupin/stressImpact.xml"/>
+	<SimulaIncludeFile fileName="plantParameters/Lupin/localNutrientResponses.xml"/>
+	
+	</SimulaBase>
+</SimulationModelIncludeFile>
+

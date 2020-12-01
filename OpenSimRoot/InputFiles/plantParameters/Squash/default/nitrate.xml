@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--?xml-stylesheet type="text/xsl" href="tree-view2.xsl"? -->
+<!--
+Copyright © 2016, The Pennsylvania State University
+All rights reserved.
+
+Copyright © 2016 Forschungszentrum Jülich GmbH
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, are permitted under the GNU General Public License v3 and provided that the following conditions are met:
+1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+
+Disclaimer
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+You should have received the GNU GENERAL PUBLIC LICENSE v3 with this file in license.txt but can also be found at http://www.gnu.org/licenses/gpl-3.0.en.html
+
+ -->
+    <!--
+barberbook for nitrate:    
+Imax=1.9     
+Km= 16.1e-3 
+E=0.5       
+--> 
+<!-- three sister study with chaochun bean N content is 3.8% = 2714 umol/g . Not much different in low N study -->
+<!-- wieneke 1992 kinetics for squash seedlings: 
+
+Vmax=6.2 μmol/g FW/hour; Km=37.0 μM
+but it can go to Vmax=14 μmol/g FW/hour; Km=15.0 μM
+
+14 μmol/g FW/hour / (22 cm2/g FW) *24 = 15.3   μmol/cm2/day
+-->
+<SimulationModelIncludeFile
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="../../../../scripts/XML/SimulaXMLSchema.xsd">
+	<SimulaDirective path="resources">
+		<SimulaBase name="nitrate">
+			<!--this represents the nutrients in the seed, should be enough for the first 7 days or so -->
+			<!--this represents the nutrients in the seed, should be enough for the first 7 days or so -->
+			<!--Mosse J. 1990. Nitrogen-to-protein conversion factor for ten cereals and six legumes or oilseeds. A reappraisal of its definition and determination. Variation according to species and to seed protein content. Journal of Agricultural and Food Chemistry 38: 18-24.
+			about 1-3% N for maize and 3-5% N for bean or  sunflower. 
+			3% squash seed ~ 428 uM/seed
+			-->
+			<SimulaConstant
+				name="initialNutrientUptake"
+				unit="uMol"> 428</SimulaConstant>
+		</SimulaBase>
+	</SimulaDirective>
+	<SimulaDirective path="shoot">
+		<SimulaBase name="nitrate">
+			<SimulaConstant
+				name="leafOptimalNutrientConcentration"
+				unit="uMol/g"> 2714</SimulaConstant>
+			<SimulaConstant
+				name="stemOptimalNutrientConcentration"
+				unit="uMol/g"> 2714</SimulaConstant>
+			<SimulaConstant
+				name="leafMinimalNutrientConcentration"
+				unit="uMol/g"> 1500</SimulaConstant>
+			<SimulaConstant
+				name="stemMinimalNutrientConcentration"
+				unit="uMol/g"> 1500</SimulaConstant>
+		</SimulaBase>
+	</SimulaDirective>
+	<SimulaDirective path="hypocotyl">
+		<SimulaBase name="nitrate">
+			<SimulaConstant
+				name="optimalNutrientConcentration"
+				unit="uMol/g"> 1200</SimulaConstant>
+			<SimulaConstant
+				name="minimalNutrientConcentration"
+				unit="uMol/g"> 600</SimulaConstant>
+			<SimulaConstant
+				name="Imax"
+				unit="uMol/cm2/day"> 15.3</SimulaConstant>
+			<SimulaConstant
+				name="Km"
+				unit="uMol/ml"> 15.0e-3</SimulaConstant>
+			<SimulaConstant
+				name="Cmin"
+				unit="uMol/ml">1e-3</SimulaConstant>
+		</SimulaBase>
+	</SimulaDirective>
+	<SimulaDirective path="primaryRoot">
+		<SimulaBase name="nitrate">
+			<SimulaConstant
+				name="optimalNutrientConcentration"
+				unit="uMol/g"> 1200</SimulaConstant>
+			<SimulaConstant
+				name="minimalNutrientConcentration"
+				unit="uMol/g"> 600</SimulaConstant>
+			<SimulaConstant
+				name="Imax"
+				unit="uMol/cm2/day"> 15.3</SimulaConstant>
+			<SimulaConstant
+				name="Km"
+				unit="uMol/ml"> 15.0e-3</SimulaConstant>
+			<SimulaConstant
+				name="Cmin"
+				unit="uMol/ml">1e-3</SimulaConstant>
+		</SimulaBase>
+	</SimulaDirective>
+	<SimulaDirective path="hypocotylBornRoots">
+		<SimulaBase name="nitrate">
+			<SimulaConstant
+				name="optimalNutrientConcentration"
+				unit="uMol/g"> 1200</SimulaConstant>
+			<SimulaConstant
+				name="minimalNutrientConcentration"
+				unit="uMol/g"> 600</SimulaConstant>
+			<SimulaConstant
+				name="Imax"
+				unit="uMol/cm2/day"> 15.3</SimulaConstant>
+			<SimulaConstant
+				name="Km"
+				unit="uMol/ml"> 15.0e-3</SimulaConstant>
+			<SimulaConstant
+				name="Cmin"
+				unit="uMol/ml">1e-3</SimulaConstant>
+		</SimulaBase>
+	</SimulaDirective>
+	<SimulaDirective path="lateralPrimaryRoot">
+		<SimulaBase name="nitrate">
+			<SimulaConstant
+				name="optimalNutrientConcentration"
+				unit="uMol/g"> 1200</SimulaConstant>
+			<SimulaConstant
+				name="minimalNutrientConcentration"
+				unit="uMol/g"> 600</SimulaConstant>
+			<SimulaConstant
+				name="Imax"
+				unit="uMol/cm2/day"> 15.3</SimulaConstant>
+			<SimulaConstant
+				name="Km"
+				unit="uMol/ml"> 15.0e-3</SimulaConstant>
+			<SimulaConstant
+				name="Cmin"
+				unit="uMol/ml">1e-3</SimulaConstant>
+		</SimulaBase>
+	</SimulaDirective>
+	<SimulaDirective path="lateralPrimaryRootFastGrowing">
+		<SimulaBase name="nitrate">
+			<SimulaConstant
+				name="optimalNutrientConcentration"
+				unit="uMol/g"> 1200</SimulaConstant>
+			<SimulaConstant
+				name="minimalNutrientConcentration"
+				unit="uMol/g"> 600</SimulaConstant>
+			<SimulaConstant
+				name="Imax"
+				unit="uMol/cm2/day"> 15.3</SimulaConstant>
+			<SimulaConstant
+				name="Km"
+				unit="uMol/ml"> 15.0e-3</SimulaConstant>
+			<SimulaConstant
+				name="Cmin"
+				unit="uMol/ml">1e-3</SimulaConstant>
+		</SimulaBase>
+	</SimulaDirective>
+	<SimulaDirective path="lateralHypocotylBornRoots">
+		<SimulaBase name="nitrate">
+			<SimulaConstant
+				name="optimalNutrientConcentration"
+				unit="uMol/g"> 1200</SimulaConstant>
+			<SimulaConstant
+				name="minimalNutrientConcentration"
+				unit="uMol/g"> 600</SimulaConstant>
+			<SimulaConstant
+				name="Imax"
+				unit="uMol/cm2/day"> 15.3</SimulaConstant>
+			<SimulaConstant
+				name="Km"
+				unit="uMol/ml"> 15.0e-3</SimulaConstant>
+			<SimulaConstant
+				name="Cmin"
+				unit="uMol/ml">1e-3</SimulaConstant>
+		</SimulaBase>
+	</SimulaDirective>
+	<SimulaDirective path="finelateral">
+		<SimulaBase name="nitrate">
+			<SimulaConstant
+				name="optimalNutrientConcentration"
+				unit="uMol/g"> 1200</SimulaConstant>
+			<SimulaConstant
+				name="minimalNutrientConcentration"
+				unit="uMol/g"> 600</SimulaConstant>
+			<SimulaConstant
+				name="Imax"
+				unit="uMol/cm2/day"> 15.3</SimulaConstant>
+			<SimulaConstant
+				name="Km"
+				unit="uMol/ml"> 15.0e-3</SimulaConstant>
+			<SimulaConstant
+				name="Cmin"
+				unit="uMol/ml">1e-3</SimulaConstant>
+		</SimulaBase>
+	</SimulaDirective>
+	<SimulaDirective path="finelateralFastGrowing">
+		<SimulaBase name="nitrate">
+			<SimulaConstant
+				name="optimalNutrientConcentration"
+				unit="uMol/g"> 1200</SimulaConstant>
+			<SimulaConstant
+				name="minimalNutrientConcentration"
+				unit="uMol/g"> 600</SimulaConstant>
+			<SimulaConstant
+				name="Imax"
+				unit="uMol/cm2/day"> 15.3</SimulaConstant>
+			<SimulaConstant
+				name="Km"
+				unit="uMol/ml"> 15.0e-3</SimulaConstant>
+			<SimulaConstant
+				name="Cmin"
+				unit="uMol/ml">1e-3</SimulaConstant>
+		</SimulaBase>
+	</SimulaDirective>
+</SimulationModelIncludeFile>

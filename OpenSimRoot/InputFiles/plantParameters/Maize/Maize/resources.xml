@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--?xml-stylesheet type="text/xsl" href="tree-view2.xsl"? -->
+<!--
+Copyright © 2016, The Pennsylvania State University
+All rights reserved.
+
+Copyright © 2016 Forschungszentrum Jülich GmbH
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, are permitted under the GNU General Public License v3 and provided that the following conditions are met:
+1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+
+Disclaimer
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+You should have received the GNU GENERAL PUBLIC LICENSE v3 with this file in license.txt but can also be found at http://www.gnu.org/licenses/gpl-3.0.en.html
+
+ -->
+<SimulationModelIncludeFile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../scripts/XML/SimulaXMLSchema.xsd">
+	<SimulaBase name="resources">
+		<SimulaConstant
+			name="carbonCostOfNitrateUptake"
+			unit="g/uMol">
+			<!--
+				Nielsen et al 1998 says, citing: "Respiration associated with ion uptake was estimated by multiplying the net uptake
+				rate of N by the specific cost of N uptake 1,2 mol CO2 /mol N" ; reviewed by Bouma, Broekhuysen & Veen (1996). this
+				is potato? This may be highest estimate of 1.16 below
+			-->
+			<!--
+			Bouma, Broekhuysen & Veen (1996): cost of nitrate uptake in  potato
+			0.39-0.67 mol 02/mol nitrate. But they state that these numbers are low compared to the literature which is more like 0.83-1.16 mol O2/mol nitrate
+			mol/mol g/mol
+			0.39	4.68
+			0.67	8.04
+			0.83	9.96
+			1.16	13.92
+				-->
+			0.00001392
+		</SimulaConstant>
+		<SimulaConstant
+			name="maxCarbonAllocation2Shoot"
+			unit="100%">0.82</SimulaConstant>
+		<SimulaConstant
+			name="seedSize"
+			unit="g">
+			<!--correct a bit, not all of the seed weight carbon can be reused-->
+			<!--Zhu et al 2005: 0.15-0.4 g -->
+			0.15
+		</SimulaConstant>
+		<SimulaConstant
+			name="seedReserveDuration"
+			unit="day"
+			type="time">
+			100 <!-- never -->
+		</SimulaConstant>
+		<SimulaTable
+			name_column1="time"
+			unit_column1="day"
+			name_column2="reserveAllocationRate"
+			unit_column2="%/day"> 0.0 0.01 1.0 0.02 2.0 0.04 3.0 0.04 10.0 0.2 11 0.2 1000
+			0.2
+		</SimulaTable>
+		<SimulaTable
+			name_column1="time"
+			unit_column1="day"
+			name_column2="carbonAllocation2RootsFactor"
+			unit_column2="100%">
+			<!--as portion of the total carbon allocation-->
+			<!--
+			Drouet JL, Pagès L. 2007. GRAAL: Growth, Architecture, ALlocation: a functional-structural model to analyse the interactions between growth and assimilates allocation integrating processes from organ to whole plant. Wageningen UR Frontis Series 22: 165.
+			figure 4
+0	1
+1	1
+6	0.4
+20	0.20
+40	0.17
+80	0.17
+			This produces a gigantic plant (if there is no stress). 
+			-->
+			0 1 1 1 6 0.4 20 0.20 40 0.17 80 0.17
+		</SimulaTable>
+		<SimulaTable
+			name_column1="time"
+			unit_column1="day"
+			name_column2="carbonAllocation2LeafsFactor"
+			unit_column2="100%">
+			<!--as portion of the carbon allocation to the shoot-->
+			<!--Raul2007 at 28 days leaf/shoot biomass ratio in irrigated plants is 0.64 (range: 0.48-0.74)-->
+			<!-- see also Drouet JL, Pagès L. 2007. GRAAL:..
+			seems their allocation to stems is less.  
+			-->
+			0 1.0 10 0.7 20 0.45 33 0.42 40 0.4 60 0.4
+		</SimulaTable>
+		<SimulaConstant
+			name="CtoDryWeightRatio"
+			unit="100%">
+			<!--Zhang 2008 three sisters data: squash 0.41, maize 0.45, bean 0.45 -->
+			0.45
+		</SimulaConstant>
+	</SimulaBase>
+</SimulationModelIncludeFile>

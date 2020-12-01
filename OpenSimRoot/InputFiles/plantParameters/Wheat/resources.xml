@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright © 2016 Forschungszentrum Jülich GmbH
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, are permitted under the GNU General Public License v3 and provided that the following conditions are met:
+1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+
+Disclaimer
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+You should have received the GNU GENERAL PUBLIC LICENSE v3 with this file in license.txt but can also be found at http://www.gnu.org/licenses/gpl-3.0.en.html
+
+ -->
+<?xml-stylesheet type="text/xsl" href="XML/treeview.xsl"?>
+<SimulationModelIncludeFile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../scripts/XML/SimulaXMLSchema.xsd">
+
+		<SimulaBase name="resources">
+		<SimulaConstant name="carbonCostOfNitrateUptake" unit="g/uMol">
+			<!--
+				Nielsen et al 1998 says, citing: "Respiration associated with ion uptake was estimated by multiplying the net uptake
+				rate of N by the specific cost of N uptake 1,2 mol CO2 /mol N" ; reviewed by Bouma, Broekhuysen & Veen (1996). this
+				is potato? This may be highest estimate of 1.16 below
+			-->
+			<!--
+			Bouma, Broekhuysen & Veen (1996): cost of nitrate uptake in  potato
+			0.39-0.67 mol 02/mol nitrate. But they state that these numbers are low compared to the literature which is more like 0.83-1.16 mol O2/mol nitrate
+			mol/mol g/mol
+			0.39	4.68
+			0.67	8.04
+			0.83	9.96
+			1.16	13.92
+				-->
+						0.00001392			
+		 
+			</SimulaConstant>
+			<SimulaConstant name="maxCarbonAllocation2Shoot"  unit="100%">0.9999</SimulaConstant>
+			<SimulaConstant name="seedSize"  unit="g" >
+			<!-- barley has a 1000 kernel weight of 40-55 g at about 16% moisture, or about 0.046 g/seed 
+			vera hecht: scarlet 49 g/1000 barke 52 g/1000 (seed weight from field experiment) -->
+			
+			<!--
+			"only 0.85% of the seed dw is assumed to be available carbon"
+			"max allocation is 4% of the seed weight per day" 
+			Rickman RW, Waldman SE, Klepper B (1996) MODWht3: A Development-Driven Wheat Growth Simulation. Agronomy Journal 88: 176
+			
+			 -->
+			 
+			   0.04
+			</SimulaConstant>
+			
+			<SimulaConstant name="seedReserveDuration"  unit="day" type="Time" >
+			
+			   100 <!-- never -->
+			</SimulaConstant>
+			<!-- SimulaTable name_column1="time" unit_column1="day" name_column2="reserveAllocationRate" unit_column2="%/day"> 
+			   0.0 0.01
+			   1.0 0.02
+			   2.0 0.04
+			   3.0 0.04
+			   10.0  0.2
+			   11 0.2
+			   1000 0.2
+			</SimulaTable-->
+			<SimulaTable name_column1="time" unit_column1="day" name_column2="carbonAllocation2LeafsFactor" unit_column2="100%">
+			<!--very rough estimate based on ernst data and assuming SLA is constant at 500 cm2/g
+				0   1.0
+				10  1.0
+				20  0.5
+ 				60  0.5
+			-->
+				0   1.0
+				10  1.0
+				20  0.7
+				28  0.6
+			</SimulaTable>
+			<SimulaConstant name="CtoDryWeightRatio"  unit="100%">
+			<!--Zhang 2008 three sisters data: squash 0.41, maize 0.45, bean 0.45 -->
+			0.41
+			</SimulaConstant>
+		</SimulaBase>
+</SimulationModelIncludeFile>
+

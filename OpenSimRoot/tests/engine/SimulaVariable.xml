@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright © 2016 Forschungszentrum Jülich GmbH
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, are permitted under the GNU General Public License v3 and provided that the following conditions are met:
+1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+
+Disclaimer
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+You should have received the GNU GENERAL PUBLIC LICENSE v3 with this file in license.txt but can also be found at http://www.gnu.org/licenses/gpl-3.0.en.html
+
+ -->
+ <!-- 
+ 
+ Tests SimulaVariable with different integration functions by implementing
+ a very simple relative growthrate model.
+ The analytical solution is given in a table named "correct answer"
+ 
+  -->
+<SimulationModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../scripts/XML/SimulaXMLSchema.xsd">
+
+	<!-- variable -->
+	<SimulaBase name="ForwardEuler">
+		<SimulaDerivative name="RGRModelRate" unit="cm/day"
+			function="usePath">
+			<SimulaConstant name="path" type="string">RGRModel
+			</SimulaConstant>
+			<SimulaConstant name="multiplier">0.5</SimulaConstant>
+		</SimulaDerivative>
+		<SimulaVariable name="RGRModel" unit="cm" function="useName+Rate"
+			integrationFunction="ForwardEuler"> 1 </SimulaVariable>
+	</SimulaBase>
+	<SimulaBase name="BackwardEuler">
+		<SimulaDerivative name="RGRModelRate" unit="cm/day"
+			function="usePath">
+			<SimulaConstant name="path" type="string">RGRModel
+			</SimulaConstant>
+			<SimulaConstant name="multiplier">0.5</SimulaConstant>
+		</SimulaDerivative>
+		<SimulaVariable name="RGRModel" unit="cm" function="useName+Rate"
+			integrationFunction="BackwardEuler"> 1 </SimulaVariable>
+	</SimulaBase>
+	<SimulaBase name="Heuns">
+		<SimulaDerivative name="RGRModelRate" unit="cm/day"
+			function="usePath">
+			<SimulaConstant name="path" type="string">RGRModel
+			</SimulaConstant>
+			<SimulaConstant name="multiplier">0.5</SimulaConstant>
+		</SimulaDerivative>
+		<SimulaVariable name="RGRModel" unit="cm" function="useName+Rate"
+			integrationFunction="Heuns"> 1 </SimulaVariable>
+	</SimulaBase>
+	<SimulaBase name="RK4">
+		<SimulaDerivative name="RGRModelRate" unit="cm/day"
+			function="usePath">
+			<SimulaConstant name="path" type="string">RGRModel
+			</SimulaConstant>
+			<SimulaConstant name="multiplier">0.5</SimulaConstant>
+		</SimulaDerivative>
+		<SimulaVariable name="RGRModel" unit="cm" function="useName+Rate"
+			integrationFunction="RungeKutta4"> 1 </SimulaVariable>
+	</SimulaBase>
+	<SimulaBase name="ForwardEuler2">
+		<SimulaDerivative name="doubleModel1Rate" unit="cm/day"
+			function="usePath">
+			<SimulaConstant name="path" type="string">doubleModel2
+			</SimulaConstant>
+			<SimulaConstant name="multiplier">0.3</SimulaConstant>
+		</SimulaDerivative>
+		<SimulaDerivative name="doubleModel2Rate" unit="cm/day"
+			function="usePath">
+			<SimulaConstant name="path" type="string">doubleModel1
+			</SimulaConstant>
+			<SimulaConstant name="multiplier">0.1</SimulaConstant>
+		</SimulaDerivative>
+		<SimulaVariable name="doubleModel1" unit="cm" function="useName+Rate"
+			integrationFunction="ForwardEuler"> 5 </SimulaVariable>
+		<SimulaVariable name="doubleModel2" unit="cm" function="useName+Rate"
+			integrationFunction="ForwardEuler"> 30 </SimulaVariable>
+	</SimulaBase>
+	<SimulaBase name="RK42">
+		<SimulaDerivative name="doubleModel1Rate" unit="cm/day"
+			function="usePath">
+			<SimulaConstant name="path" type="string">doubleModel2
+			</SimulaConstant>
+			<SimulaConstant name="multiplier">0.3</SimulaConstant>
+		</SimulaDerivative>
+		<SimulaDerivative name="doubleModel2Rate" unit="cm/day"
+			function="usePath">
+			<SimulaConstant name="path" type="string">doubleModel1
+			</SimulaConstant>
+			<SimulaConstant name="multiplier">0.1</SimulaConstant>
+		</SimulaDerivative>
+		<SimulaVariable name="doubleModel1" unit="cm" function="useName+Rate"
+			integrationFunction="RungeKutta4"> 5 </SimulaVariable>
+		<SimulaVariable name="doubleModel2" unit="cm" function="useName+Rate"
+			integrationFunction="RungeKutta4"> 30 </SimulaVariable>
+	</SimulaBase>
+
+	<SimulaBase name="RK4LargeTimeStep">
+		<SimulaDerivative name="RGRModelRate" unit="cm/day"
+			function="usePath">
+			<SimulaConstant name="path" type="string">RGRModel
+			</SimulaConstant>
+			<SimulaConstant name="multiplier">0.5</SimulaConstant>
+		</SimulaDerivative>
+		<SimulaVariable name="RGRModel" unit="cm" function="useName+Rate"
+			integrationFunction="RungeKutta4" minTimeStep="2" preferedTimeStep="2"
+			maxTimeStep="2"> 1 </SimulaVariable>
+	</SimulaBase>
+	<SimulaBase name="ForwardeEulerLargeTimeStep">
+		<SimulaDerivative name="RGRModelRate" unit="cm/day"
+			function="usePath">
+			<SimulaConstant name="path" type="string">RGRModel
+			</SimulaConstant>
+			<SimulaConstant name="multiplier">0.5</SimulaConstant>
+		</SimulaDerivative>
+		<SimulaVariable name="RGRModel" unit="cm" function="useName+Rate"
+			integrationFunction="ForwardEuler" minTimeStep="2" preferedTimeStep="2"
+			maxTimeStep="2"> 1 </SimulaVariable>
+	</SimulaBase>
+
+	<SimulaTable name_column1="time" unit_column1="day"
+		name_column2="correctAnswerRGRModel" unit_column2="cm">
+		<!-- e^(0.5t) -->
+		
+		0 1
+		1 1.6487212707
+		2 2.7182818285
+		3 4.4816890703
+		4 7.3890560989
+		5 12.1824939607
+		6 20.0855369232
+		7 33.1154519587
+		8 54.5981500331
+		9 90.0171313005
+		10 148.4131591026
+
+	</SimulaTable>
+
+
+
+	<SimulaBase name="simulationControls">
+		<SimulaBase name="outputParameters">
+			<SimulaBase name="table">
+				<SimulaConstant name="run" type="bool"> 1 </SimulaConstant>
+				<SimulaConstant name="searchingDepth" type="integer"> 3
+				</SimulaConstant>
+				<SimulaConstant name="startTime" type="time"> 0.
+				</SimulaConstant>
+				<SimulaConstant name="endTime" type="time"> 10
+				</SimulaConstant>
+				<SimulaConstant name="timeInterval" type="time"> 0.1
+				</SimulaConstant>
+			</SimulaBase>
+		</SimulaBase>
+	</SimulaBase>
+
+
+</SimulationModel>
+

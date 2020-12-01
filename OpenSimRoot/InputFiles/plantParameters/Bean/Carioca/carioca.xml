@@ -1,0 +1,863 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--?xml-stylesheet type="text/xsl" href="tree-view2.xsl"? -->
+<!--
+Copyright © 2016, The Pennsylvania State University
+All rights reserved.
+
+Copyright © 2016 Forschungszentrum Jülich GmbH
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, are permitted under the GNU General Public License v3 and provided that the following conditions are met:
+1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+
+Disclaimer
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+You should have received the GNU GENERAL PUBLIC LICENSE v3 with this file in license.txt but can also be found at http://www.gnu.org/licenses/gpl-3.0.en.html
+
+ -->
+<SimulationModelIncludeFile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../scripts/XML/SimulaXMLSchema.xsd">
+	<SimulaBase name="Bean-Carioca-SimRoot4">
+		<SimulaBase name="stressImpactFactors">
+			<SimulaBase name="impactOn:photosynthesis">
+			   <!--for phosphorus this is based on Lynch et al 1991 figure 4 where severe P stress reduced photosynthesis by ~ 1/2 (2/3 if you take the extremes). The response was linear and measured in bean leaves-->
+				<SimulaTable
+					name_column2="impactBy:phosphorus"
+					name_column1="phosphorus stress factor">1 1 0 0.5</SimulaTable>
+				<SimulaTable
+					name_column2="impactBy:potassium"
+					name_column1="potassium stress factor">1 1 0 0</SimulaTable>
+				<SimulaTable
+					name_column2="impactBy:nitrate"
+					name_column1="nitrate stress factor">1 1 0.4 0.5 0 0</SimulaTable>
+			</SimulaBase>
+			<SimulaBase name="impactOn:leafAreaExpantionRate">
+				<SimulaTable
+					name_column2="impactBy:phosphorus"
+					name_column1="phosphorus stress factor">1 1 0 0</SimulaTable>
+				<SimulaTable
+					name_column2="impactBy:potassium"
+					name_column1="potassium stress factor">1 1 0 1</SimulaTable>
+				<SimulaTable
+					name_column2="impactBy:nitrate"
+					name_column1="nitrate stress factor">1 1 0.3 0.1 0 0</SimulaTable>
+			</SimulaBase>
+			<SimulaBase name="impactOn:rootPotentialLongitudinalGrowth">
+				<SimulaTable
+					name_column2="impactBy:phosphorus"
+					name_column1="phosphorus stress factor"> 1 1 0.1 1 0 1
+				</SimulaTable>
+				<SimulaTable
+					name_column2="impactBy:potassium"
+					name_column1="potassium stress factor"> 1 1 0.5 1 0 0
+				</SimulaTable>
+				<SimulaTable
+					name_column2="impactBy:nitrate"
+					name_column1="nitrate stress factor"> 1 1 0.5 1 0 0
+				</SimulaTable>
+			</SimulaBase>
+			<SimulaBase name="impactOn:rootSegmentCarbonCostOfExudates">
+				<SimulaTable
+					name_column2="impactBy:phosphorus"
+					name_column1="phosphorus stress factor">1 1 0 1</SimulaTable>
+				<SimulaTable
+					name_column2="impactBy:potassium"
+					name_column1="potassium stress factor">1 1 0 1</SimulaTable>
+				<SimulaTable
+					name_column2="impactBy:nitrate"
+					name_column1="nitrate stress factor">1 1 0 1</SimulaTable>
+			</SimulaBase>
+			<SimulaBase name="impactOn:rootSegmentRespiration">
+				<SimulaTable
+					name_column2="impactBy:phosphorus"
+					name_column1="phosphorus stress factor">1 1 0 1</SimulaTable>
+				<SimulaTable
+					name_column2="impactBy:potassium"
+					name_column1="potassium stress factor">1 1 0 0.</SimulaTable>
+				<SimulaTable
+					name_column2="impactBy:nitrate"
+					name_column1="nitrate stress factor">1 1 0 1</SimulaTable>
+			</SimulaBase>
+			<SimulaBase name="impactOn:leafRespiration">
+				<SimulaTable
+					name_column2="impactBy:phosphorus"
+					name_column1="phosphorus stress factor">1 1 0 1</SimulaTable>
+				<SimulaTable
+					name_column2="impactBy:potassium"
+					name_column1="potassium stress factor">1 1 0 1.</SimulaTable>
+				<SimulaTable
+					name_column2="impactBy:nitrate"
+					name_column1="nitrate stress factor">1 1 0 1</SimulaTable>
+			</SimulaBase>
+			<SimulaBase name="impactOn:stemRespiration">
+				<SimulaTable
+					name_column2="impactBy:phosphorus"
+					name_column1="phosphorus stress factor">1 1 0 1</SimulaTable>
+				<SimulaTable
+					name_column2="impactBy:potassium"
+					name_column1="potassium stress factor">1 1 0 1</SimulaTable>
+				<SimulaTable
+					name_column2="impactBy:nitrate"
+					name_column1="nitrate stress factor">1 1 0 1</SimulaTable>
+			</SimulaBase>
+			<SimulaBase name="impactOn:rootSegmentSecondaryGrowth">
+				<SimulaTable
+					name_column2="impactBy:phosphorus"
+					name_column1="phosphorus stress factor">1 1 0 0</SimulaTable>
+				<SimulaTable
+					name_column2="impactBy:potassium"
+					name_column1="potassium stress factor">1 1 0 0</SimulaTable>
+				<SimulaTable
+					name_column2="impactBy:nitrate"
+					name_column1="nitrate stress factor">1 1 0 0</SimulaTable>
+			</SimulaBase>
+
+<!-- these moderate the local nutrient response -->
+			<SimulaBase name="impactOn:rootPotentialLongitudinalGrowthMultiplier">
+				<SimulaTable
+					name_column2="impactBy:phosphorus"
+					name_column1="phosphorus stress factor"> 1 0 0.5 1 0 1
+				</SimulaTable>
+				<SimulaTable
+					name_column2="impactBy:potassium"
+					name_column1="potassium stress factor"> 1 0 0.5 1 0 1
+				</SimulaTable>
+				<SimulaTable
+					name_column2="impactBy:nitrate"
+					name_column1="nitrate stress factor"> 1 0 0.5 1 0 1
+				</SimulaTable>
+			</SimulaBase>
+			<SimulaBase name="impactOn:branchingFrequencyMultiplier">
+				<SimulaTable
+					name_column2="impactBy:phosphorus"
+					name_column1="phosphorus stress factor"> 1 0 0.5 1 0 1
+				</SimulaTable>
+				<SimulaTable
+					name_column2="impactBy:potassium"
+					name_column1="potassium stress factor"> 1 0 0.5 1 0 1
+				</SimulaTable>
+				<SimulaTable
+					name_column2="impactBy:nitrate"
+					name_column1="nitrate stress factor"> 1 0 0.5 1 0 1
+				</SimulaTable>
+			</SimulaBase>
+			<SimulaBase name="impactOn:gravitropismMultiplier">
+				<SimulaTable
+					name_column2="impactBy:phosphorus"
+					name_column1="phosphorus stress factor"> 1 0 0.5 1 0 1
+				</SimulaTable>
+				<SimulaTable
+					name_column2="impactBy:potassium"
+					name_column1="potassium stress factor"> 1 0 0.5 1 0 1
+				</SimulaTable>
+				<SimulaTable
+					name_column2="impactBy:nitrate"
+					name_column1="nitrate stress factor"> 1 0 0.5 1 0 1
+				</SimulaTable>
+			</SimulaBase>
+		</SimulaBase>
+		<SimulaBase name="resources">
+			<SimulaConstant
+				name="carbonCostOfNitrateUptake"
+				unit="g/uMol">
+	<!--
+		Nielsen et al 1998 says, citing: "Respiration associated with ion uptake was estimated by multiplying the net uptake
+		rate of N by the specific cost of N uptake 1,2 mol CO2 /mol N" ; reviewed by Bouma, Broekhuysen & Veen (1996). this
+		is potato? This may be highest estimate of 1.16 below
+	-->
+	<!--
+	Bouma, Broekhuysen & Veen (1996): cost of nitrate uptake in  potato
+	0.39-0.67 mol 02/mol nitrate. But they state that these numbers are low compared to the literature which is more like 0.83-1.16 mol O2/mol nitrate
+mol/mol g/mol
+0.39	4.68
+0.67	8.04
+0.83	9.96
+1.16	13.92
+	-->
+				0.00001392
+			</SimulaConstant>
+			<SimulaConstant
+				name="carbonCostOfBiologicalNitrogenFixation"
+				unit="g/uMol">
+	<!--
+		cropgro uses 7.06 g glucose/g N fixed - this is halfway values reported for soyabean by LaRue and Patterson (1981) and Ryle et al (1979) 
+		7.06 g glucose/g N = 2.8 g C / g N = 39.5 g C/ mol N 
+		0r 11000 umol N = 0.43 g C
+		
+	-->
+	<!--note this is much more than for uptake. But uptake does not include cost of root growth or cost for N assimilation?-->
+	<!-- A
+detailed analysis of all costs, including construction and mainte-
+nance of nodules as well as the metabolic cost of reduction of
+atmospheric N to ammonia, suggests that on average in legumes it
+costs 3–5 kg[C] kg [N] 1 fixed (7–12 mol CO 2 mol N 2 1 )
+(Minchin & Witty, 2005) -->
+				0.0000395
+			</SimulaConstant>
+			<SimulaConstant
+				name="relativeRelianceOnBNF"
+				unit="100%">0.30</SimulaConstant>
+			<SimulaConstant
+				name="maxCarbonAllocation2SecondaryGrowth"
+				unit="100%">0.70</SimulaConstant>
+			<SimulaConstant
+				name="maxCarbonAllocation2Shoot"
+				unit="100%">0.95</SimulaConstant>
+			<SimulaConstant
+				name="seedSize"
+				unit="g"> 
+			<!--small seeded beans about 0.3 g , but we should subtract something for reallocation is not 100%-->
+			<!-- yan et al 1995: seed size 16-63 g/100 seeds, carioca 23.8 g/100 seeds -->
+				0.20
+			</SimulaConstant>
+			<SimulaConstant
+				name="seedReserveDuration"
+				unit="day"
+				type="time"> 25
+			</SimulaConstant>
+			<SimulaTable
+				name_column1="time since creation"
+				unit_column1="day"
+				name_column2="reserveAllocationRate"
+				unit_column2="100%/day"> 
+<!--///@todo: this should go. plants can just take what they need when we have potential growth for the shoot in place.-->
+				0 0.4 2 0.4 3 0.4 4 0.4 1000 0.4
+			</SimulaTable>
+			<SimulaTable
+				name_column1="time since creation"
+				unit_column1="day"
+				name_column2="carbonAllocation2RootsFactor"
+				unit_column2="100%">
+			<!--as portion of the total carbon allocation-->
+				0 1 1 0.5 5 0.2 1000 0.2
+			</SimulaTable>
+			<SimulaTable
+				name_column1="time since creation"
+				unit_column1="day"
+				name_column2="carbonAllocation2LeafsFactor"
+				unit_column2="100%">
+			<!--as portion of the carbon allocation to the shoot-->
+				0 0.70 10 0.65 30 0.65 40 0.65 60 0.40
+				<!--stem/leaf ratio is relative constant, but after 5 weeks the first pods are formed, and currently I do not have a sink for that -->
+			</SimulaTable>
+			<SimulaConstant
+				name="CtoDryWeightRatio"
+				unit="100%">
+			<!--Zhang 2008 three sisters data: squash 0.41, maize 0.45, bean 0.45 -->
+				0.45
+			</SimulaConstant>
+		</SimulaBase>
+		<SimulaBase name="shoot">
+			<SimulaConstant
+				name="relativePotentialTranspiration"
+				unit="cm3/g">
+			<!--use either cm3/cm2 leaf area/day or per cm3/g C of photosynthesis-->
+			<!--sinclair et al 1975: maize: max. during day = 0.6 mg/mm2/hour = 
+			1.44 cm3/cm2/day
+			wue (measured): 7-16 10e-3 g CO2/g H2O. = 1.9-4.3  mg/ml 229-524 where maize becomes less water efficient when stomata close?
+			-->  
+			<!--
+			http://www.dse.vic.gov.au/dpi/vro/vrosite.nsf/pages/lwm_farmwater_maize
+			maize: 30 kg dm/mm = 15 kg C/M3 = 15 mg/cm3 = 66 g/cm3 
+			-->
+			<!--gaiser et al 2004: maize-cowpea system:	11.2 kg/mm	-->
+			<!--baldocchi 1994: 
+			10-15 mg C/g water during day, but during night negative numbers because of respiration
+			~ 66-100 ml/g -->
+				100
+			</SimulaConstant>
+			<SimulaConstant
+				name="extinctionCoefficient"
+				unit="noUnit"
+				>
+				0.9
+			   <!--note that around 1 means full leaf cover at lai 3, this is not for individual leaves and 0.64 is too low -->					   <!--KDF for maize = 0.64 Heemst 1988, p22 --> 
+			   <!--this really depends on angle between the leaf surface area and the sun rays. 
+			   for high standing sun it should be higher for bean, for low higher for maize. 
+			   values between 0.4-1 are realistic see g-function in tsubo and walker 2002-->
+			   <!-- bean leaves can track the sun light -->
+			</SimulaConstant>
+			<SimulaTable
+				name_column1="time"
+				name_column2="specificLeafArea"
+				unit_column1="day"
+				unit_column2="g/cm2"
+				>
+				0 0.0015 24 0.0025 40 0.0030 60 0.0030 
+			   <!--Bean: 40 mm2/mg (varying from 25-60) (aldefer and eagles 1976), = 0.0025 g/cm2 (range 0.0015-0.004) -->
+			   <!--HORT402 growth exp. 2009: SLA 220-250 cm2/g = 0.004-0.0045 g/cm2 including stems, this number may be dropping to half, showing effect of stems and pots-->
+			   <!--KOSHKIN, E.I., 1990. Yield-Respiration Relationships at Different Bean (Phaseolus vulgaris) Plant Densities. Ann Bot, 65(6), 581-584.
+					0.0012-0.0030 g/cm2-->
+			</SimulaTable>
+			<SimulaConstant
+				name="lightUseEfficiency"
+				unit="g/uMol"
+				> 
+			<!--0.28-0.35 from maize, in low light intensities this doesn't differ much between bean and maize-->
+			<!-- 28 umol/m2/s @ 800 umol par/m2/s =  0.42 g/umol  for bean pastenes & horton 1996 -->
+			<!-- this needs to be compensated for leaf respiration, about 8% higher than measured-->
+				0.42E-6
+			</SimulaConstant>
+			<SimulaConstant
+				name="areaPerPlant"
+				unit="cm2">
+				660    
+			   <!-- bean planting density is about 25 plants/m2= 400cm2/plant
+			        latin america it's more like 15 plants/m2 = 667 cm2/plant
+			        30 cm row spacing and 13 cm inter row spacing could be common
+			        here 30x22
+			        -->
+			</SimulaConstant>
+		</SimulaBase>
+		<SimulaBase name="hypocotyl">
+			<SimulaConstant
+				type="integer"
+				name="rootClassID"
+				>96</SimulaConstant>
+			<SimulaBase name="branchList">
+				<SimulaBase name="hypocotylBornRoots">
+			<!--these branch of the stem in the original model. We will just attached them to the top of the primary root-->
+					<SimulaConstant
+						name="branchingFrequency"
+						unit="cm"> 0.4</SimulaConstant>
+					<SimulaConstant
+						name="branchingSpatialOffset"
+						unit="cm"> 0.4</SimulaConstant>
+					<SimulaConstant
+						name="branchingDelay"
+						unit="day"> 0.</SimulaConstant>
+					<SimulaConstant
+						name="branchingTimeOffset"
+						unit="day"
+						type="time"> 10</SimulaConstant>
+				<!--SimulaConstant  name="maximumRootLengthForBranching" unit="cm"> 3 </SimulaConstant-->
+					<SimulaConstant
+						name="maxNumberOfBranches"
+						unit="#"
+						type="integer"> 10</SimulaConstant>
+					<SimulaConstant
+						name="allowBranchesToFormAboveGround"
+						type="bool">false</SimulaConstant>
+				</SimulaBase>
+				<SimulaBase name="basalWhorl1">
+					<!--these branch of the stem in the original model. We will just attached them to the top of the primary root-->
+					<SimulaConstant
+						name="branchingFrequency"
+						unit="cm"> 0.01
+					</SimulaConstant>
+					<SimulaConstant
+						name="branchingSpatialOffset"
+						unit="cm"> 0.01
+					</SimulaConstant>
+					<SimulaConstant
+						name="branchingTimeOffset"
+						unit="day"
+						type="time">
+						<!-- first whorl after 100 hours (4.167 days), second after 150 (6.25 days) hours-->
+						<!--original file first whorl after 100 hours-->
+						<!-- this is probably wrong 
+						stricktly speaking, all the primordia are already in the seed, but Kathy Brown says
+						usually the lower whorls (here number 1) develop faster initially, while the
+						higher whorls may develop stronger later on according to Michuelize -->
+						4.167
+					</SimulaConstant>
+					<SimulaConstant
+						type="integer"
+						name="maxNumberOfBranches"
+						unit="#">
+						<!--Originally 2 whorls with 8 and 6 branches respectively where created-->
+						<!--this seems to much for carioca. Changed it to 2 whorls with 4 roots-->
+						4
+					</SimulaConstant>
+					<SimulaConstant
+						type="integer"
+						name="numberOfBranches/whorl"
+						unit="#">
+						<!-- Original file reads on line 85 and 99 8 and 6-->
+						4
+					</SimulaConstant>
+				</SimulaBase>
+				<SimulaBase name="basalWhorl2">
+					<SimulaConstant
+						name="branchingFrequency"
+						unit="cm"> 0.5
+					</SimulaConstant>
+					<SimulaConstant
+						name="branchingSpatialOffset"
+						unit="cm"> 0.3
+					</SimulaConstant>
+					<SimulaConstant
+						name="branchingTimeOffset"
+						unit="day"
+						type="time"> 6.25
+					</SimulaConstant>
+					<SimulaConstant
+						type="integer"
+						name="maxNumberOfBranches"
+						unit="#"> 4
+					</SimulaConstant>
+					<SimulaConstant
+						type="integer"
+						name="numberOfBranches/whorl"
+						unit="#"> 4
+					</SimulaConstant>
+				</SimulaBase>	
+				<!--SimulaBase name="basalWhorl3">
+						<SimulaConstant  name="branchingFrequency" unit="cm">
+							 0.5
+						</SimulaConstant>
+						<SimulaConstant  name="branchingSpatialOffset" unit="cm">
+							0.6
+						</SimulaConstant>
+						<SimulaConstant  name="branchingTimeOffset" unit="day" type="time">
+							8.00
+						</SimulaConstant>
+						<SimulaConstant type="integer" name="maxNumberOfBranches" unit="#">
+							  4
+						</SimulaConstant>
+						<SimulaConstant type="integer" name="numberOfBranches/whorl" unit="#">
+							  4
+						</SimulaConstant>
+				</SimulaBase-->
+			</SimulaBase>
+			<SimulaConstant
+				name="density"
+				unit="g/cm3"> 0.094
+			</SimulaConstant>
+		</SimulaBase>
+		<SimulaBase name="primaryRoot">
+			<SimulaConstant
+				type="integer"
+				name="rootClassID"
+				 >100</SimulaConstant>
+			<SimulaBase name="branchList">
+				<SimulaBase name="lateralPrimaryRoot">
+						<!--default is one. following line changes the default to given number-->
+					<SimulaConstant
+						type="integer"
+						name="numberOfBranches/whorl"
+						unit="#">
+								<!--original file reads (line 17): 1 -->
+						1
+					</SimulaConstant>
+					<SimulaConstant
+						name="branchingFrequency"
+						unit="cm">
+						<!--original file reads (line 20): 0.5 which equals 2/cm-->
+						<!-- note that the model accepts the following units: #/cm, #/day, and the inverse cm and day apart -->
+						<!-- original file seems to low to explain lynch and van been 1993, furthermore in three sister 2008 we had 12 laterals/cm for the primary root -->
+						0.1
+					</SimulaConstant>
+					<SimulaConstant
+						name="lengthRootTip"
+						unit="cm">
+						<!--original file reads (line 19): 5-->
+						10
+					</SimulaConstant>
+					<SimulaConstant
+						name="allowBranchesToFormAboveGround"
+						type="bool">false</SimulaConstant>
+				</SimulaBase>
+				<SimulaBase name="lateralPrimaryRootFastGrowing">
+						<!--default is one. following line changes the default to given number-->
+					<SimulaConstant
+						type="integer"
+						name="numberOfBranches/whorl"
+						unit="#">
+								<!--original file reads (line 17): 1 -->
+						1
+					</SimulaConstant>
+					<SimulaStochastic
+						name="branchingFrequency"
+						unit="cm"
+						distribution="uniform"
+						minimum="1"
+						maximum="5" />
+					<SimulaConstant
+						name="lengthRootTip"
+						unit="cm">
+						<!--original file reads (line 19): 5-->
+						10
+					</SimulaConstant>
+					<SimulaConstant
+						name="allowBranchesToFormAboveGround"
+						type="bool">false</SimulaConstant>
+				</SimulaBase>
+			</SimulaBase>
+			<SimulaConstant
+				name="density"
+				unit="g/cm3"> 0.094
+			</SimulaConstant>
+		</SimulaBase>
+	<!--PARAMETERS FOR BASAL ROOTS OF WHORL 1-->
+		<SimulaBase name="basalWhorl1">
+			<SimulaConstant
+				type="integer"
+				name="rootClassID"
+				>99</SimulaConstant>
+			<SimulaBase name="branchList">
+				<SimulaBase name="lateralBasalRoots">
+					<SimulaConstant
+						name="branchingFrequency"
+						unit="cm">
+						<!-- original file line 44: 0.55  -->
+						<!-- original file seems much to low, this was very consistent 7/cm for basal roots in 2008 three sister experiment-->
+						0.15
+					</SimulaConstant>
+					<SimulaConstant
+						name="lengthRootTip"
+						unit="cm">
+						<!-- original file line 43: 10 -->
+						8
+					</SimulaConstant>
+					<SimulaConstant
+						name="allowBranchesToFormAboveGround"
+						type="bool">false</SimulaConstant>
+				</SimulaBase>
+			</SimulaBase>
+			<SimulaConstant
+				name="density"
+				unit="g/cm3"> 0.094
+			</SimulaConstant>
+		</SimulaBase>
+	<!--PARAMETERS FOR BASAL ROOTS WHORL2-->
+		<SimulaBase name="basalWhorl2">
+			<SimulaConstant
+				type="integer"
+				name="rootClassID"
+				>99</SimulaConstant>
+			<SimulaBase name="branchList">
+				<SimulaBase name="lateralBasalRoots">
+					<SimulaConstant
+						name="branchingFrequency"
+						unit="cm">
+						<!-- see whorl 1 -->
+						0.15
+					</SimulaConstant>
+					<SimulaConstant
+						name="lengthRootTip"
+						unit="cm">
+						<!-- original file line 43: 10 -->
+						10
+					</SimulaConstant>
+					<SimulaConstant
+						name="allowBranchesToFormAboveGround"
+						type="bool">false</SimulaConstant>
+				</SimulaBase>
+			</SimulaBase>
+			<SimulaConstant
+				name="density"
+				unit="g/cm3"> 0.094
+			</SimulaConstant>
+		</SimulaBase>
+		<SimulaBase name="basalWhorl3">
+			<SimulaConstant
+				type="integer"
+				name="rootClassID"
+				>99</SimulaConstant>
+			<SimulaBase name="branchList">
+				<SimulaBase name="lateralBasalRoots">
+					<SimulaConstant
+						name="branchingFrequency"
+						unit="cm">
+						<!-- see whorl 1 -->
+						0.15
+					</SimulaConstant>
+					<SimulaConstant
+						name="lengthRootTip"
+						unit="cm">
+						<!-- original file line 43: 10 -->
+						10
+					</SimulaConstant>
+					<SimulaConstant
+						name="allowBranchesToFormAboveGround"
+						type="bool">false</SimulaConstant>
+				</SimulaBase>
+			</SimulaBase>
+			<SimulaConstant
+				name="density"
+				unit="g/cm3"> 0.094
+			</SimulaConstant>
+		</SimulaBase>
+		<SimulaBase name="hypocotylBornRoots">
+			<SimulaConstant
+				type="integer"
+				name="rootClassID"
+				>98</SimulaConstant>
+			<SimulaBase name="branchList">
+				<SimulaBase name="lateralHypocotylBornRoots">
+					<SimulaConstant
+						name="branchingFrequency"
+						unit="cm"> 0.4
+					</SimulaConstant>
+					<SimulaConstant
+						name="lengthRootTip"
+						unit="cm">
+						<!-- original file line 43: 10 -->
+						10
+					</SimulaConstant>
+					<SimulaConstant
+						name="allowBranchesToFormAboveGround"
+						type="bool">false</SimulaConstant>
+				</SimulaBase>
+			</SimulaBase>
+			<SimulaConstant
+				name="density"
+				unit="g/cm3"> 0.094
+			</SimulaConstant>
+		</SimulaBase>
+		<SimulaBase name="lateralPrimaryRoot">
+			<SimulaConstant
+				type="integer"
+				name="rootClassID"
+				>97</SimulaConstant>
+			<SimulaBase name="branchList">
+				<SimulaBase name="finelateral">
+					<SimulaConstant
+						name="branchingFrequency"
+						unit="cm"> 0.5
+					</SimulaConstant>
+					<SimulaConstant
+						name="lengthRootTip"
+						unit="cm"> 4
+					</SimulaConstant>
+					<SimulaConstant
+						name="allowBranchesToFormAboveGround"
+						type="bool">false</SimulaConstant>
+				</SimulaBase>
+			</SimulaBase>
+			<SimulaConstant
+				name="density"
+				unit="g/cm3"> 0.094
+			</SimulaConstant>
+		</SimulaBase>
+		<SimulaBase name="lateralPrimaryRootFastGrowing">
+			<SimulaConstant
+				type="integer"
+				name="rootClassID"
+				>97</SimulaConstant>
+			<SimulaBase name="branchList">
+				<SimulaBase name="finelateralFastGrowing">
+					<SimulaConstant
+						name="branchingFrequency"
+						unit="cm"> 0.55
+					</SimulaConstant>
+					<SimulaConstant
+						name="lengthRootTip"
+						unit="cm">
+						<!-- original file line 43: 10 -->
+						4
+					</SimulaConstant>
+					<SimulaConstant
+						name="allowBranchesToFormAboveGround"
+						type="bool">false</SimulaConstant>
+				</SimulaBase>
+			</SimulaBase>
+			<SimulaConstant
+				name="density"
+				unit="g/cm3"> 0.094
+			</SimulaConstant>
+		</SimulaBase>
+		<SimulaBase name="lateralBasalRoots">
+			<SimulaConstant
+				type="integer"
+				name="rootClassID"
+				>97</SimulaConstant>
+			<SimulaBase name="branchList">
+				<SimulaBase name="finelateral">
+					<SimulaConstant
+						name="branchingFrequency"
+						unit="cm"> 0.5
+					</SimulaConstant>
+					<SimulaConstant
+						name="lengthRootTip"
+						unit="cm"> 4
+					</SimulaConstant>
+					<SimulaConstant
+						name="allowBranchesToFormAboveGround"
+						type="bool">false</SimulaConstant>
+				</SimulaBase>
+			</SimulaBase>
+			<SimulaConstant
+				name="density"
+				unit="g/cm3"> 0.094
+			</SimulaConstant>
+		</SimulaBase>
+		<SimulaBase name="lateralHypocotylBornRoots">
+			<SimulaConstant
+				type="integer"
+				name="rootClassID"
+				>97</SimulaConstant>
+			<SimulaBase name="branchList">
+			</SimulaBase>
+			<SimulaConstant
+				name="density"
+				unit="g/cm3"> 0.094
+			</SimulaConstant>
+		</SimulaBase>
+		<SimulaBase name="finelateral">
+			<SimulaConstant
+				type="integer"
+				name="rootClassID"
+				>97</SimulaConstant>
+			<SimulaBase name="branchList">
+				<!--there are no branches on lateral roots-->
+			</SimulaBase>
+			<SimulaConstant
+				name="density"
+				unit="g/cm3"> 0.094
+			</SimulaConstant>
+		</SimulaBase>
+		<SimulaBase name="finelateralFastGrowing">
+			<SimulaConstant
+				type="integer"
+				name="rootClassID"
+				>97</SimulaConstant>
+			<SimulaBase name="branchList">
+				<!--there are no branches on lateral roots-->
+			</SimulaBase>
+			<SimulaConstant
+				name="density"
+				unit="g/cm3"> 0.094
+			</SimulaConstant>
+		</SimulaBase>
+		<SimulaIncludeFile fileName="plantParameters/Bean/Carioca/growthrates.xml" />
+		<SimulaIncludeFile fileName="plantParameters/Bean/Carioca/phosphorus.xml" />
+		<SimulaIncludeFile fileName="plantParameters/Bean/Carioca/potassium.xml" />
+		<SimulaIncludeFile fileName="plantParameters/Bean/Carioca/nitrate.xml" />
+		<SimulaIncludeFile fileName="plantParameters/Bean/Carioca/aerenchyma.xml" />
+	<!--SimulaIncludeFile fileName="plantParameters/Bean/Carioca/etiolation.xml"/-->
+		<SimulaIncludeFile fileName="plantParameters/Bean/Carioca/respiration.xml" />
+		<!-- The exudation parameters for this species lead to a very high fraction of carbon produced being spent on exudation. Because of this, exudation has been disabled by default until new measurements of the parameters are available. Take care when enabling this again. -->
+		<!--SimulaIncludeFile fileName="plantParameters/Bean/Carioca/exudates.xml" /-->
+		<SimulaIncludeFile fileName="plantParameters/Bean/Carioca/rootHairs.xml" />
+		<SimulaIncludeFile fileName="plantParameters/Bean/Carioca/angles.xml" />
+		<SimulaIncludeFile
+			fileName="plantParameters/Bean/Carioca/includeTopBoundary.xml" />
+		<SimulaIncludeFile
+			fileName="plantParameters/Bean/Carioca/keepRootsInsideBox.xml" />
+	</SimulaBase>
+</SimulationModelIncludeFile>
+
+<!--END OF THE SIMULATION MODEL-->		
+
+
+<!--- original simroot 4 input file follows with extra comments
+
+Carioca
+2            Time step (for display?)
+320          End simulation time
+Hr.          Time units
+cm           Length Units
+25           Radius Index (Most of the time 25??)
+0.4          Voxel (Volume Element) Size
+0.0000001    Diffusion Coefficient (10E-7)
+4            Number of first root (seed in this case)
+4            Number of different root types
+
+Main_Tap_Root
+1            Main Tap Root ID number
+1            How many roots branch from it
+
+3            Root Type number 3 (Lateral roots) branchs from the main tap root.
+/1            How many "3" roots branch off at the same time
+0            Regular topology flag (set here for random angle in the GrowRootSystem function)
+/5            Length of first branching 
+/0.5          Length of braching interval 
+9999.9       Time of first braching (not used here)
+9999.9       Time branching interval (not used here)
+75           Angle of braching (this goes down or up?)
+/4            Number of poles
+0            Radial braching angle offset
+             <<-  Now there is no shift root hair factor, this only appear in more advanced versions of SimRoot
+0            Does growth stop after branching? No for this.
+0.098        Note that here we don't have a counter for several length growth parameters, there is only one and its value is 0.098
+1            Radial Growth Parameter
+1            Gravitation Factor (this root goes completely down)
+0.3          Randomness Factor (this root has a few randomic turns. Higher the value, more changes in direction. We can use values bigger than one, but
+             perhaps you don't want to see that!!) 
+
+Basal_Roots
+2            ID
+1	how many branhces – namely lateral roots
+
+3	Root Type number 3 (Lateral roots) branchs from the Basal root.
+1	How many "3" roots branch off at the same time
+0	Regular topology flag (set here for random angle in the GrowRootSystem function)
+10	Length of first branching 
+0.55	Length of braching interval 
+9999.9	Time of first braching (not used here)
+9999.9	Time branching interval (not used here)
+75	Angle of braching (this goes down or up?)
+4	Number of poles
+0	Radial braching angle offset
+	<<-  Now there is no shift root hair factor, this only appear in more advanced versions of SimRoot
+0	Does growth stop after branching? No for this.
+0.17	growthrate in cm/hour???
+1	radial growth parameter
+0.08	gravitation factor
+0.1	randomness factor
+
+Lateral_Roots
+3	ID
+0	now many branches
+
+0	does growth stop after branching?
+0.032	growth rate cm/hour?
+1	radial growth?
+0.025	gravitation?
+0.1	randomness?
+
+Stem
+4	ID
+3	number of branches, taproot, basal and ....?
+
+//==this is a block for root branches of type 1 that branch of the stem. ===//
+1	taproots that come from the stem
+1	number of taproots
+1	regular topology?
+9999.9	
+9999.9
+0.1
+9999.9
+0	angle of branching?
+2	number of poles?
+0	radial branching offset?
+
+//==this is a block for root branches of type 2 that branch of the stem. ===//
+2	branch type id (basal roots)
+8	how many branches branch off, 8 branches /whorl seems a lot
+1	regular topology
+0	length of the first branch (straight away)
+9999.9	time of first branching (not used)
+100	Time branching interval ? 
+9999.9  ???  These parameters are used to control number number of whorls that are formed. 
+90	angle of branching
+8	number of poles
+0	radial branching angle offset
+
+
+//==this is a block for root branches of type 2 that branch of the stem. ===//
+??This seems to be a repitition of the previous block. It probably creates the second whorl?
+2	
+6
+1
+0
+9999.9
+150
+9999.9
+90
+6
+0
+
+/=====these are the 5 growth parameters that are acutally associated with the stem======///
+0
+0
+0
+0
+0
+
+
+end of the original file-->

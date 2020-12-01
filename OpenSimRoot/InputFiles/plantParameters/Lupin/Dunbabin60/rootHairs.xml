@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+data from dunbabin on root hairs:
+Below is the root hair info that Yinglong measured.  I don’t think we have an idea of hairiness of different root classes by age.  The measurements below were taken on 6-day old seedlings.  We saw a big variation in hairiness in the genotypes grown in nutrient solution, but this didn’t seem to be dominated by genotype or root classes, but more by local growth conditions.  Maybe you could check the root images Yinglong and see if you can pick out any patterns in where and when the root hairs grew?
+ 
+gt=Genotype
+rhd=Root hair density (per cm root length)
+rhdst=Root hair density (per cm) Std. Error
+rhda=Root hair density (per cm2 root area)
+rhl=Root hair length (mm)
+rhlst=Root hair length Std. Error
+
+gt		rhd		rhdst	rhda		rhl		rhlst
+#004	37.6	5.96	1413.3	0.349	0.045
+#044	67.9	10.56	4606.8	0.222	0.010
+#071	62.3	14.49	3886.8	0.168	0.017
+#085	54.3	11.84	2953.7	0.159	0.010
+#060	81.9	19.19	6700.3	0.732	0.082	
+ 
+
+-->
+<SimulationModelIncludeFile>
+		<SimulaDirective path="hypocotyl">
+				<SimulaTable name_column1="time since creation" unit_column1="day" name_column2="rootHairLength" unit_column2="cm">
+					 0 0
+					 100 0
+				</SimulaTable>
+				<SimulaConstant  name="rootHairDiameter" unit="cm">5e-4</SimulaConstant>
+				<SimulaTable name_column1="time since creation" unit_column1="day" name_column2="rootHairDensity" unit_column2="#/cm2">
+					 0 0
+					 100 0
+				</SimulaTable>
+		</SimulaDirective>
+		<SimulaDirective path="primaryRoot">
+				<SimulaTable name_column1="time since creation" unit_column1="day" name_column2="rootHairLength" unit_column2="cm">
+					 0 0
+					 1 0
+					 2 0.0732
+					 100 0.0732
+				</SimulaTable>
+				<SimulaConstant  name="rootHairDiameter" unit="cm">5e-4</SimulaConstant>
+				<SimulaTable name_column1="time since creation" unit_column1="day" name_column2="rootHairDensity" unit_column2="#/cm2">
+					 0 6700
+					 10 6700
+					 30 6700
+					 100 6700
+				</SimulaTable>
+	</SimulaDirective>
+	<SimulaDirective path="lateralPrimaryRoot">
+				<SimulaTable name_column1="time since creation" unit_column1="day" name_column2="rootHairLength" unit_column2="cm">
+					 0 0
+					 1 0
+					 2 0.0732
+					 100 0.0732
+				</SimulaTable>
+				<SimulaConstant  name="rootHairDiameter" unit="cm">5e-4</SimulaConstant>
+				<SimulaTable name_column1="time since creation" unit_column1="day" name_column2="rootHairDensity" unit_column2="#/cm2">
+					 0 6700
+					 10 6700
+					 30 6700
+					 100 6700
+				</SimulaTable>
+	</SimulaDirective>
+	<SimulaDirective path="finelateral">
+				<SimulaTable name_column1="time since creation" unit_column1="day" name_column2="rootHairLength" unit_column2="cm">
+					 0 0
+					 1 0
+					 2 0.0732
+					 100 0.0732
+				</SimulaTable>
+				<SimulaConstant  name="rootHairDiameter" unit="cm">5e-4</SimulaConstant>
+				<SimulaTable name_column1="time since creation" unit_column1="day" name_column2="rootHairDensity" unit_column2="#/cm2">
+					 0 6700
+					 100 6700
+				</SimulaTable>
+	</SimulaDirective>
+</SimulationModelIncludeFile>			
+

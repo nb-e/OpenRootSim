@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<!--
+this keeps roots inside a predefined box
+-->
+<SimulationModelIncludeFile>
+	<SimulaDirective path="hypocotyl">
+		<SimulaConstant name="topBoundary" type="bool">0</SimulaConstant>
+	</SimulaDirective>
+	<SimulaDirective path="primaryRoot">
+		<SimulaConstant name="topBoundary" type="bool">1</SimulaConstant>
+	</SimulaDirective>
+	<SimulaDirective path="lateralPrimaryRoot">
+		<SimulaConstant name="topBoundary" type="bool">1</SimulaConstant>
+	</SimulaDirective>
+	<SimulaDirective path="finelateral">
+		<SimulaConstant name="topBoundary" type="bool">1</SimulaConstant>
+	</SimulaDirective>
+</SimulationModelIncludeFile>

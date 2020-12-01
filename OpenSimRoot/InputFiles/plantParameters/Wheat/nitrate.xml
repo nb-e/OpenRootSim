@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright © 2016 Forschungszentrum Jülich GmbH
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, are permitted under the GNU General Public License v3 and provided that the following conditions are met:
+1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+
+Disclaimer
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+You should have received the GNU GENERAL PUBLIC LICENSE v3 with this file in license.txt but can also be found at http://www.gnu.org/licenses/gpl-3.0.en.html
+
+ -->
+<?xml-stylesheet type="text/xsl" href="XML/treeview.xsl"?>
+<SimulationModelIncludeFile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../scripts/XML/SimulaXMLSchema.xsd">
+<!--THIS FILE IS NOT UP TO DATE, THE COMMENTS ARE CORRECT BUT THE INPUT DATA NOT-->
+<!--Simulation file for SimRoot : nitrate parameters for maize-->
+<!--
+		moshe silberbush initial estimates for maize 2008:
+Root Section	Imax			Km		Cmin	R2	
+				(pmol cm-2 s-1)	(uM)	(uM)	
+Induced by Nitrate
+Seminal Roots:
+0-4 cm	26.6cd	10.5e	2.82a	0.79
+4-8 cm	22.2d	16.1d	2.06b	0.93
+Nodal Roots:
+0-4 cm	14.0e	15.7de	2.36ab	0.82
+4-8 cm	24.3d	52.2bc	0.98c	0.90
+Lateral Roots:
+0-4 cm	14.7e	2.7f	1.70c	0.82
+
+Imax converted to uMol/cm2/day
+pmol/cm2/s umol/cm2/day
+26.6		2.3
+22.2		1.92
+14			1.21
+24.3		2.1
+14.7		1.27
+
+Barberbook:
+Imax=1.9       #6.43 nmol/m2/s= 0.643 pmol/cm2/s = 55.55 10-3 umol/cm2/day
+Km= 16.1e-3    #umol/mL
+E=0.5          #efflux 
+-->
+<!--
+mcclure 1986 Comparison of nitrate uptake kinetic parameters across maize inbred lines
+maize:  
+vmax = 0.107 μmolNO3/mg root dry weight/hr
+Km = 224 μM = 0.224 uM/ml
+
+1 cm root= 0.314 cm2 & 0.785 mg
+roots with a diameter of 1 mm have about 0.4 cm2 /mg
+imax= 0.268 umol/cm2/hr =  6.42 umol/cm2/day
+average root diameter must have been less, and so this number must be an upper limit.
+-->
+<!--
+hole et al 1990 maize
+km: 18-24 uM
+Imax: 93-159 nMol/g f.w./min = 
+-->
+<!--
+aslam et al 1992 
+barley seedlings: high for induced seedlings
+km: 6-36 uM
+Imax: 1-8.4 uMol/g/h
+-->
+<!--target concentrations:
+P. Alexandrova and D. Donov 2003 fig 1:
+  40 g/kg dropping to 15 g/kg dm after 80 days
+= 2850 uMol/g dm dropping to 1071 uMol/g dm
+whole shoot!, so should be corrected for increasing stem tissue. 
+
+Chevalier P, Schrader LE. 1977. Genotypic Differences in Nitrate Absorption and Partitioning of N Among Plant Parts in Maize. Crop Sci 17: 897-901.
+these have ears
+roots: 4-8(N-NO3)+15-19(reduced N) ug/mg = 1357-1929
+leafs: 0.4-1.1(N-NO3)+16-25(reduced N) ug/mg = 1171-1864
+stems & leaf sheats: 4.7-7.7(N-NO3)+5-7(reduced N) ug/mg = 692 - 1050
+
+-->
+<!--
+Sinclair TR, Horie T. 1989. Leaf Nitrogen, Photosynthesis, and Crop Radiation Use Efficiency: A Review. Crop Sci 29: 90-98.
+
+leaf N optimal for photosynthesis of leafs is about 1.2 g/m2, no photosynthesis at 0.3 
+
+-->
+<!-- three sister study wit chaochyn maize N content 2.6 % = 1857 umol/g (including stems)-->
+
+	<SimulaDirective path="resources">
+		<SimulaBase name="nitrate">
+			<!--this represents the nutrients in the seed, should be enough for the first 7 days or so -->
+			<!--Mosse J. 1990. Nitrogen-to-protein conversion factor for ten cereals and six legumes or oilseeds. A reappraisal of its definition and determination. Variation according to species and to seed protein content. Journal of Agricultural and Food Chemistry 38: 18-24.
+			about 1-3% N for maize and 3-5% N for bean or  sunflower. 
+			2% = 20 mg/g = 285 uM/seed
+			-->
+			<SimulaConstant name="initialNutrientUptake" unit="uMol"> 285 </SimulaConstant>
+		</SimulaBase>
+	</SimulaDirective>
+	<SimulaDirective path="shoot">
+		<SimulaBase name="nitrate">
+			<SimulaTable name_column1="time" name_column2="leafOptimalNutrientConcentration" unit_column1="day"
+				unit_column2="uMol/g"
+			> 0 2500 80 1500</SimulaTable>
+			<SimulaTable name_column1="time" name_column2="leafMinimalNutrientConcentration" unit_column1="day"
+				unit_column2="uMol/g"
+			> 0 1200 80 800</SimulaTable>
+			<SimulaConstant name="stemOptimalNutrientConcentration" unit="uMol/g"> 800</SimulaConstant>
+			<SimulaConstant name="stemMinimalNutrientConcentration" unit="uMol/g"> 400</SimulaConstant>
+		</SimulaBase>
+	</SimulaDirective>
+	<SimulaDirective path="defaults">
+		<SimulaBase name="nitrate">
+			<SimulaTable name_column1="time since creation" unit_column1="day" name_column2="Imax" unit_column2="uMol/cm2/day"> 
+			0 2. 40 2.</SimulaTable>
+			<SimulaTable name_column1="time since creation" unit_column1="day" name_column2="Km" unit_column2="uMol/ml"> 
+			0 15e-3 40 15e-3</SimulaTable>
+			<SimulaConstant name="Cmin" unit="uMol/ml">1e-3</SimulaConstant>
+			<SimulaConstant name="optimalNutrientConcentration" unit="uMol/g"> 1200</SimulaConstant>
+			<SimulaConstant name="minimalNutrientConcentration" unit="uMol/g"> 600</SimulaConstant>
+		</SimulaBase>
+	</SimulaDirective>
+
+</SimulationModelIncludeFile>

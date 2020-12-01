@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright © 2016 Forschungszentrum Jülich GmbH
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, are permitted under the GNU General Public License v3 and provided that the following conditions are met:
+1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+
+Disclaimer
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+You should have received the GNU GENERAL PUBLIC LICENSE v3 with this file in license.txt but can also be found at http://www.gnu.org/licenses/gpl-3.0.en.html
+
+ -->
+<SimulationModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../scripts/XML/SimulaXMLSchema.xsd">
+<!-- 
+Runs a single instance of the Barber-Cushman model for
+a single root node. The model is solved in two different
+ways, once using Crank-Nicolson, as in the original 
+barber paper, and once using an explicit method
+as implemented by Christian Kuppe. Results are written
+to file as a matrix, and can be compared to
+each other and to a R based implementation of the crank
+nicolson model. To compare, run the Barber-Cushma.R 
+which runs the R model and plots the results of all three 
+runs (R, SimRoot CN and SimRoot Expl.)
+  
+ -->
+	<SimulaConstant name="plantType" type="string">myPlant
+	</SimulaConstant>
+	<SimulaBase name="plantPosition">
+		<SimulaBase name="root">
+			<SimulaConstant name="rootType" type="string">myRoot
+			</SimulaConstant>
+			<SimulaBase name="dataPoints">
+				<SimulaBase name="dataPoint00000" startTime="0.0">
+					<SimulaConstant name="rootDiameter" unit="cm"> 0.02
+					</SimulaConstant>
+					<SimulaConstant name="rootSegmentLength" unit="cm"> 100
+					</SimulaConstant>
+					<SimulaTable name_column1="day" unit_column1="day"
+						name_column2="rootWaterUptake" unit_column2="cm3/cm">
+						<!-- model divides this by r0 and uses getRate on this 
+						86400(seconds/day)*1e-6(v0)*0.01(r0)*100(days) = 0.0864 -->
+						0 0
+						100 0.0864
+					</SimulaTable>
+					<SimulaConstant name="rootHairLength" unit="cm"> 3e-2
+					</SimulaConstant>
+					<SimulaConstant name="rootHairDiameter" unit="cm"> 1e-3
+					</SimulaConstant>
+					<SimulaConstant name="rootHairDensity" unit="#/cm"> 1000
+					</SimulaConstant>
+					<SimulaBase name="phosphorus1983">
+						<SimulaVariable name="rootSegmentNutrientUptakeCrankNicolson"
+							unit="uMol" preferedTimeStep="0.01" minTimeStep="0.01"
+							maxTimeStep="0.01" integrationFunction="BackwardEuler"
+							function="barber_cushman_1981_nutrient_uptake" />
+						<SimulaVariable name="rootSegmentNutrientUptakeExplicit"
+							unit="uMol" preferedTimeStep="0.01" minTimeStep="0.01"
+							maxTimeStep="0.01" integrationFunction="BarberCushmanSolver"
+							function="barber_cushman_1981_nutrient_uptake_explicit" />
+						<SimulaVariable name="rootSegmentNutrientUptakeExplicitOde23"
+							unit="uMol" preferedTimeStep="0.01" minTimeStep="0.01"
+							maxTimeStep="0.01" integrationFunction="BarberCushmanSolverOde23"
+							function="barber_cushman_1981_nutrient_uptake_ode23" />
+					</SimulaBase>
+				</SimulaBase>
+			</SimulaBase>
+		</SimulaBase>
+	</SimulaBase>
+
+
+	<SimulaBase name="rootTypeParameters">
+		<SimulaBase name="myPlant">
+			<SimulaBase name="myRoot">
+				<SimulaBase name="phosphorus1983">
+					<SimulaConstant name="Imax" unit="uMol/cm2/day"> 0.0864
+					</SimulaConstant>
+					<SimulaConstant name="Km" unit="uMol/ml"> 0.003
+					</SimulaConstant>
+					<SimulaConstant name="Cmin" unit="uMol/ml"> 0.3e-3
+					</SimulaConstant>
+					<SimulaConstant name="competition" type="bool"> true
+					</SimulaConstant>
+					<SimulaConstant name="writeFiles" type="bool"> true
+					</SimulaConstant>
+				</SimulaBase>
+			</SimulaBase>
+		</SimulaBase>
+	</SimulaBase>
+
+	<SimulaBase name="environment">
+		<SimulaBase name="soil">
+			<SimulaBase name="phosphorus1983">
+				<SimulaConstant name="concentration" unit="uMol/ml"> 1.55e-2
+				</SimulaConstant>
+				<SimulaConstant name="diffusionCoefficient" unit="cm2/day">
+					0.0001728
+				</SimulaConstant>
+				<SimulaConstant name="bufferPower" unit="noUnit"> 167
+				</SimulaConstant>
+				<SimulaConstant name="r1-r0" unit="cm">
+					0.29
+				</SimulaConstant>
+				<SimulaConstant name="increaseTimeStep">1.1
+				</SimulaConstant>
+			</SimulaBase>
+		</SimulaBase>
+	</SimulaBase>
+
+
+	<SimulaBase name="simulationControls">
+		<SimulaBase name="outputParameters">
+			<SimulaBase name="table">
+				<SimulaConstant name="run" type="bool"> 1 </SimulaConstant>
+				<SimulaConstant name="searchingDepth" type="integer"> 10
+				</SimulaConstant>
+				<SimulaConstant name="startTime" type="time"> 0.
+				</SimulaConstant>
+				<SimulaConstant name="endTime" type="time"> 30
+				</SimulaConstant>
+				<SimulaConstant name="timeInterval" type="time"> 0.1
+				</SimulaConstant>
+				<SimulaConstant name="skipTheseVariables" type="string">
+					rootTypeParameters, environment, rootWaterUptake,
+					rootSegmentLength, rootDiameter
+				</SimulaConstant>
+			</SimulaBase>
+		</SimulaBase>
+	</SimulaBase>
+
+
+
+
+</SimulationModel>

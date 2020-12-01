@@ -1,0 +1,503 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--?xml-stylesheet type="text/xsl" href="tree-view2.xsl"? -->
+<!--
+Copyright © 2016, The Pennsylvania State University
+All rights reserved.
+
+Copyright © 2016 Forschungszentrum Jülich GmbH
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, are permitted under the GNU General Public License v3 and provided that the following conditions are met:
+1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+
+Disclaimer
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+You should have received the GNU GENERAL PUBLIC LICENSE v3 with this file in license.txt but can also be found at http://www.gnu.org/licenses/gpl-3.0.en.html
+
+ -->
+
+<!-- miller 2003 - sand culture data: after 21 days beans had between 
+35-76 meters of adventitious root length (HP) and 50-140 m of basal root length
+total 120-170 m without the primary root system. THis seems rather a lot. -->
+
+	<!-- Growthrate parameters for bean	-->
+<SimulationModelIncludeFile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../scripts/XML/SimulaXMLSchema.xsd">
+	<SimulaDirective path="shoot">
+		<SimulaTable
+			name_column1="time"
+			name_column2="leafAreaExpantionRate"
+			unit_column1="day"
+			unit_column2="cm2/day">
+			<!--
+				bean data based on three sisters study and lynch et al 1991. I fitted a bolzman sigmoid equation and than took the
+				derivative of that.
+			-->
+			0 0 2 0 3 3 4 5 6 5 7.04 3.91 7.29 4.21 7.55 4.52 7.8 4.85 8.05 5.19
+			8.3 5.54 8.56 5.92 8.81 6.31 9.06 6.72 9.31 7.14 9.57 7.59 9.82 8.06
+			10.07 8.55 10.32 9.06 10.58 9.59 10.83 10.15 11.08 10.74 11.33 11.35
+			11.59 11.99 11.84 12.66 12.09 13.36 12.34 14.09 12.6 14.85 12.85
+			15.65 13.1 16.49 13.35 17.37 13.61 18.28 13.86 19.24 14.11 20.24
+			14.36 21.29 14.62 22.39 14.87 23.53 15.12 24.73 15.37 25.98 15.63
+			27.3 15.88 28.67 16.13 30.1 16.38 31.6 16.64 33.17 16.89 34.81 17.14
+			36.53 17.39 38.32 17.65 40.2 17.9 42.16 18.15 44.21 18.4 46.36 18.66
+			48.61 18.91 50.96 19.16 53.41 19.41 55.98 19.67 58.67 19.92 61.48
+			20.17 64.42 20.42 67.49 20.68 70.71 20.93 74.07 21.18 77.59 21.43
+			81.27 21.69 85.12 21.94 89.14 22.19 93.35 22.44 97.75 22.7 102.35
+			22.95 107.17 23.2 112.2 23.45 117.47 23.71 122.98 23.96 128.74 24.21
+			134.76 24.46 141.06 24.72 147.65 24.97 154.55 25.29 156.06 25.66
+			154.09 26.02 152.11 26.38 150.11 26.74 148.1 27.1 146.08 27.46 144.05
+			27.83 142.02 28.19 139.98 28.55 137.94 28.91 135.9 29.27 133.85 29.63
+			131.81 29.99 129.77 30.36 127.73 30.72 125.7 31.08 123.67 31.44
+			121.65 31.8 119.64 32.16 117.64 32.52 115.65 32.89 113.67 33.25
+			111.71 33.61 109.75 33.97 107.81 34.33 105.89 34.69 103.98 35.06
+			102.09 35.42 100.21 35.78 98.36 36.14 96.52 36.5 94.7 36.86 92.9
+			37.22 91.12 37.59 89.36 37.95 87.62 38.31 85.9 38.67 84.2 39.03 82.53
+			39.39 80.87 39.76 79.24 40.12 77.63 40.48 76.05 40.84 74.49 41.2
+			72.95 41.56 71.43 41.92 69.94 42.29 68.47 42.65 67.02 43.01 65.59
+			43.37 64.19 43.73 62.82 44.09 61.46 44.45 60.13 44.82 58.82 45.18
+			57.53 45.54 56.27 45.9 55.03 46.26 53.81 46.62 52.61 46.99 51.44
+			47.35 50.29 47.71 49.16 48.07 48.05 48.43 46.96 48.79 45.89 49.15
+			44.84 49.52 43.82 49.88 42.81 50.24 41.83 50.6 40.86 50.96 39.91
+			51.32 38.99 51.69 38.08 52.05 37.19 52.41 36.32 52.77 35.47 53.13
+			34.63 53.49 33.82 53.85 33.02 54.22 32.23 54.58 31.47 54.94 30.72
+			55.3 29.99 55.66 29.27 56.02 28.57 56.38 27.88 56.75 27.21 57.11
+			26.56 57.47 25.92 57.83 25.29 58.19 24.68 58.55 24.08 58.92 23.49
+			59.28 22.92 59.64 22.36
+		</SimulaTable>
+	</SimulaDirective>
+	<SimulaDirective path="hypocotyl">
+		<SimulaTable
+			name_column1="time since creation"
+			unit_column1="day"
+			name_column2="growthRate"
+			unit_column2="cm/day"> 0 1 1 3 2 3 3 1 3.3 0.5 4 0.2 5 0 1000 0
+		</SimulaTable>
+		<SimulaConstant
+			name="diameter"
+			unit="cm"> 0.4
+		</SimulaConstant>
+		<SimulaTable
+			name_column1="root segment age"
+			name_column2="secondaryGrowthRate"
+			unit_column1="day"
+			unit_column2="cm/day">
+<!--this will add 0.1 cm after 43 days, to adjust use scaling factor-->
+			0 0.00000 4 0.00050 5 0.00100 7 0.00150 11 0.00200 13 0.00230 18
+			0.00260 24 0.00285 29 0.00300 100 0.00300
+		</SimulaTable>
+		<SimulaTable
+			name_column1="distance to base of the root"
+			name_column2="secondaryGrowthScalingFactor"
+			unit_column1="cm"
+			unit_column2="100%"> 0 7 2 7 10 7 1000 7
+		</SimulaTable>
+	</SimulaDirective>
+	<SimulaDirective path="primaryRoot">
+		<SimulaTable
+			name_column1="time since creation"
+			unit_column1="day"
+			name_column2="growthRate"
+			unit_column2="cm/day">
+			<!--original file (line 28): 0.098 cm/hour = 2.352 cm/day-->
+			<!--Study with anan fita fernandez: primary root stayed shorter than basal root, maybe 2/3 - but other studies they were just the same length -->
+			<!--lynch and been 1993: 33cm in 14 days=2.357, this may be the source of the original file -->
+			0 2.357 10 2.357 15 2.357 250 2.357
+		</SimulaTable>
+		<!--SimulaStochastic name="longitudinalGrowthRateMultiplier" unit="cm" distribution="uniform" minimum="0.9"
+			maximum="1.1" /-->
+		<SimulaConstant
+			name="diameter"
+			unit="cm">
+		<!--miller et al 2003 primary root is .8-1 mm thick-->
+			0.09
+		</SimulaConstant>
+		<SimulaTable
+			name_column1="root segment age"
+			name_column2="secondaryGrowthRate"
+			unit_column1="day"
+			unit_column2="cm/day">
+<!--pictures of laury show a 5 times increase in diameter for dor364, given our scaling factor I guess it should be relative linear in time -->
+			0 0.00000 4 0.00050 5 0.00100 7 0.00150 11 0.00200 13 0.00230 18
+			0.00260 24 0.00285 29 0.00300 1000 0.00300
+		</SimulaTable>
+		<SimulaTable
+			name_column1="distance to base of the root"
+			name_column2="secondaryGrowthScalingFactor"
+			unit_column1="cm"
+			unit_column2="100%">
+		<!--make it fit roughly the hypocotyl if possible -->
+			0 4 0.5 4 1 4. 20 4 40 2 1000 2
+		</SimulaTable>
+	</SimulaDirective>
+	<SimulaDirective path="basalWhorl1">
+		<SimulaTable
+			name_column1="time since creation"
+			unit_column1="day"
+			name_column2="growthRate"
+			unit_column2="cm/day">
+			<!-- orignal file line 52: 0.17 presumably in cm/hour = 4.08-->
+			<!-- Jonathan ciat field observations, three sister field observations, basals can row at least 2 meter long-->
+			<!-- 4.08 seems high, maybe hydroponics based, estimate to match lynch and been 1993 would be more like 3
+			but this could also be related to number of whorls?-->
+			0 0.1 3 4 10 4 15 3 25 2.352 35 2.352 40 0 1000 0
+		</SimulaTable>
+		<SimulaConstant
+			name="diameter"
+			unit="cm">
+		<!--miller et al 2003 basal roots 0.65-0.72 mm thick-->
+		<!--radius? 0.3 mm for apical, 0.7 mm for middle section of the root, see images laury for etiolation -->
+			0.068
+		</SimulaConstant>
+		<SimulaTable
+			name_column1="root segment age"
+			name_column2="secondaryGrowthRate"
+			unit_column1="day"
+			unit_column2="cm/day"> 0 0.00000 2 0.00000 4 0.00050 5 0.00100 7 0.00150 11
+			0.00200 13 0.00230 18 0.00260 24 0.00285 29 0.00300 100 0.00300
+		</SimulaTable>
+		<SimulaTable
+			name_column1="distance to base of the root"
+			name_column2="secondaryGrowthScalingFactor"
+			unit_column1="cm"
+			unit_column2="100%"> 0 0.7 20 0.7 40 0.4 1000 0.4
+		</SimulaTable>
+	</SimulaDirective>
+	<SimulaDirective path="basalWhorl2">
+		<SimulaTable
+			name_column1="time since creation"
+			unit_column1="day"
+			name_column2="growthRate"
+			unit_column2="cm/day">
+			<!-- orignal file line 52: 0.17 presumably in cm/hour-->
+			0 0.1 3 4 10 4 15 3 25 2.352 35 2.352 40 0 1000 0
+		</SimulaTable>
+		<SimulaConstant
+			name="diameter"
+			unit="cm">
+		<!--miller et al 2003 basal roots 0.65-0.72 mm thick-->
+			0.068
+		</SimulaConstant>
+		<SimulaTable
+			name_column1="root segment age"
+			name_column2="secondaryGrowthRate"
+			unit_column1="day"
+			unit_column2="cm/day"> 0 0.00000 2 0.00000 4 0.00050 5 0.00100 7 0.00150 11
+			0.00200 13 0.00230 18 0.00260 24 0.00285 29 0.00300 100 0.00300
+		</SimulaTable>
+		<SimulaTable
+			name_column1="distance to base of the root"
+			name_column2="secondaryGrowthScalingFactor"
+			unit_column1="cm"
+			unit_column2="100%"> 0 0.7 20 0.7 40 0.4 1000 0.4
+		</SimulaTable>
+	</SimulaDirective>
+	<SimulaDirective path="basalWhorl3">
+		<SimulaTable
+			name_column1="time since creation"
+			unit_column1="day"
+			name_column2="growthRate"
+			unit_column2="cm/day">
+			<!-- orignal file line 52: 0.17 presumably in cm/hour-->
+			0 0.1 2 4 10 4 15 3 25 2.352 35 2.352 40 0 1000 0
+		</SimulaTable>
+		<SimulaConstant
+			name="diameter"
+			unit="cm">
+		<!--miller et al 2003 basal roots 0.65-0.72 mm thick-->
+			0.068
+		</SimulaConstant>
+		<SimulaTable
+			name_column1="root segment age"
+			name_column2="secondaryGrowthRate"
+			unit_column1="day"
+			unit_column2="cm/day"> 0 0.00000 4 0.00050 5 0.00100 7 0.00150 11 0.00200 13
+			0.00230 18 0.00260 24 0.00285 29 0.00300 100 0.00300
+		</SimulaTable>
+		<SimulaTable
+			name_column1="distance to base of the root"
+			name_column2="secondaryGrowthScalingFactor"
+			unit_column1="cm"
+			unit_column2="100%"> 0 0.7 20 0.7 40 0.4 1000 0.4
+		</SimulaTable>
+	</SimulaDirective>
+	<SimulaDirective path="hypocotylBornRoots">
+		<SimulaTable
+			name_column1="time since creation"
+			unit_column1="day"
+			name_column2="growthRate"
+			unit_column2="cm/day"> 0 1 25 0.8 35 0 60 0
+		</SimulaTable>
+		<SimulaStochastic
+			name="longitudinalGrowthRateMultiplier"
+			unit="cm"
+			distribution="normal"
+			mean="1"
+			stdev="0.1"
+			minimum="0.5"
+			maximum="1.5" />
+		<SimulaConstant
+			name="diameter"
+			unit="cm">
+			<!--miller et al 2003 has 0.64 mm for young hypocotyl born roots -->
+			0.064
+		</SimulaConstant>
+		<SimulaTable
+			name_column1="root segment age"
+			name_column2="secondaryGrowthRate"
+			unit_column1="day"
+			unit_column2="cm/day">
+		<!--this will add 1 mm in 40 days. use scaling factor to adjust-->
+			0 0.00000 4 0.00050 5 0.00100 7 0.00150 11 0.00200 13 0.00230 18
+			0.00260 24 0.00285 29 0.00300 100 0.00300
+		</SimulaTable>
+		<SimulaTable
+			name_column1="distance to base of the root"
+			name_column2="secondaryGrowthScalingFactor"
+			unit_column1="cm"
+			unit_column2="100%"> 0 0.6 50 0.2 1000 0.2
+		</SimulaTable>
+	</SimulaDirective>
+	<SimulaDirective path="lateralPrimaryRoot">
+<!-- walk et al 2006
+Tap and basal
+lateral growth rates were nonzero for 288 and
+180 h, respectively. Adventitious lateral and 2nd
+order tap and basal lateral growth rates were nonzero
+for 72 h.
+-->
+		<SimulaTable
+			name_column1="time since creation"
+			unit_column1="day"
+			name_column2="growthRate"
+			unit_column2="cm/day">
+			<!-- original file line 62: 0.032 cm/hour 
+			     walk et al 2006 also reports about cm/day for -->
+			0 0.768 2 0.768 4 0.768 6 0.768 10 0 1000 0
+		</SimulaTable>
+		<SimulaStochastic
+			name="longitudinalGrowthRateMultiplier"
+			unit="cm"
+			distribution="normal"
+			mean="1"
+			stdev="0.1"
+			minimum="0.8"
+			maximum="1.2" />
+		<SimulaConstant
+			name="diameter"
+			unit="cm">
+			<!-- NOT UNDERSTOOD FROM ORIGINAL FILE-->
+			<!--laterals are about a 1/3 mm jouke pot observation growth experiment 2009-->
+			0.03
+		</SimulaConstant>
+		<SimulaTable
+			name_column1="root segment age"
+			name_column2="secondaryGrowthRate"
+			unit_column1="day"
+			unit_column2="cm/day">
+		<!--this will add 1 mm in 40 days. use scaling factor to adjust-->
+			0 0.00000 4 0.00050 5 0.00100 7 0.00150 11 0.00200 13 0.00230 18
+			0.00260 24 0.00285 29 0.00300 100 0.00300
+		</SimulaTable>
+		<SimulaTable
+			name_column1="distance to base of the root"
+			name_column2="secondaryGrowthScalingFactor"
+			unit_column1="cm"
+			unit_column2="100%"> 0 0.1 50 0.1 1000 0.1
+		</SimulaTable>
+	</SimulaDirective>
+	<SimulaDirective path="lateralPrimaryRootFastGrowing">
+<!-- hydroponics observations
+these are very long laterals with a lot of branches. Grow nearly as fast as the primary root up to 30-40 cm
+-->
+		<SimulaTable
+			name_column1="time since creation"
+			unit_column1="day"
+			name_column2="growthRate"
+			unit_column2="cm/day">
+			<!-- original file line 62: 0.032 cm/hour 
+			     walk et al 2006 also reports about cm/day for -->
+			0 0.768 2 0.768 15 0.768 20 0 1000 0
+		</SimulaTable>
+		<SimulaStochastic
+			name="longitudinalGrowthRateMultiplier"
+			unit="cm"
+			distribution="normal"
+			mean="1.6"
+			stdev="0.2"
+			minimum="1.4"
+			maximum="1.8" />
+		<SimulaConstant
+			name="diameter"
+			unit="cm">
+			<!-- NOT UNDERSTOOD FROM ORIGINAL FILE-->
+			<!--laterals are about a 1/3 mm jouke pot observation growth experiment 2009-->
+			0.03
+		</SimulaConstant>
+		<SimulaTable
+			name_column1="root segment age"
+			name_column2="secondaryGrowthRate"
+			unit_column1="day"
+			unit_column2="cm/day">
+		<!--this will add 1 mm in 40 days. use scaling factor to adjust-->
+			0 0.00000 4 0.00050 5 0.00100 7 0.00150 11 0.00200 13 0.00230 18
+			0.00260 24 0.00285 29 0.00300 100 0.00300
+		</SimulaTable>
+		<SimulaTable
+			name_column1="distance to base of the root"
+			name_column2="secondaryGrowthScalingFactor"
+			unit_column1="cm"
+			unit_column2="100%"> 0 0.3 50 0.2 1000 0.2
+		</SimulaTable>
+	</SimulaDirective>
+	<SimulaDirective path="lateralBasalRoots">
+<!-- walk et al 2006
+Tap and basal
+lateral growth rates were nonzero for 288 and
+180 h, respectively. Adventitious lateral and 2nd
+order tap and basal lateral growth rates were nonzero
+for 72 h.
+-->
+		<SimulaTable
+			name_column1="time since creation"
+			unit_column1="day"
+			name_column2="growthRate"
+			unit_column2="cm/day">
+			<!-- original file line 62: 0.032 cm/hour 
+			     walk et al 2006 also reports about cm/day for -->
+			0 0.768 2 0.768 4 0.768 6 0.2 10 0 1000 0
+		</SimulaTable>
+		<SimulaStochastic
+			name="longitudinalGrowthRateMultiplier"
+			unit="cm"
+			distribution="normal"
+			mean="0.8"
+			stdev="0.1"
+			minimum="0.6"
+			maximum="1.0" />
+		<SimulaConstant
+			name="diameter"
+			unit="cm">
+			<!-- NOT UNDERSTOOD FROM ORIGINAL FILE-->
+			<!--laterals are about a 1/3 mm jouke pot observation growth experiment 2009-->
+			0.03
+		</SimulaConstant>
+	</SimulaDirective>
+	<SimulaDirective path="lateralHypocotylBornRoots">
+<!-- walk et al 2006
+Tap and basal
+lateral growth rates were nonzero for 288 and
+180 h, respectively. Adventitious lateral and 2nd
+order tap and basal lateral growth rates were nonzero
+for 72 h.
+-->
+		<SimulaTable
+			name_column1="time since creation"
+			unit_column1="day"
+			name_column2="growthRate"
+			unit_column2="cm/day">
+			<!-- original file line 62: 0.032 cm/hour 
+			     walk et al 2006 also reports about cm/day for -->
+			0 0.768 2 0.768 4 0.768 6 0.2 10 0. 1000 0.
+		</SimulaTable>
+		<SimulaStochastic
+			name="longitudinalGrowthRateMultiplier"
+			unit="cm"
+			distribution="normal"
+			mean="0.8"
+			stdev="0.1"
+			minimum="0.6"
+			maximum="1.0" />
+		<SimulaConstant
+			name="diameter"
+			unit="cm">
+			<!-- NOT UNDERSTOOD FROM ORIGINAL FILE-->
+			<!--laterals are about a 1/3 mm jouke pot observation growth experiment 2009-->
+			0.03
+		</SimulaConstant>
+	</SimulaDirective>
+	<SimulaDirective path="finelateral">
+		<SimulaTable
+			name_column1="time since creation"
+			unit_column1="day"
+			name_column2="growthRate"
+			unit_column2="cm/day">
+			<!-- get 2-3 cm long at least-->
+			0 0.2 3 0.2 5 0 100 0
+		</SimulaTable>
+		<SimulaStochastic
+			name="longitudinalGrowthRateMultiplier"
+			unit="cm"
+			distribution="normal"
+			mean="0.6"
+			stdev="0.1"
+			minimum="0.3"
+			maximum="1." />
+		<SimulaConstant
+			name="diameter"
+			unit="cm">
+			<!-- NOT UNDERSTOOD FROM ORIGINAL FILE-->
+			0.01
+		</SimulaConstant>
+	</SimulaDirective>
+	<SimulaDirective path="finelateralFastGrowing">
+		<SimulaTable
+			name_column1="time since creation"
+			unit_column1="day"
+			name_column2="growthRate"
+			unit_column2="cm/day">
+			<!-- get 2-3 cm long at least-->
+			0 0.5 1 0.8 2 1 3 1 4 0 100 0
+		</SimulaTable>
+		<SimulaStochastic
+			name="longitudinalGrowthRateMultiplier"
+			unit="cm"
+			distribution="normal"
+			mean="0.6"
+			stdev="0.1"
+			minimum="0.3"
+			maximum="1." />
+		<SimulaConstant
+			name="diameter"
+			unit="cm">
+			<!-- NOT UNDERSTOOD FROM ORIGINAL FILE-->
+			0.015
+		</SimulaConstant>
+	</SimulaDirective>
+</SimulationModelIncludeFile>
+
+	<!--END OF THE SIMULATION MODEL-->
+	<!--
+		- original file follows with extra comments Carioca 2 Time step (for display?) 320 End simulation time Hr. Time units
+		cm Length Units 25 Radius Index (Most of the time 25??) 0.4 Voxel (Volume Element) Size 0.0000001 Diffusion
+		Coefficient (10E-7) 4 Number of first root (seed in this case) 4 Number of different root types Main_Tap_Root 1 Main
+		Tap Root ID number 1 How many roots branch from it 3 Root Type number 3 (Lateral roots) branchs from the main tap
+		root. /1 How many "3" roots branch off at the same time 0 Regular topology flag (set here for random angle in the
+		GrowRootSystem function) /5 Length of first branching /0.5 Length of braching interval 9999.9 Time of first braching
+		(not used here) 9999.9 Time branching interval (not used here) 75 Angle of braching (this goes down or up?) /4 Number
+		of poles 0 Radial braching angle offset <<- Now there is no shift root hair factor, this only appear in more advanced
+		versions of SimRoot 0 Does growth stop after branching? No for this. 0.098 Note that here we don't have a counter for
+		several length growth parameters, there is only one and its value is 0.098 1 Radial Growth Parameter 1 Gravitation
+		Factor (this root goes completely down) 0.3 Randomness Factor (this root has a few randomic turns. Higher the value,
+		more changes in direction. We can use values bigger than one, but perhaps you don't want to see that!!) Basal_Roots 2
+		ID 1 how many branhces – namely lateral roots 3 Root Type number 3 (Lateral roots) branchs from the Basal root. 1 How
+		many "3" roots branch off at the same time 0 Regular topology flag (set here for random angle in the GrowRootSystem
+		function) 10 Length of first branching 0.55 Length of braching interval 9999.9 Time of first braching (not used here)
+		9999.9 Time branching interval (not used here) 75 Angle of braching (this goes down or up?) 4 Number of poles 0 Radial
+		braching angle offset <<- Now there is no shift root hair factor, this only appear in more advanced versions of
+		SimRoot 0 Does growth stop after branching? No for this. 0.17 growthrate in cm/hour??? 1 radial growth parameter 0.08
+		gravitation factor 0.1 randomness factor Lateral_Roots 3 ID 0 now many branches 0 does growth stop after branching?
+		0.032 growth rate cm/hour? 1 radial growth? 0.025 gravitation? 0.1 randomness? Stem 4 ID 3 number of branches,
+		taproot, basal and ....? //==this is a block for root branches of type 1 that branch of the stem. ===// 1 taproots
+		that come from the stem 1 number of taproots 1 regular topology? 9999.9 9999.9 0.1 9999.9 0 angle of branching? 2
+		number of poles? 0 radial branching offset? //==this is a block for root branches of type 2 that branch of the stem.
+		===// 2 branch type id (basal roots) 8 how many branches branch off, 8 branches /whorl seems a lot 1 regular topology
+		0 length of the first branch (straight away) 9999.9 time of first branching (not used) 100 Time branching interval ?
+		9999.9 ??? These parameters are used to control number number of whorls that are formed. 90 angle of branching 8
+		number of poles 0 radial branching angle offset //==this is a block for root branches of type 2 that branch of the
+		stem. ===// ??This seems to be a repitition of the previous block. It probably creates the second whorl? 2 6 1 0
+		9999.9 150 9999.9 90 6 0 /=====these are the 5 growth parameters that are acutally associated with the stem======/// 0
+		0 0 0 0 end of the original file
+	-->

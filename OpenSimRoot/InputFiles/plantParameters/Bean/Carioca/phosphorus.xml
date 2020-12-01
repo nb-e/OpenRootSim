@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--?xml-stylesheet type="text/xsl" href="tree-view2.xsl"? -->
+<!--
+Copyright © 2016, The Pennsylvania State University
+All rights reserved.
+
+Copyright © 2016 Forschungszentrum Jülich GmbH
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, are permitted under the GNU General Public License v3 and provided that the following conditions are met:
+1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+
+Disclaimer
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+You should have received the GNU GENERAL PUBLIC LICENSE v3 with this file in license.txt but can also be found at http://www.gnu.org/licenses/gpl-3.0.en.html
+
+ -->
+
+
+	<!-- Phosphorus parameters for maize	-->
+	<!--
+		53 uMol/g in bean roots: 1. I. Juszczuk, M. Malusa, and A. Rychter, “Phosphate deficiency induced oxidative stress in
+		bean (Phaseolus vulgaris L.),” in Plant Nutrition, 2001, 148-149, http://dx.doi.org/10.1007/0-306-47624-X_71.
+		
+		minus P only 2.3 umol/g  
+	-->
+	<!--
+		root conc are slightly less compared to shoot conc ~ 10-20% 1. J. Sierra et al., “Nutrient and assimilate partitioning
+		in two tropical maize cultivars in relation to their tolerance to soil acidity,” Field Crops Research 95, no. 2-3
+		(February 15, 2006): 234-249, doi:10.1016/j.fcr.2005.03.002.
+	-->
+	<!-- 
+	high P in nodules of bean roots
+	-->
+	<!--Imax 6.43 nmol/m2/s=55.55 10-3 umol/cm2/day-->
+<SimulationModelIncludeFile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../scripts/XML/SimulaXMLSchema.xsd">
+	<SimulaDirective path="resources">
+		<SimulaBase name="phosphorus">
+			   <!--this represents the nutrients in the seed , should be enough for the first 0 days ~ 100-200 uMol/g -->
+			   <!-- yan et al 1995: ~3 g/kg, seed size 16-63 g 
+			   carioca 1.22 mg/seed = 39 umol
+			   -->
+			<SimulaConstant
+				name="initialNutrientUptake"
+				unit="uMol"> 39</SimulaConstant>
+		</SimulaBase>
+	</SimulaDirective>
+	<SimulaDirective path="shoot">
+		<SimulaBase name="phosphorus">
+		<!-- lynch et al 1991: 60-72 uMol/g dw for bean leafs (but photosynthesis more like 40-100)
+		-->
+
+		<!--
+			Three sisters 2007 shoot P concentration mg/g dw treatment MMM HPHN 2.43 HPLN 2.24 LPHN 1.85 LPLN 1.89
+			2.3 mg/g / 30.97 mg/mmol = 74.2 uMol/g 
+			2 mg/g (0.2%) seems common critical trashold
+		-->
+		<!--
+			shoot optimal concentration lay somewhere above 2% - but if we see this decreasing with time. This decrease could be
+			explained by the increasing stem proportion causing us to assume that optimal conc for the leaf are more int he 3-4 %
+			range while stems are fine with 1% D. Plenet et al., “Growth analysis of maize field crops under phosphorus
+			deficiency - I. Leaf growth,” PLANT AND SOIL 223, no. 1-2 (2000): 117-130.
+		-->
+		<!--
+			there is a critical concentration below which plant can't grow any more. The critical concentration seems to be about halfway the optimal concentration and growth reduction seems linear between the two. 
+			(look up ref). 
+		-->
+		<!--
+			Bean has higher demand for P: three sister whole shoot data:
+			fert    P mg/g  umol/g
+			HPHN	3.22	104.03
+			HPLN	2.73	88.02
+			LPHN	2.21	71.27 (about 50% growth reduction)
+			LPLN	2.48	79.88
+		-->
+		<!--three sister shoot P data first harvest 2007 (includes both stems and leafs)
+		 plant	HPHN
+			BBB	  2.80
+			MBB-B	2.44
+			MBB-M	2.49
+			MBS-B	2.72
+			MBS-M	2.27
+			MBS-S	2.53
+			MMM	  2.43
+			SSS	  2.56
+		-->
+			<SimulaConstant
+				name="leafOptimalNutrientConcentration"
+				unit="uMol/g"> 100</SimulaConstant>
+			<SimulaConstant
+				name="leafMinimalNutrientConcentration"
+				unit="uMol/g"> 50</SimulaConstant>
+			<SimulaConstant
+				name="stemOptimalNutrientConcentration"
+				unit="uMol/g"> 50</SimulaConstant>
+			<SimulaConstant
+				name="stemMinimalNutrientConcentration"
+				unit="uMol/g"> 25</SimulaConstant>
+		</SimulaBase>
+	</SimulaDirective>
+	<SimulaDirective path="hypocotyl">
+		<SimulaBase name="phosphorus">
+			<SimulaConstant
+				name="optimalNutrientConcentration"
+				unit="uMol/g"> 60</SimulaConstant>
+			<SimulaConstant
+				name="minimalNutrientConcentration"
+				unit="uMol/g"> 30</SimulaConstant>
+			<SimulaConstant
+				name="Imax"
+				unit="uMol/cm2/day"> 0.0555</SimulaConstant>
+			<SimulaConstant
+				name="Km"
+				unit="uMol/ml"> 5.45e-3</SimulaConstant>
+			<SimulaConstant
+				name="Efflux"
+				unit="uMol/cm/day"> 1e-6</SimulaConstant>
+			<SimulaConstant
+				name="Cmin"
+				unit="uMol/ml"> 0.2e-3</SimulaConstant>
+		</SimulaBase>
+	</SimulaDirective>
+	<SimulaDirective path="primaryRoot">
+		<SimulaBase name="phosphorus">
+			<SimulaConstant
+				name="optimalNutrientConcentration"
+				unit="uMol/g"> 60</SimulaConstant>
+			<SimulaConstant
+				name="minimalNutrientConcentration"
+				unit="uMol/g"> 30</SimulaConstant>
+			<SimulaConstant
+				name="Imax"
+				unit="uMol/cm2/day">0.0555</SimulaConstant>
+			<SimulaConstant
+				name="Km"
+				unit="uMol/ml"> 5.45e-3</SimulaConstant>
+			<SimulaConstant
+				name="Efflux"
+				unit="uMol/cm/day"> 1e-6</SimulaConstant>
+			<SimulaConstant
+				name="Cmin"
+				unit="uMol/ml"> 0.2e-3</SimulaConstant>
+		</SimulaBase>
+	</SimulaDirective>
+	<!--PARAMETERS FOR Seminal ROOTS-->
+	<SimulaDirective path="basalWhorl1">
+		<SimulaBase name="phosphorus">
+			<SimulaConstant
+				name="optimalNutrientConcentration"
+				unit="uMol/g"> 60</SimulaConstant>
+			<SimulaConstant
+				name="minimalNutrientConcentration"
+				unit="uMol/g"> 30</SimulaConstant>
+			<SimulaConstant
+				name="Imax"
+				unit="uMol/cm2/day">0.0555</SimulaConstant>
+			<SimulaConstant
+				name="Km"
+				unit="uMol/ml"> 5.45e-3</SimulaConstant>
+			<SimulaConstant
+				name="Efflux"
+				unit="uMol/cm/day"> 1e-6</SimulaConstant>
+			<SimulaConstant
+				name="Cmin"
+				unit="uMol/ml"> 0.2e-3</SimulaConstant>
+		</SimulaBase>
+	</SimulaDirective>
+	<SimulaDirective path="basalWhorl2">
+		<SimulaBase name="phosphorus">
+			<SimulaConstant
+				name="optimalNutrientConcentration"
+				unit="uMol/g"> 60</SimulaConstant>
+			<SimulaConstant
+				name="minimalNutrientConcentration"
+				unit="uMol/g"> 30</SimulaConstant>
+			<SimulaConstant
+				name="Imax"
+				unit="uMol/cm2/day"> 0.0555</SimulaConstant>
+			<SimulaConstant
+				name="Km"
+				unit="uMol/ml"> 5.45e-3</SimulaConstant>
+			<SimulaConstant
+				name="Efflux"
+				unit="uMol/cm/day"> 1e-6</SimulaConstant>
+			<SimulaConstant
+				name="Cmin"
+				unit="uMol/ml"> 0.2e-3</SimulaConstant>
+		</SimulaBase>
+	</SimulaDirective>
+	<SimulaDirective path="basalWhorl3">
+		<SimulaBase name="phosphorus">
+			<SimulaConstant
+				name="optimalNutrientConcentration"
+				unit="uMol/g"> 60</SimulaConstant>
+			<SimulaConstant
+				name="minimalNutrientConcentration"
+				unit="uMol/g"> 30</SimulaConstant>
+			<SimulaConstant
+				name="Imax"
+				unit="uMol/cm2/day"> 0.0555</SimulaConstant>
+			<SimulaConstant
+				name="Km"
+				unit="uMol/ml"> 5.45e-3</SimulaConstant>
+			<SimulaConstant
+				name="Efflux"
+				unit="uMol/cm/day"> 1e-6</SimulaConstant>
+			<SimulaConstant
+				name="Cmin"
+				unit="uMol/ml"> 0.2e-3</SimulaConstant>
+		</SimulaBase>
+	</SimulaDirective>
+	<SimulaDirective path="hypocotylBornRoots">
+		<SimulaBase name="phosphorus">
+			<SimulaConstant
+				name="optimalNutrientConcentration"
+				unit="uMol/g"> 60</SimulaConstant>
+			<SimulaConstant
+				name="minimalNutrientConcentration"
+				unit="uMol/g"> 30</SimulaConstant>
+			<SimulaConstant
+				name="Imax"
+				unit="uMol/cm2/day"> 0.0555</SimulaConstant>
+			<SimulaConstant
+				name="Km"
+				unit="uMol/ml"> 5.45e-3</SimulaConstant>
+			<SimulaConstant
+				name="Efflux"
+				unit="uMol/cm/day"> 1e-6</SimulaConstant>
+			<SimulaConstant
+				name="Cmin"
+				unit="uMol/ml"> 0.2e-3</SimulaConstant>
+		</SimulaBase>
+	</SimulaDirective>
+	<SimulaDirective path="lateralPrimaryRoot">
+		<SimulaBase name="phosphorus">
+			<SimulaConstant
+				name="optimalNutrientConcentration"
+				unit="uMol/g"> 60</SimulaConstant>
+			<SimulaConstant
+				name="minimalNutrientConcentration"
+				unit="uMol/g"> 30</SimulaConstant>
+			<SimulaConstant
+				name="Imax"
+				unit="uMol/cm2/day"> 0.0555</SimulaConstant>
+			<SimulaConstant
+				name="Km"
+				unit="uMol/ml"> 5.45e-3</SimulaConstant>
+			<SimulaConstant
+				name="Efflux"
+				unit="uMol/cm/day"> 1e-6</SimulaConstant>
+			<SimulaConstant
+				name="Cmin"
+				unit="uMol/ml"> 0.2e-3</SimulaConstant>
+		</SimulaBase>
+	</SimulaDirective>
+	<SimulaDirective path="lateralPrimaryRootFastGrowing">
+		<SimulaBase name="phosphorus">
+			<SimulaConstant
+				name="optimalNutrientConcentration"
+				unit="uMol/g"> 60</SimulaConstant>
+			<SimulaConstant
+				name="minimalNutrientConcentration"
+				unit="uMol/g"> 30</SimulaConstant>
+			<SimulaConstant
+				name="Imax"
+				unit="uMol/cm2/day"> 0.0555</SimulaConstant>
+			<SimulaConstant
+				name="Km"
+				unit="uMol/ml"> 5.45e-3</SimulaConstant>
+			<SimulaConstant
+				name="Efflux"
+				unit="uMol/cm/day"> 1e-6</SimulaConstant>
+			<SimulaConstant
+				name="Cmin"
+				unit="uMol/ml"> 0.2e-3</SimulaConstant>
+		</SimulaBase>
+	</SimulaDirective>
+	<SimulaDirective path="lateralBasalRoots">
+		<SimulaBase name="phosphorus">
+			<SimulaConstant
+				name="optimalNutrientConcentration"
+				unit="uMol/g"> 60</SimulaConstant>
+			<SimulaConstant
+				name="minimalNutrientConcentration"
+				unit="uMol/g"> 30</SimulaConstant>
+			<SimulaConstant
+				name="Imax"
+				unit="uMol/cm2/day"> 0.0555</SimulaConstant>
+			<SimulaConstant
+				name="Km"
+				unit="uMol/ml"> 5.45e-3</SimulaConstant>
+			<SimulaConstant
+				name="Efflux"
+				unit="uMol/cm/day"> 1e-6</SimulaConstant>
+			<SimulaConstant
+				name="Cmin"
+				unit="uMol/ml"> 0.2e-3</SimulaConstant>
+		</SimulaBase>
+	</SimulaDirective>
+	<SimulaDirective path="lateralHypocotylBornRoots">
+		<SimulaBase name="phosphorus">
+			<SimulaConstant
+				name="optimalNutrientConcentration"
+				unit="uMol/g"> 60</SimulaConstant>
+			<SimulaConstant
+				name="minimalNutrientConcentration"
+				unit="uMol/g"> 30</SimulaConstant>
+			<SimulaConstant
+				name="Imax"
+				unit="uMol/cm2/day"> 0.0555</SimulaConstant>
+			<SimulaConstant
+				name="Km"
+				unit="uMol/ml"> 5.45e-3</SimulaConstant>
+			<SimulaConstant
+				name="Efflux"
+				unit="uMol/cm/day"> 1e-6</SimulaConstant>
+			<SimulaConstant
+				name="Cmin"
+				unit="uMol/ml"> 0.2e-3</SimulaConstant>
+		</SimulaBase>
+	</SimulaDirective>
+	<SimulaDirective path="finelateral">
+		<SimulaBase name="phosphorus">
+			<SimulaConstant
+				name="optimalNutrientConcentration"
+				unit="uMol/g"> 60</SimulaConstant>
+			<SimulaConstant
+				name="minimalNutrientConcentration"
+				unit="uMol/g"> 30</SimulaConstant>
+			<SimulaConstant
+				name="Imax"
+				unit="uMol/cm2/day"> 0.0555</SimulaConstant>
+			<SimulaConstant
+				name="Km"
+				unit="uMol/ml"> 5.45e-3</SimulaConstant>
+			<SimulaConstant
+				name="Efflux"
+				unit="uMol/cm/day"> 1e-6</SimulaConstant>
+			<SimulaConstant
+				name="Cmin"
+				unit="uMol/ml"> 0.2e-3</SimulaConstant>
+		</SimulaBase>
+	</SimulaDirective>
+	<SimulaDirective path="finelateralFastGrowing">
+		<SimulaBase name="phosphorus">
+			<SimulaConstant
+				name="optimalNutrientConcentration"
+				unit="uMol/g"> 60</SimulaConstant>
+			<SimulaConstant
+				name="minimalNutrientConcentration"
+				unit="uMol/g"> 30</SimulaConstant>
+			<SimulaConstant
+				name="Imax"
+				unit="uMol/cm2/day"> 0.0555</SimulaConstant>
+			<SimulaConstant
+				name="Km"
+				unit="uMol/ml"> 5.45e-3</SimulaConstant>
+			<SimulaConstant
+				name="Efflux"
+				unit="uMol/cm/day"> 1e-6</SimulaConstant>
+			<SimulaConstant
+				name="Cmin"
+				unit="uMol/ml"> 0.2e-3</SimulaConstant>
+		</SimulaBase>
+	</SimulaDirective>
+</SimulationModelIncludeFile>

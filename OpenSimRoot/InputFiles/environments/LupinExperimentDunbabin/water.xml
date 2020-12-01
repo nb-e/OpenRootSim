@@ -1,0 +1,92 @@
+<!--SimRoot parameter file-->
+<SimulationModelIncludeFile>
+<!--environmental parameters start here. -->
+<!--rocksprings has a hagerstown silt loam--> 
+<!--
+	hodnet and tomasella 2002 table 6:  
+	                 a      n     hs    hr 
+Loamy sand       0.837  1.672 0.438 0.062 
+Silty clay loam  0.298 1.513 0.586 0.267 
+Silt loam        0.191 1.644 0.601 0.223 
+-->
+<!--
+Leij, Alves, and van Genuchten, 1996
+Soil                ths   thr     alpha    n     Ks(cm hr-1)
+Sand 	              0.43 	0.045 	0.145 	2.68 	29.7
+Loamy sand 	        0.41 	0.057 	0.124 	2.28 	14.6
+Sandy loam 	        0.41 	0.065 	0.075 	1.89 	4.42
+Loam 	              0.43 	0.078 	0.036 	1.56 	1.04
+Silt 	              0.46 	0.034 	0.016 	1.37 	0.25
+Silt loam 	        0.45 	0.067 	0.020 	1.41 	0.45
+Sandy clay loam 	  0.39 	0.100 	0.059 	1.48 	1.31
+Clay loam 	        0.41 	0.095 	0.019 	1.31 	0.26
+Silty clay loam 	  0.43 	0.089 	0.010 	1.23 	0.07
+Sandy clay 	        0.38 	0.100 	0.027 	1.23 	0.12
+Silty clay 	        0.36 	0.070 	0.005 	1.09 	0.02
+Clay 	              0.38 	0.068 	0.008 	1.09 	0.20
+-->
+<!--
+J.H.M. Wo¨sten et al.rGeoderma 90 (1999) 169–185 177
+Table 4
+Mualem-van Genuchten parameters for the fits on the geometric mean curves
+
+Topsoils		  ur    us     a      n      m     l     Ks(cm/d)
+Coarse 			0.025 0.403 0.0383 1.3774 0.2740 1.2500 60.000
+Medium 			0.010 0.439 0.0314 1.1804 0.1528 2.3421 12.061
+Mediumfine 	0.010 0.430 0.0083 1.2539 0.2025 0.5884 2.272
+Fine 				0.010 0.520 0.0367 1.1012 0.0919 1.9772 24.800
+Very Fine 	0.010 0.614 0.0265 1.1033 0.0936 2.5000 15.000
+Subsoils
+Coarse 			0.025 0.366 0.0430 1.5206 0.3424 1.2500 70.000
+Medium 			0.010 0.392 0.0249 1.1689 0.1445 0.7437 10.755
+Mediumfine 	0.010 0.412 0.0082 1.2179 0.1789 0.5000 4.000
+Fine 0.010 	0.481 0.0198 1.0861 0.0793 3.7124 8.500
+Very Fine 	0.010 0.538 0.0168 1.0730 0.0680 0.0001 8.235
+Organica 		0.010 0.766 0.0130 1.2039 0.1694 0.4000 8.000
+-->
+<!--Dunbabin used yellow sand in her study -->
+	<SimulaDirective path="environment/soil">
+		<SimulaBase name="water">
+				<SimulaTable name_column2="initialHydraulicHead" name_column1="depth" unit_column1="cm" unit_column2="cm"> 
+				0 -300
+			 -300 0
+				</SimulaTable>
+				<SimulaTable name_column2="residualWaterContent" name_column1="depth" unit_column1="cm" unit_column2="100%">
+				  0 0.07
+				  -300 0.07
+				</SimulaTable>
+				<SimulaTable name_column2="saturatedWaterContent" name_column1="depth" unit_column1="cm" unit_column2="100%" TinterpolationMethod="step">
+				<!--Luo L, Lin H, Halleck P. 2008. Quantifying Soil Structure and Preferential Flow in Intact Soil Using X-ray Computed Tomography. Soil Sci Soc Am J 72: 1058-1069.-->
+				    0 0.30
+					-100	0.30
+				</SimulaTable>
+				<SimulaTable name_column2="vanGenuchten:alpha" name_column1="depth" unit_column1="cm" unit_column2="1/cm">
+				<!--see hodnet and tomasella 2002 - rocksprings has a hagerstown silt loam--> 
+				  0 0.03
+				  -300 0.03
+				</SimulaTable>
+				<SimulaTable name_column2="vanGenuchten:n" name_column1="depth" unit_column1="cm" unit_column2="noUnit"> 
+				<!--see hodnet and tomasella 2002 - rocksprings has a hagerstown silt loam--> 
+				  0 2.
+				  -300 2.
+				</SimulaTable>
+				<SimulaTable name_column2="saturatedConductivity" name_column1="depth" unit_column1="cm" unit_column2="cm/day" TinterpolationMethod="step">
+				<!--Luo L, Lin H, Halleck P. 2008. Quantifying Soil Structure and Preferential Flow in Intact Soil Using X-ray Computed Tomography. Soil Sci Soc Am J 72: 1058-1069.
+					  0	74.000
+					-15 74.000
+					-25 64.800
+					-35 50.400
+					-65 50.400
+					-300 50.400 -->
+					<!--These numbers seem high, may rocksprings is more like a sandy clay loam?-->
+					<!-- silt loam 0.45*24=10.8 -->
+					0 400
+					-300 400
+				</SimulaTable>
+				<SimulaConstant name="volumetricWaterContentInBarberCushman" unit="cm3/cm3">1</SimulaConstant>
+			</SimulaBase>
+	</SimulaDirective>
+</SimulationModelIncludeFile>
+
+		
+		

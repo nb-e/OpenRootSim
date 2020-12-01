@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--?xml-stylesheet type="text/xsl" href="tree-view2.xsl"? -->
+<!-- Copyright © 2016 Forschungszentrum Jülich GmbH All rights reserved. 
+	Redistribution and use in source and binary forms, with or without modification, 
+	are permitted under the GNU General Public License v3 and provided that the 
+	following conditions are met: 1. Redistributions of source code must retain 
+	the above copyright notice, this list of conditions and the following disclaimer. 
+	2. Redistributions in binary form must reproduce the above copyright notice, 
+	this list of conditions and the following disclaimer in the documentation 
+	and/or other materials provided with the distribution. 3. Neither the name 
+	of the copyright holder nor the names of its contributors may be used to 
+	endorse or promote products derived from this software without specific prior 
+	written permission. Disclaimer THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT 
+	HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, 
+	BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS 
+	FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT 
+	HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, 
+	EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT 
+	OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
+	INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, 
+	STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN 
+	ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY 
+	OF SUCH DAMAGE. You should have received the GNU GENERAL PUBLIC LICENSE v3 
+	with this file in license.txt but can also be found at http://www.gnu.org/licenses/gpl-3.0.en.html -->
+
+<!--This XML constructs a simple, rue based crop model. Roots and stems are 
+	only presented as Carbon (dry weight) pools Leaf dry weight is converted 
+	to leaf area based on SLA Leaf area is converted to light interception using 
+	an extinction coeff. Light interception is converted to photosynthesis using 
+	RUE Photosynthesis is converted to struct carbon using a conversion factor 
+	(multiplier) which represents relative losses due to respiration Fixed allocation 
+	causes struct carbon to be divided over root, stem and leafs. Behaviour, 
+	is simple exponential growth for which counts RGR = SLA * C2Leafs * photosynthesis 
+	* multiplier However, as the light interception with increasing leaf area 
+	reaches an assymptote, the model will move towards linear growth. -->
+
+<SimulationModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="../../scripts/XML/SimulaXMLSchema.xsd">
+
+	<SimulaBase name="plant">
+		<SimulaBase name="myplant">
+			<SimulaConstant name="plantType" type="string">
+				mySpecies
+			</SimulaConstant>
+			<SimulaConstant name="plantingTime" unit="day" type="time">
+				0
+			</SimulaConstant>
+			<SimulaConstant name="plantPosition" type="coordinate">
+				0 -2 0
+				<SimulaBase name="shoot">
+					<SimulaDerivative name="lightInterception" unit="umol/cm2/day"
+						function="lightInterception" />
+					<SimulaVariable name="photosynthesis" unit="g"
+						function="photosynthesisLintulV2" />
+					<SimulaDerivative name="leafAreaIndex" unit="cm2/cm2"
+						function="leafAreaIndex" />
+					<SimulaVariable name="leafArea" unit="cm2" function="leafArea">
+						1.
+					</SimulaVariable>
+					<SimulaVariable name="leafDryWeight" unit="g"
+						function="leafDryWeight.v2" />
+					<SimulaDerivative name="relativeCarbonAllocation2Leafs"
+						unit="100%" function="relativeCarbonAllocation2LeafsFromInputFile" />
+					<SimulaVariable name="carbonAllocation2Leafs" unit="g"
+						function="carbonAllocation2Leafs" />
+					<!-- optional to have stem weight -->
+					<SimulaDerivative name="relativeCarbonAllocation2Stems"
+						unit="100%" function="relativeCarbonAllocation2StemsOneMinusLeafs" />
+					<SimulaVariable name="carbonAllocation2Stems" unit="g"
+						function="carbonAllocation2Stems" />
+					<SimulaVariable name="stemDryWeight" unit="g"
+						function="stemDryWeight" />
+				</SimulaBase>
+			</SimulaConstant>
+			<SimulaConstant name="carbonToDryWeightRatio" unit="100%">
+				0.45
+			</SimulaConstant>
+			<SimulaDerivative name="relativeCarbonAllocation2Shoot"
+				unit="100%" function="relativeCarbonAllocation2ShootFromInputFile" />
+			<SimulaVariable name="carbonAllocation2Shoot" unit="g"
+				function="carbonAllocation2Shoot" />
+			<SimulaDerivative name="carbonAvailableForGrowth"
+				unit="g" function="usePath">
+				<SimulaConstant name="path" type="string">
+					plantPosition/shoot/photosynthesis
+				</SimulaConstant>
+				<!-- half of carbon assumed to be respired -->
+				<SimulaConstant name="multiplier">0.5</SimulaConstant>
+			</SimulaDerivative>
+			<!-- optional to have root dryweight -->
+			<SimulaDerivative name="relativeCarbonAllocation2Roots"
+				unit="100%" 
+				function="relativeCarbonAllocation2RootsOneMinusShoot" />
+			<SimulaVariable name="carbonAllocation2Roots" unit="g"
+				function="carbonAllocation2Roots" />
+			<SimulaVariable name="rootDryWeight" unit="g"
+				function="rootDryWeight" />
+
+		</SimulaBase>
+	</SimulaBase>
+
+	<SimulaBase name="environment">
+		<SimulaBase name="atmosphere">
+			<SimulaTable name_column1="time" name_column2="irradiation"
+				unit_column1="day" unit_column2="umol/cm2/day">
+				0 3000
+				100 3000
+			</SimulaTable>
+		</SimulaBase>
+	</SimulaBase>
+
+	<SimulaBase name="rootTypeParameters">
+		<SimulaBase name="mySpecies">
+			<SimulaBase name="resources">
+				<SimulaTable name_column1="time" unit_column1="day"
+					name_column2="carbonAllocation2LeafsFactor" unit_column2="100%">
+					0 1
+					10 0.8
+					40 0.5
+					60 0.
+					80 0.
+				</SimulaTable>
+				<SimulaTable name_column1="time" unit_column1="day"
+					name_column2="carbonAllocation2RootsFactor" unit_column2="100%">
+					0 0.8
+					10
+					0.2
+					40 0.2
+					80 0.2
+				</SimulaTable>
+			</SimulaBase>
+			<SimulaBase name="shoot">
+				<SimulaConstant name="areaPerPlant" unit="cm2">
+					100
+				</SimulaConstant>
+				<SimulaConstant name="extinctionCoefficient" unit="noUnit">
+					0.6
+				</SimulaConstant>
+				<SimulaConstant name="lightUseEfficiency" unit="g/umol">
+					0.4E-6
+				</SimulaConstant>
+				<SimulaTable name_column1="time" name_column2="specificLeafArea"
+					unit_column1="day" unit_column2="g/cm2">
+					0 0.001
+					10 0.002
+					40 0.003
+					80
+					0.003
+				</SimulaTable>
+			</SimulaBase>
+		</SimulaBase>
+	</SimulaBase>
+
+	<SimulaBase name="simulationControls">
+		<SimulaBase name="outputParameters">
+			<SimulaBase name="table">
+				<SimulaConstant name="run" type="bool"> 1 </SimulaConstant>
+				<SimulaConstant name="searchingDepth" type="integer"> 10
+				</SimulaConstant>
+				<SimulaConstant name="startTime" type="time"> 0.
+				</SimulaConstant>
+				<SimulaConstant name="endTime" type="time"> 80.
+				</SimulaConstant>
+				<SimulaConstant name="timeInterval" type="time"> 0.5
+				</SimulaConstant>
+			</SimulaBase>
+		</SimulaBase>
+	</SimulaBase>
+
+
+
+
+</SimulationModel>
+
+
+
+

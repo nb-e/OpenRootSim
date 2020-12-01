@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<!--
+this keeps roots inside a predefined box
+-->
+<SimulationModelIncludeFile>
+	<SimulaDirective path="hypocotyl">
+		<SimulaConstant name="bottomBoundary" type="bool">1</SimulaConstant>
+		<SimulaConstant name="bounceOfTheSide" type="bool">0</SimulaConstant>
+		<SimulaConstant name="cannotgrowup" type="bool">0</SimulaConstant>
+	</SimulaDirective>
+	<SimulaDirective path="primaryRoot">
+		<SimulaConstant name="bottomBoundary" type="bool">1</SimulaConstant>
+		<SimulaConstant name="bounceOfTheSide" type="bool">0</SimulaConstant>
+		<SimulaConstant name="cannotgrowup" type="bool">1</SimulaConstant>
+	</SimulaDirective>
+	<SimulaDirective path="lateralPrimaryRoot">
+		<SimulaConstant name="bottomBoundary" type="bool">1</SimulaConstant>
+		<SimulaConstant name="bounceOfTheSide" type="bool">0</SimulaConstant>
+		<SimulaConstant name="cannotgrowup" type="bool">1</SimulaConstant>
+	</SimulaDirective>
+	<SimulaDirective path="finelateral">
+		<SimulaConstant name="bottomBoundary" type="bool">1</SimulaConstant>
+		<SimulaConstant name="bounceOfTheSide" type="bool">0</SimulaConstant>
+		<SimulaConstant name="cannotgrowup" type="bool">1</SimulaConstant>
+	</SimulaDirective>
+</SimulationModelIncludeFile>

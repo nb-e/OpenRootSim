@@ -1,0 +1,508 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified">
+  <xs:element name="SimulationModel" type="SimulationModelType">
+    <xs:annotation>
+      <xs:documentation>Copyright © 2016 Forschungszentrum Jülich GmbH
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, are permitted under the GNU General Public License v3 and provided that the following conditions are met:
+1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+
+Disclaimer
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+You should have received the GNU GENERAL PUBLIC LICENSE v3 with this file in license.txt but can also be found at http://www.gnu.org/licenses/gpl-3.0.en.html
+      </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="SimulationModelIncludeFile" type="SimulationModelType">
+    <xs:annotation>
+      <xs:documentation>Copyright © 2016 Forschungszentrum Jülich GmbH
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, are permitted under the GNU General Public License v3 and provided that the following conditions are met:
+1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+
+Disclaimer
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+You should have received the GNU GENERAL PUBLIC LICENSE v3 with this file in license.txt but can also be found at http://www.gnu.org/licenses/gpl-3.0.en.html
+      </xs:documentation>
+    </xs:annotation>
+  </xs:element>  <xs:complexType name="SimulaBaseType">
+    <xs:choice maxOccurs="unbounded" minOccurs="0">
+      <xs:group ref="simulaGroup"/>
+    </xs:choice>
+    <xs:attribute type="xs:string" name="name" use="required"/>
+    <xs:attribute type="objectGeneratorType" name="objectGenerator" use="optional"/>
+    <xs:attribute type="xs:float" name="startTime" use="optional"/>
+    <xs:attribute type="xs:float" name="endTime" use="optional"/>
+    <xs:attribute type="alwaysTrueType" name="replacesPreviousDeclaration" use="optional"/>
+  </xs:complexType>
+  <xs:complexType name="SimulaConstantType" mixed="true">
+    <xs:choice maxOccurs="unbounded" minOccurs="0">
+      <xs:group ref="simulaGroup"/>
+    </xs:choice>
+    <xs:attribute type="xs:string" name="name" use="required"/>
+    <xs:attribute type="typeType" name="type" use="optional"/>
+    <xs:attribute type="xs:string" name="unit" use="optional"/>
+    <xs:attribute type="xs:float" name="startTime" use="optional"/>
+    <xs:attribute type="xs:float" name="endTime" use="optional"/>
+    <xs:attribute type="objectGeneratorType" name="objectGenerator" use="optional"/>
+    <xs:attribute type="alwaysTrueType" name="replacesPreviousDeclaration" use="optional"/>
+  </xs:complexType>
+  <xs:complexType name="SimulaStochasticType">
+    <xs:choice maxOccurs="unbounded" minOccurs="0">
+      <xs:group ref="simulaGroup"/>
+    </xs:choice>
+    <xs:attribute type="xs:string" name="name" use="required"/>
+    <xs:attribute type="typeType" name="type" use="optional"/>
+    <xs:attribute type="xs:string" name="unit" use="required"/>
+    <xs:attribute type="xs:float" name="startTime" use="optional"/>
+    <xs:attribute type="xs:float" name="endTime" use="optional"/>
+    <xs:attribute type="distributionType" name="distribution" use="required"/>
+    <xs:attribute type="boolType" name="sampleOnce" use="optional"/>
+    <xs:attribute type="boolType" name="cacheWithTimeStep" use="optional"/>
+    <xs:attribute type="xs:float" name="minimum" use="optional"/>
+    <xs:attribute type="xs:float" name="maximum" use="optional"/>
+    <xs:attribute type="xs:float" name="mean" use="optional"/>
+    <xs:attribute type="xs:float" name="stdev" use="optional"/>
+    <xs:attribute type="xs:float" name="scale" use="optional"/>
+    <xs:attribute type="xs:float" name="shape" use="optional"/>
+    <xs:attribute type="objectGeneratorType" name="objectGenerator" use="optional"/>
+    <xs:attribute type="xs:string" name="replacesPreviousDeclaration" use="optional"/>
+  </xs:complexType>
+  <xs:complexType name="SimulaTableType" mixed="true">
+    <xs:choice maxOccurs="unbounded" minOccurs="0">
+      <xs:group ref="simulaGroup"/>
+    </xs:choice>
+    <xs:attribute type="xs:string" name="name" use="optional"/>
+    <xs:attribute type="xs:string" name="unit" use="optional"/>
+    <xs:attribute type="xs:float" name="startTime" use="optional"/>
+    <xs:attribute type="xs:float" name="endTime" use="optional"/>
+    <xs:attribute type="xs:string" name="linksName" use="optional"/>
+    <xs:attribute type="xs:string" name="name_column1" use="required"/>
+    <xs:attribute type="xs:string" name="unit_column1" use="optional"/>
+    <xs:attribute type="xs:string" name="name_column2" use="optional"/>
+    <xs:attribute type="xs:string" name="unit_column2" use="optional"/>
+    <xs:attribute type="typeType" name="type" use="optional"/>
+    <xs:attribute type="functionSimulaTableType" name="function" use="optional"/>
+    <xs:attribute type="interpolationMethodType" name="interpolationMethod" use="optional"/>
+    <xs:attribute type="objectGeneratorType" name="objectGenerator" use="optional"/>
+    <xs:attribute type="alwaysTrueType" name="replacesPreviousDeclaration" use="optional"/>
+    <!-- only works in schema 1.1 xs:assert test="exists(name) != exists(name_column2)" xs:message="Either use name, or name_column1. Both attributes do the same."/-->
+  </xs:complexType>
+  <xs:complexType name="SimulaTableTypeAlt1" mixed="true">
+    <xs:choice maxOccurs="unbounded" minOccurs="0">
+      <xs:group ref="simulaGroup"/>
+    </xs:choice>
+    <xs:attribute type="xs:string" name="name" use="required"/>
+    <xs:attribute type="xs:string" name="unit" use="required"/>
+    <xs:attribute type="xs:float" name="startTime" use="optional"/>
+    <xs:attribute type="xs:float" name="endTime" use="optional"/>
+    <xs:attribute type="xs:string" name="linksName" use="optional"/>
+    <xs:attribute type="xs:string" name="name_column1" use="required"/>
+    <xs:attribute type="xs:string" name="unit_column1" use="required"/>
+    <xs:attribute type="typeType" name="type" use="optional"/>
+    <xs:attribute type="interpolationMethodType" name="interpolationMethod" use="optional"/>
+    <xs:attribute type="objectGeneratorType" name="objectGenerator" use="optional"/>
+    <xs:attribute type="alwaysTrueType" name="replacesPreviousDeclaration" use="optional"/>
+    <!-- only works in schema 1.1 xs:assert test="exists(name) != exists(name_column2)" xs:message="Either use name, or name_column1. Both attributes do the same."/-->
+  </xs:complexType>
+  <xs:complexType name="SimulaGridType" mixed="true">
+    <xs:choice maxOccurs="unbounded" minOccurs="0">
+      <xs:group ref="simulaGroup"/>
+    </xs:choice>
+    <xs:attribute type="xs:string" name="name" use="required"/>
+    <xs:attribute type="xs:string" name="unit" use="required"/>
+    <xs:attribute type="interpolationMethod3DType" name="interpolationMethod" use="optional"/>
+    <xs:attribute type="objectGeneratorType" name="objectGenerator" use="optional"/>
+    <xs:attribute type="alwaysTrueType" name="replacesPreviousDeclaration" use="optional"/>
+  </xs:complexType>
+  <xs:complexType name="SimulaDerivativeType">
+    <xs:choice maxOccurs="unbounded" minOccurs="0">
+      <xs:group ref="simulaGroup"/>
+    </xs:choice>
+    <xs:attribute type="xs:string" name="name" use="required"/>
+    <xs:attribute type="xs:string" name="unit" use="optional"/>
+    <xs:attribute type="typeType" name="type" use="optional"/>
+    <xs:attribute type="xs:float" name="startTime" use="optional"/>
+    <xs:attribute type="xs:float" name="endTime" use="optional"/>
+    <xs:attribute type="functionType" name="function" use="required"/>
+    <xs:attribute type="boolType" name="garbageCollectionOff" use="optional"/>
+    <xs:attribute type="objectGeneratorType" name="objectGenerator" use="optional"/>
+    <xs:attribute type="alwaysTrueType" name="replacesPreviousDeclaration" use="optional"/>
+  </xs:complexType>
+  <xs:complexType name="SimulaVariableType" mixed="true">
+    <xs:choice maxOccurs="unbounded" minOccurs="0">
+      <xs:group ref="simulaGroup"/>
+    </xs:choice>
+    <xs:attribute type="xs:string" name="name" use="required"/>
+    <xs:attribute type="xs:string" name="unit" use="required"/>
+    <xs:attribute type="xs:float" name="startTime" use="optional"/>
+    <xs:attribute type="xs:float" name="endTime" use="optional"/>
+    <xs:attribute type="xs:float" name="minTimeStep" use="optional"/>
+    <xs:attribute type="xs:float" name="maxTimeStep" use="optional"/>
+    <xs:attribute type="xs:float" name="preferedTimeStep" use="optional"/>
+    <xs:attribute type="xs:float" name="errorTolerance" use="optional"/>
+    <xs:attribute type="functionType" name="function" use="required"/>
+    <xs:attribute type="integrationFunctionType" name="integrationFunction" use="optional"/>
+    <xs:attribute type="boolType" name="garbageCollectionOff" use="optional"/>
+    <xs:attribute type="objectGeneratorType" name="objectGenerator" use="optional"/>
+    <xs:attribute type="alwaysTrueType" name="replacesPreviousDeclaration" use="optional"/>
+  </xs:complexType>
+  <xs:complexType name="SimulaExternalType" mixed="true">
+    <xs:choice maxOccurs="unbounded" minOccurs="0">
+    </xs:choice>
+    <xs:attribute type="xs:string" name="name" use="required"/>
+    <xs:attribute type="xs:string" name="unit" use="required"/>
+    <xs:attribute type="functionType" name="function" use="required"/>
+    <xs:attribute type="xs:float" name="minTimeStep" use="optional"/>
+    <xs:attribute type="xs:float" name="maxTimeStep" use="optional"/>
+    <xs:attribute type="xs:float" name="preferedTimeStep" use="optional"/>
+    <xs:attribute type="xs:float" name="errorTolerance" use="optional"/>
+    <xs:attribute type="alwaysTrueType" name="replacesPreviousDeclaration" use="optional"/>
+  </xs:complexType>
+  <xs:complexType name="SimulaPointType" mixed="true">
+    <xs:choice maxOccurs="unbounded" minOccurs="0">
+      <xs:group ref="simulaGroup"/>
+    </xs:choice>
+    <xs:attribute type="xs:string" name="name" use="required"/>
+    <xs:attribute type="xs:float" name="startTime" use="optional"/>
+    <xs:attribute type="xs:float" name="endTime" use="optional"/>
+    <xs:attribute type="functionSimulaPointType" name="function" use="required"/>
+    <!--todo possibly define simulaPointIntegrationFunctionType in order tolist only does that have impllementations for coordinate.-->
+    <xs:attribute type="integrationFunctionType" name="integrationFunction" use="optional"/>
+    <xs:attribute type="xs:float" name="minTimeStep" use="optional"/>
+    <xs:attribute type="xs:float" name="maxTimeStep" use="optional"/>
+    <xs:attribute type="xs:float" name="preferedTimeStep" use="optional"/>
+    <xs:attribute type="xs:float" name="errorTolerance" use="optional"/>
+    <xs:attribute type="boolType" name="garbageCollectionOff" use="optional"/>
+    <xs:attribute type="objectGeneratorType" name="objectGenerator" use="optional"/>
+    <xs:attribute type="alwaysTrueType" name="replacesPreviousDeclaration" use="optional"/>
+  </xs:complexType>
+  <xs:complexType name="SimulaLinkType">
+    <xs:choice maxOccurs="unbounded" minOccurs="0">
+      <xs:group ref="simulaGroup"/>
+    </xs:choice>
+    <xs:attribute type="xs:string" name="name" use="required"/>
+    <xs:attribute type="xs:string" name="unit" use="optional"/>
+    <xs:attribute type="xs:float" name="startTime" use="optional"/>
+    <xs:attribute type="xs:float" name="endTime" use="optional"/>
+    <xs:attribute type="xs:string" name="linksName" use="optional"/>
+    <xs:attribute type="objectGeneratorType" name="objectGenerator" use="optional"/>
+    <xs:attribute type="alwaysTrueType" name="replacesPreviousDeclaration" use="optional"/>
+  </xs:complexType>
+  <xs:complexType name="SimulaDirectiveType">
+    <xs:choice maxOccurs="unbounded" minOccurs="0">
+      <xs:group ref="simulaGroup"/>
+    </xs:choice>
+    <xs:attribute type="xs:string" name="path" use="required"/>
+    <xs:attribute type="alwaysTrueType" name="optional" use="optional"/>
+  </xs:complexType>
+  <xs:complexType name="SimulaIncludeFileType">
+    <xs:attribute type="xs:string" name="fileName" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="SimulationModelType">
+    <xs:choice maxOccurs="unbounded" minOccurs="0">
+      <xs:group ref="simulaGroup"/>
+    </xs:choice>
+    <xs:attribute type="xs:string" name="synchronizationTimeStep" use="optional"/>
+    <xs:attribute type="xs:string" name="defaultMinimumTimeStep" use="optional"/>
+    <xs:attribute type="xs:string" name="defaultMaximumTimeStep" use="optional"/>
+    <xs:attribute type="xs:string" name="defaultStartingTimeStep" use="optional"/>
+  </xs:complexType>
+  <xs:group name="simulaGroup">
+    <xs:choice>
+      <xs:element type="SimulaBaseType" name="SimulaBase"/>
+      <xs:element type="SimulaConstantType" name="SimulaConstant"/>
+      <xs:element type="SimulaStochasticType" name="SimulaStochastic"/>
+      <xs:element type="SimulaTableType" name="SimulaTable">
+        <!-- only works in version 1.1 xs:alternative test="exists(name_column2)" type="SimulaTableTypeAlt1"/-->
+      </xs:element>
+      <xs:element type="SimulaGridType" name="SimulaGrid"/>
+      <xs:element type="SimulaDerivativeType" name="SimulaDerivative"/>
+      <xs:element type="SimulaVariableType" name="SimulaVariable"/>
+      <xs:element type="SimulaPointType" name="SimulaPoint"/>
+      <xs:element type="SimulaIncludeFileType" name="SimulaIncludeFile"/>
+      <xs:element type="SimulaDirectiveType" name="SimulaDirective"/>
+      <xs:element type="SimulaLinkType" name="SimulaLink"/>
+      <xs:element type="SimulaExternalType" name="SimulaExternal"/>
+    </xs:choice>
+  </xs:group>
+  <!-- restricted attribute values -->
+  <xs:simpleType name="boolType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="true"/>
+      <xs:enumeration value="false"/>
+      <xs:enumeration value="0"/>
+      <xs:enumeration value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="alwaysTrueType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="true"/>
+      <xs:enumeration value="whenExisting"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="typeType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="double"/>
+      <xs:enumeration value="integer"/>
+      <xs:enumeration value="string"/>
+      <xs:enumeration value="coordinate"/>
+      <xs:enumeration value="time"/>
+      <xs:enumeration value="bool"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="distributionType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="normal"/>
+      <xs:enumeration value="lognormal"/>
+      <xs:enumeration value="uniform"/>
+      <xs:enumeration value="weibull"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="interpolationMethodType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="linear"/>
+      <xs:enumeration value="step"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="interpolationMethod3DType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="triLinearInterpolation"/>
+      <xs:enumeration value="naturalNeighbourInterpolation"/>
+      <xs:enumeration value="nearestNeighbourInterpolation"/>
+      <xs:enumeration value="Kriging3D"/>
+      <xs:enumeration value="inverseDistanceWeightedAverage"/>
+      <xs:enumeration value="diffuseSpots"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="integrationFunctionType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="BackwardEuler"/>
+      <xs:enumeration value="BarberCushmanSolver"/>
+      <xs:enumeration value="ForwardEuler"/>
+      <xs:enumeration value="Heuns"/>
+      <xs:enumeration value="HeunsII"/>
+      <xs:enumeration value="RungeKutta4"/>
+      <xs:enumeration value="convergenceSolver"/>
+      <xs:enumeration value="explicitConvergence"/>
+      <xs:enumeration value="iterativeSolver"/>
+      <xs:enumeration value="singleStepSolver"/>
+      <xs:enumeration value="Fehlberg"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="objectGeneratorType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="copyDefaults"/>
+      <xs:enumeration value="fieldPlanting"/>
+      <xs:enumeration value="generateRoot"/>
+      <xs:enumeration value="insertRootBranchContainers"/>
+      <xs:enumeration value="rootBranches"/>
+      <xs:enumeration value="rootBranchesOfTillers"/>
+      <xs:enumeration value="rootDataPoints"/>
+      <xs:enumeration value="seedling"/>
+      <xs:enumeration value="tillerDevelopment"/>
+      <xs:enumeration value="tillerFormation"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="functionType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="BFMmemory"/>
+      <xs:enumeration value="D95"/>
+      <xs:enumeration value="Grass_reference_evapotranspiration"/>
+      <xs:enumeration value="Interception"/>
+      <xs:enumeration value="InterceptionV2"/>
+      <xs:enumeration value="PriestleyTaylor"/>
+      <xs:enumeration value="Radiation"/>
+      <xs:enumeration value="SimpleSoilTemperature"/>
+      <xs:enumeration value="Simunek"/>
+      <xs:enumeration value="Stanghellini"/>
+      <xs:enumeration value="Swms3d"/>
+      <xs:enumeration value="Tall_reference_Crop"/>
+      <xs:enumeration value="ThermalConductivity"/>
+      <xs:enumeration value="VolumetricHeatCapacity"/>
+      <xs:enumeration value="actualTranspiration"/>
+      <xs:enumeration value="aerodynamicResistance"/>
+      <xs:enumeration value="airDensity"/>
+      <xs:enumeration value="airPressure"/>
+      <xs:enumeration value="barber_cushman_1981_nutrient_uptake"/>
+      <xs:enumeration value="barber_cushman_1981_nutrient_uptake_explicit"/>
+      <xs:enumeration value="barber_cushman_1981_nutrient_uptake_ode23"/>
+      <xs:enumeration value="bnf.V1"/>
+      <xs:enumeration value="carbonAllocation2Leafs"/>
+      <xs:enumeration value="carbonAllocation2Roots"/>
+      <xs:enumeration value="carbonAllocation2Shoot"/>
+      <xs:enumeration value="carbonAllocation2Stems"/>
+      <xs:enumeration value="carbonAvailableForGrowth"/>
+      <xs:enumeration value="carbonCostOfBiologicalNitrogenFixation"/>
+      <xs:enumeration value="carbonCostOfExudates"/>
+      <xs:enumeration value="carbonCostOfNutrientUptake"/>
+      <xs:enumeration value="carbonReserves"/>
+      <xs:enumeration value="carbonToDryWeightRatio"/>
+      <xs:enumeration value="constantLeafGrowthRate"/>
+      <xs:enumeration value="delta_e_s"/>
+      <xs:enumeration value="e_a"/>
+      <xs:enumeration value="e_s"/>
+      <xs:enumeration value="getValuesFromPlantWaterUptake"/>
+      <xs:enumeration value="getValuesFromSWMS"/>
+      <xs:enumeration value="hydraulicConductivity"/>
+      <xs:enumeration value="hydraulicConductivityRootSystem"/>
+      <xs:enumeration value="integrateOverSegment"/>
+      <xs:enumeration value="kineticParameters"/>
+      <xs:enumeration value="leafArea"/>
+      <xs:enumeration value="leafAreaIndex"/>
+      <xs:enumeration value="leafAreaReductionCoefficient"/>
+      <xs:enumeration value="leafDryWeight"/>
+      <xs:enumeration value="leafDryWeight.v2"/>
+      <xs:enumeration value="leafMinimalNutrientContent"/>
+      <xs:enumeration value="leafOptimalNutrientContent"/>
+      <xs:enumeration value="leafPotentialCarbonSinkForGrowth"/>
+      <xs:enumeration value="leafRespirationRate"/>
+      <xs:enumeration value="leafSenescence"/>
+      <xs:enumeration value="lightInterception"/>
+      <xs:enumeration value="localNutrientResponse"/>
+      <xs:enumeration value="meanLeafAreaIndex"/>
+      <xs:enumeration value="meanOverAllPlantShoots"/>
+      <xs:enumeration value="meanOverAllPlants"/>
+      <xs:enumeration value="meanOverAllPlantsNutrients"/>
+      <xs:enumeration value="michaelis_menten_nutrient_uptake"/>
+      <xs:enumeration value="monteithEQ"/>
+      <xs:enumeration value="numberOfRoots"/>
+      <xs:enumeration value="numberOfTillers"/>
+      <xs:enumeration value="nutrientStressFactor"/>
+      <xs:enumeration value="nutrientStressFactor.V2"/>
+      <xs:enumeration value="penmanEQ"/>
+      <xs:enumeration value="photosynthesisLintul"/>
+      <xs:enumeration value="photosynthesisLintulV2"/>
+      <xs:enumeration value="plantCarbonBalance"/>
+      <xs:enumeration value="plantCarbonIncomeRate"/>
+      <xs:enumeration value="plantTotal"/>
+      <xs:enumeration value="plantTotalForNutrients"/>
+      <xs:enumeration value="plantTotalRates"/>
+      <xs:enumeration value="plantTotalRatesRootFraction"/>
+      <xs:enumeration value="plantTotalRatesShootFraction"/>
+      <xs:enumeration value="plantTotalRootFraction"/>
+      <xs:enumeration value="plantTotalShootFraction"/>
+      <xs:enumeration value="pointSensor"/>
+      <xs:enumeration value="potentialLeafArea"/>
+      <xs:enumeration value="potentialLeafGrowthRate"/>
+      <xs:enumeration value="potentialRootGrowthRate"/>
+      <xs:enumeration value="potentialSecondaryGrowth"/>
+      <xs:enumeration value="potentialTranspirationCrop"/>
+      <xs:enumeration value="proximity"/>
+      <xs:enumeration value="radiusDepletionZoneBarberCushman"/>
+      <xs:enumeration value="radiusDepletionZoneSimRoot4"/>
+      <xs:enumeration value="randomGravitropism"/>
+      <xs:enumeration value="randomImpedence"/>
+      <xs:enumeration value="relativeCarbonAllocation2LeafsFromInputFile"/>
+      <xs:enumeration value="relativeCarbonAllocation2RootsFromInputFile"/>
+      <xs:enumeration value="relativeCarbonAllocation2RootsOneMinusShoot"/>
+      <xs:enumeration value="relativeCarbonAllocation2RootsPotentialGrowth"/>
+      <xs:enumeration value="relativeCarbonAllocation2RootsScaledGrowth"/>
+      <xs:enumeration value="relativeCarbonAllocation2ShootFromInputFile"/>
+      <xs:enumeration value="relativeCarbonAllocation2ShootPotentialGrowth"/>
+      <xs:enumeration value="relativeCarbonAllocation2ShootScaledGrowth"/>
+      <xs:enumeration value="relativeCarbonAllocation2ShootSwitch"/>
+      <xs:enumeration value="relativeCarbonAllocation2StemsOneMinusLeafs"/>
+      <xs:enumeration value="remainingProportion"/>
+      <xs:enumeration value="reserves"/>
+      <xs:enumeration value="reservesSinkBased"/>
+      <xs:enumeration value="rootCircumference"/>
+      <xs:enumeration value="rootClassID"/>
+      <xs:enumeration value="rootDiameter"/>
+      <xs:enumeration value="rootDiameter.v2"/>
+      <xs:enumeration value="rootDiameterCortex"/>
+      <xs:enumeration value="rootDryWeight"/>
+      <xs:enumeration value="rootGrowthDirection"/>
+      <xs:enumeration value="rootGrowthScalingFactor"/>
+      <xs:enumeration value="rootLength2Base"/>
+      <xs:enumeration value="rootLengthDensity"/>
+      <xs:enumeration value="rootLengthProfile"/>
+      <xs:enumeration value="rootNodePotentialCarbonSinkForGrowth"/>
+      <xs:enumeration value="rootNutrientTotal"/>
+      <xs:enumeration value="rootPotentialCarbonSinkForGrowth"/>
+      <xs:enumeration value="rootSegmentAge"/>
+      <xs:enumeration value="rootSegmentDryWeight"/>
+      <xs:enumeration value="rootSegmentLength"/>
+      <xs:enumeration value="rootSegmentMinimalNutrientContent"/>
+      <xs:enumeration value="rootSegmentNutrientDepletionVolume"/>
+      <xs:enumeration value="rootSegmentOptimalNutrientContent"/>
+      <xs:enumeration value="rootSegmentRespirationRate"/>
+      <xs:enumeration value="rootSegmentRootHairSurfaceArea"/>
+      <xs:enumeration value="rootSegmentSpecificWeight"/>
+      <xs:enumeration value="rootSegmentSurfaceArea"/>
+      <xs:enumeration value="rootSegmentVolume"/>
+      <xs:enumeration value="rootSegmentVolumeCortex"/>
+      <xs:enumeration value="rootSegmentVolumeSteel"/>
+      <xs:enumeration value="rootSystemNutrientTotal"/>
+      <xs:enumeration value="rootSystemPotentialCarbonSinkForGrowth"/>
+      <xs:enumeration value="rootSystemTotal"/>
+      <xs:enumeration value="rootSystemTotalRates"/>
+      <xs:enumeration value="rootTotal"/>
+      <xs:enumeration value="rootTotal.v2"/>
+      <xs:enumeration value="rootTotalRates"/>
+      <xs:enumeration value="rootsBelowD95Solute"/>
+      <xs:enumeration value="scaledRootGrowthRate"/>
+      <xs:enumeration value="scaledWaterUptake"/>
+      <xs:enumeration value="secondaryGrowth"/>
+      <xs:enumeration value="segmentMaxNutrientUptakeRate"/>
+      <xs:enumeration value="shootDryWeight"/>
+      <xs:enumeration value="shootMinimalNutrientContent"/>
+      <xs:enumeration value="shootOptimalNutrientContent"/>
+      <xs:enumeration value="simplePotentialTranspiration"/>
+      <xs:enumeration value="soluteMassBalanceTest"/>
+      <xs:enumeration value="specificHeatCapacityOfAir"/>
+      <xs:enumeration value="stemDryWeight"/>
+      <xs:enumeration value="stemMinimalNutrientContent"/>
+      <xs:enumeration value="stemOptimalNutrientContent"/>
+      <xs:enumeration value="stemPotentialCarbonSinkForGrowth"/>
+      <xs:enumeration value="stemRespirationRate"/>
+      <xs:enumeration value="stomatalResistance"/>
+      <xs:enumeration value="stressAdjustedPotentialLeafGrowthRate"/>
+      <xs:enumeration value="stressFactor"/>
+      <xs:enumeration value="sum"/>
+      <xs:enumeration value="sumOverAllPlantShoots"/>
+      <xs:enumeration value="sumOverAllPlants"/>
+      <xs:enumeration value="sumOverAllPlantsNutrients"/>
+      <xs:enumeration value="sumSteelCortex"/>
+      <xs:enumeration value="tropisms"/>
+      <xs:enumeration value="useDerivative"/>
+      <xs:enumeration value="useFormula"/>
+      <xs:enumeration value="useName+Rate"/>
+      <xs:enumeration value="useParameterFromParameterSection"/>
+      <xs:enumeration value="usePath"/>
+      <xs:enumeration value="useRootClassAndNutrientSpecificTable"/>
+      <xs:enumeration value="useRootClassSpecificTable"/>
+      <xs:enumeration value="virtualCoring"/>
+      <xs:enumeration value="waterMassBalanceTest"/>
+      <xs:enumeration value="waterUptakeDoussanModel"/>
+      <xs:enumeration value="waterUptakeAlmDoussanSchnepfModel"/>
+      <xs:enumeration value="waterUptakeFromHopmans"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="functionSimulaPointType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="rootGrowthDirection"/>
+      <xs:enumeration value="useDerivative"/>
+      <xs:enumeration value="useName+Rate"/>
+      <xs:enumeration value="useParameterFromParameterSection"/>
+      <xs:enumeration value="usePath"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="functionSimulaTableType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="getValuesFromPlantWaterUptake"/>
+      <xs:enumeration value="getValuesFromSWMS"/>
+      <xs:enumeration value="usePath"/>
+      <xs:enumeration value="radiusDepletionZoneBarberCushman"/>
+
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<!--
+		Simulation file for SimRoot version 5. This development version, build July 2007 Author: Jouke Postma Note: This file
+		is an include file and contains the environmental variables. Feel free to change values, but ALWAYS include a comment
+		why you changed the value and what you changed it to. Please REFERENCE you data. PLEASE KEEP THIS HEADER UP TO DATE!
+		LIST BELOW WHO YOU ARE, WHEN AND WHAT CHANGES YOU MADE AND WHY. LIST YOUR SOURCE AS MUCH AS POSSIBLE! change log:
+	-->
+<SimulationModelIncludeFile>
+	<!--environmental parameters start here. -->
+	<SimulaBase name="environment">
+		<SimulaBase name="dimensions">
+			<SimulaConstant name="minCorner" type="coordinate">
+				<!-- -13.33 -30 -30-->
+				-10 -20 -10
+			</SimulaConstant>
+			<SimulaConstant name="maxCorner" type="coordinate">
+				<!-- 13.33 0 30-->
+				10  0  10
+			</SimulaConstant>
+			<SimulaConstant name="resolution" type="coordinate">
+				<!-- 0.3  0.3  0.3 -->
+				2 2 2
+			</SimulaConstant>
+			<SimulaConstant name="rotateBox" type="bool">
+			   0
+				<SimulaConstant name="rotationAngle" unit="degrees">
+				   0
+ 				</SimulaConstant>
+				<SimulaConstant name="rotationAxis" type="coordinate">
+					0 0  1
+				</SimulaConstant>
+				<SimulaConstant name="rotationCenter" type="coordinate">
+					<!--  suggest you make this equal to the planting position -->
+					0 -2  0
+				</SimulaConstant>
+			</SimulaConstant>
+			<SimulaConstant name="roundPot" type="bool">
+			   0
+			</SimulaConstant>
+			   
+		</SimulaBase>
+		<SimulaBase name="soil">
+			<SimulaTable name_column1="depth" unit_column1="cm" name_column2="bulkDensity" unit_column2="g/cm3">
+				<!--data maria rocksprings: 0 1.24 -5 1.24 -16 1.29 -30 1.42 -47 1.40 -65 1.51 -200 1.51 -->
+				0 1.24 -5 1.24 -16 1.29 -30 1.42 -47 1.40 -65 1.51 -200 1.51
+			</SimulaTable>
+		</SimulaBase>
+	</SimulaBase>
+	<SimulaIncludeFile fileName="environments/splitBox/water.xml" />
+	<SimulaIncludeFile fileName="environments/Rocksprings-maize/atmosphere.xml" />
+	<SimulaIncludeFile fileName="environments/splitBox/nitrate.xml" />
+	<SimulaIncludeFile fileName="environments/splitBox/phosphorus.xml" />
+	<SimulaIncludeFile fileName="environments/Rocksprings-maize/potassium.xml" />
+	<SimulaIncludeFile fileName="environments/Rocksprings-maize/organic.xml" />
+	<!-- SimulaIncludeFile fileName="environmentalParameters/multiplier.xml" /-->
+</SimulationModelIncludeFile>
